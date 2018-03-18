@@ -6,8 +6,8 @@ public class Image extends item.Item{
     private String resolution;
     private String frequency;
 
-    public Image(String code, String name, double boughtPrice, double sellPrice) {
-        super(code, name, boughtPrice, sellPrice);
+    public Image(String code, String name, double boughtPrice, double sellPrice,int quantity) {
+        super(code, name, boughtPrice, sellPrice,quantity);
     }
 
     public double getInches() {

@@ -103,30 +103,7 @@ public class StockManager extends TextDatabase implements Imanager {
         return null;
     }
 
-//        /* Display content using Iterator*/
-//        Set set = hmap.entrySet();
-//        Iterator iterator = set.iterator();
-//        while (iterator.hasNext()) {
-//            Map.Entry mentry = (Map.Entry) iterator.next();
-//            System.out.print("key is: " + mentry.getKey() + " & Value is: ");
-//            System.out.println(mentry.getValue());
-//        }
-//
-//        /* Get values based on key*/
-//        String var = hmap.get(2);
-//        System.out.println("Value at index 2 is: " + var);
-//
-//        /* Remove values based on key*/
-//        hmap.remove(3);
-//        System.out.println("Map key and values after removal:");
-//        Set set2 = hmap.entrySet();
-//        Iterator iterator2 = set2.iterator();
-//        while (iterator2.hasNext()) {
-//            Map.Entry mentry2 = (Map.Entry) iterator2.next();
-//            System.out.print("Key is: " + mentry2.getKey() + " & Value is: ");
-//            System.out.println(mentry2.getValue());
-//        }
-    // }
+//   
     public Electrodomestic generateRandomItem() {
 
         Electrodomestic item = null;
@@ -223,8 +200,6 @@ public class StockManager extends TextDatabase implements Imanager {
         double price;
         int quantity;
 
-        Electrodomestic item = null;
-
 //Creamos un lector
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -239,13 +214,12 @@ public class StockManager extends TextDatabase implements Imanager {
         description = br.readLine();
         System.out.println("Introduzca precio de compra");//Se pide un dato al usuario
         price = Double.parseDouble(br.readLine());
-           System.out.println("Introduzca cantidad en stock");//Se pide un dato al usuario
+        System.out.println("Introduzca cantidad en stock");//Se pide un dato al usuario
         quantity = Integer.parseInt(br.readLine());
 //   
+        Electrodomestic item = new Electrodomestic(code, description, price, price, quantity);
 
-        item = new Electrodomestic(code, description, price, price,quantity);
-
-        //Guardamos el cliente en la coleccion
+        //Guardamos el item en la coleccion
         add(item);
         //Guardar los datos 
         save();
@@ -261,6 +235,31 @@ public class StockManager extends TextDatabase implements Imanager {
     @Override
     public void update(Object e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        /* Display content using Iterator*/
+//        Set set = hmap.entrySet();
+//        Iterator iterator = set.iterator();
+//        while (iterator.hasNext()) {
+//            Map.Entry mentry = (Map.Entry) iterator.next();
+//            System.out.print("key is: " + mentry.getKey() + " & Value is: ");
+//            System.out.println(mentry.getValue());
+//        }
+//
+//        /* Get values based on key*/
+//        String var = hmap.get(2);
+//        System.out.println("Value at index 2 is: " + var);
+//
+//        /* Remove values based on key*/
+//        hmap.remove(3);
+//        System.out.println("Map key and values after removal:");
+//        Set set2 = hmap.entrySet();
+//        Iterator iterator2 = set2.iterator();
+//        while (iterator2.hasNext()) {
+//            Map.Entry mentry2 = (Map.Entry) iterator2.next();
+//            System.out.print("Key is: " + mentry2.getKey() + " & Value is: ");
+//            System.out.println(mentry2.getValue());
+//        }
+        // }
     }
 
 }

@@ -55,13 +55,12 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
     }
 
     @Override //necesitamos el codigo del elemento, 
-    //por tanto esto será string
+ 
     public void delete(Object person) {
         Person lperson;
         lperson = (Person) person;
         persons.remove(lperson);
-        System.out.println("Student: Roll No " + lperson.getfirstName() + ", deleted from database");
-
+       
     }
 
     @Override
@@ -104,16 +103,6 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
     }
 
 //  /*
-//            
-//        /* This is how to declare HashMap */
-//        HashMap<String, Node> hmap = new HashMap<>();
-//
-//        /*Adding elements to HashMap*/
-//        hmap.put(12, "Chaitanya");
-//        hmap.put(2, "Rahul");
-//        hmap.put(7, "Singh");
-//        hmap.put(49, "Ajeet");
-//        hmap.put(3, "Anuj");
 //
 //        /* Display content using Iterator*/
 //        Set set = hmap.entrySet();

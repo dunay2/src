@@ -151,5 +151,4 @@ public class ClientManager extends PersonManager {
         System.out.println("Pulse una tecla para continuar");
     }
 
-
 }

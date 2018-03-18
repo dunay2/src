@@ -49,20 +49,7 @@ public class Tienda {
         numeroPro = teclado.nextInt();
         return numeroPro;
     }
- /*  public void solicitarNombrePro(){
-        Scanner teclado = new Scanner(System.in);
-        System.out.println("------Producto--------");
-        System.out.println("Introduce el nombre del producto: ");
-        nombrePr = teclado.nextLine();
-    }
- 
- /*   public void solicitarStockPro(){
-        Scanner teclado = new Scanner(System.in);
- 
-        System.out.println("Introduce el stock de: " + devolverNombre() + " : ");
-        stock = teclado.nextInt();
-    }
- 
+
   /*  public void solicitarPrecioPro(){
         Scanner teclado = new Scanner(System.in);
  
