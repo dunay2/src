@@ -40,7 +40,7 @@ public class StockManager extends TextDatabase implements Imanager {
        //     listaProductos.put(codigo, precio);
        // }
     }*/
-         save(electrodomestics);
+        save(electrodomestics);
     }
 
 //Cargar la base de datos de personas
@@ -57,7 +57,7 @@ public class StockManager extends TextDatabase implements Imanager {
 //Devuelve todo el listado de personas
     @Override
     public HashMap<String, Electrodomestic> getAll() {
-        
+
         return electrodomestics;
     }
 
@@ -221,6 +221,7 @@ public class StockManager extends TextDatabase implements Imanager {
         String name;
         String description;
         double price;
+        int quantity;
 
         Electrodomestic item = null;
 
@@ -238,8 +239,11 @@ public class StockManager extends TextDatabase implements Imanager {
         description = br.readLine();
         System.out.println("Introduzca precio de compra");//Se pide un dato al usuario
         price = Double.parseDouble(br.readLine());
+           System.out.println("Introduzca cantidad en stock");//Se pide un dato al usuario
+        quantity = Integer.parseInt(br.readLine());
 //   
-        item = new Electrodomestic(code, description, price, price);
+
+        item = new Electrodomestic(code, description, price, price,quantity);
 
         //Guardamos el cliente en la coleccion
         add(item);
