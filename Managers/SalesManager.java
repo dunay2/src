@@ -4,15 +4,19 @@
  * and open the template in the editor.
  */
 package Managers;
+
+import DataBase.TextDatabase;
 import Person.Client.Client;
 import Person.Person;
+import java.io.IOException;
+import java.util.HashMap;
 
 /**
  *
  * @author ashh412
  */
-public class SalesManager {
- 
+public class SalesManager extends TextDatabase implements Imanager {
+
     private final Client actor1;
     private final Person actor2;
 
@@ -20,10 +24,52 @@ public class SalesManager {
         this.actor1 = actor1;
         this.actor2 = actor2;
     }
-    
-    
-    
-    
+
+    @Override
+    public Object get(int rollNo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public HashMap getAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void update(Object e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void delete(Object e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean add(Object e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object search(String e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void list() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object createObject() throws IOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean handleProcess(int e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
 
 
@@ -106,7 +152,7 @@ break;
 
     /**
      * @param args the command line arguments
-     */
+ */
 /*
     public static void main(String[] args) {
         // TODO code application logic here

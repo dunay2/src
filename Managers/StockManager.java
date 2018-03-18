@@ -50,10 +50,10 @@ public class StockManager extends TextDatabase implements Imanager {
     }
 
     //   @Override
-    //   public HashMap<String, Electrodomestic> load(String filename) {
-    // return super.load(filename);//Pasamos el nombre del fichero
-    //      return null;
-    // }
+//       public HashMap<String, Electrodomestic> load(String filename) {
+//     return super.load(filename);//Pasamos el nombre del fichero
+//          return null;
+//     }
 //Devuelve todo el listado de personas
     @Override
     public HashMap<String, Electrodomestic> getAll() {
