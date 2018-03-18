@@ -7,9 +7,15 @@ package Managers;
 
 import DataBase.TextDatabase;
 import Person.Client.Client;
+import Person.Employee.Cashier;
 import Person.Person;
+import ScreenInterfaces.Node;
+import ishop.Shoppingcart;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,12 +23,14 @@ import java.util.HashMap;
  */
 public class SalesManager extends TextDatabase implements Imanager {
 
-    private final Client actor1;
-    private final Person actor2;
+    private final Client client;
+    private final Cashier cashier;
+    private final Shoppingcart shoppingcart;
 
-    public SalesManager(Client actor1, Person actor2) {
-        this.actor1 = actor1;
-        this.actor2 = actor2;
+    public SalesManager(Client client, Cashier cashier) {
+        this.cashier = cashier;
+        this.client = client;
+        shoppingcart = new Shoppingcart(this.cashier);
     }
 
     @Override
@@ -67,7 +75,53 @@ public class SalesManager extends TextDatabase implements Imanager {
 
     @Override
     public boolean handleProcess(int e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        Scanner scanner = new Scanner(System.in);
+        String a = "";
+
+        switch (e) {
+
+            //Gestion de clientes introducción de DNI
+            case 1: {
+                try {
+                    createObject();
+                    // Este es el nod raiz    myInterface.getNode();
+                } catch (IOException ex) {
+                    Logger.getLogger(ClientManager.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                return true;
+            }
+
+            // (11, childNode, "1. Consultar el contenido del carrito y el importe actual"));
+            case 11:
+                getTotalAmount();
+                a = scanner.nextLine();
+                return true;
+
+            //"12. Añadir electrodomestico al carrito"
+            case 12:
+                //elegir entre las secciones
+                break;
+
+            //13. Pagar Compra
+            case 13:
+                //identificar al cliente o solicitar alta 
+                break;
+
+            //Crear carrito aleatorio
+            case 25:
+                //  createRandomClient();
+                a = scanner.nextLine();
+                return true;
+        }
+        return false;
+    }
+    //intervinient
+    //role (clasgetname)
+
+    private void getTotalAmount() {
+        System.out.println(shoppingcart.getTotalAmount());
+
     }
 
 }
@@ -153,11 +207,11 @@ break;
     /**
      * @param args the command line arguments
  */
-/*
+ /*
     public static void main(String[] args) {
         // TODO code application logic here
         String resultado="0";
 Ventasproductos.inventarioyventa(resultado);
     }
 
-*/
+ */
