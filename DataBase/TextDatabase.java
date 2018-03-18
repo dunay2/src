@@ -19,11 +19,9 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author ashh412
- * Propósito: agregar persistencia al proyecto mediante acceso a un fichero de texto
- * donde se guardan los objetos serializados
+ * @author ashh412 Propósito: agregar persistencia al proyecto mediante acceso a
+ * un fichero de texto donde se guardan los objetos serializados
  */
-
 public abstract class TextDatabase implements IDatabase {
 
 //Implementamos el método save para guardar objetos tipo person
@@ -33,19 +31,20 @@ public abstract class TextDatabase implements IDatabase {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    }
 //    
-   // public void save(HashMap<String, Person> hm) {
-@Override
-public void save(HashMap hm) 
-{
-        FileOutputStream fout = null;
-        try {
+    // public void save(HashMap<String, Person> hm) {
+    @Override
+    public void save(HashMap hm) {
 
-            //Obtenemos el primer objeto para saber su tipo y guardar en su fichero
-            Iterator<Entry<String, Person>> it = hm.entrySet().iterator();
-            //Tomamos el primer valor para conocer la clase hija que vamos a guardar
-            Entry<String, Person> ite = it.next();
-            Person person = ite.getValue();
-            //Guardamos el nombre de la clase hija
+        try {
+            FileOutputStream fout = null;
+
+//Capturar el tipo
+//Obtenemos el primer objeto para saber su tipo y guardar en su fichero
+            Iterator<Entry<String, Object>> it = hm.entrySet().iterator();
+//Tomamos el primer valor para conocer la clase hija que vamos a guardar
+            Entry<String, Object> ite = it.next();
+            Object person = ite.getValue();
+//Guardamos el nombre de la clase hija
             String filename = person.getClass().getSimpleName() + ".data";
 
             File f = new File(filename);
@@ -66,22 +65,21 @@ public void save(HashMap hm)
                 person = ite.getValue();
 
             }
+            fout.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(TextDatabase.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(TextDatabase.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                fout.close();
-            } catch (IOException ex) {
-                Logger.getLogger(TextDatabase.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
-
     }
 
+}
+
+}
+}
+
     @Override
-    public HashMap<String, Person> load(String fileName
+        public HashMap<String, Person> load(String fileName
     ) {
         HashMap<String, Person> e = null;
         FileInputStream file = null;
@@ -110,20 +108,56 @@ public void save(HashMap hm)
 //                        Person per = me.getValue();
 //                    }
 
-                }
+                
+
+
+
+
+
+
+
+}
 
             } catch (IOException | ClassNotFoundException ex) {
-                Logger.getLogger(TextDatabase.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TextDatabase.class
+
+
+
+.getName()).log(Level.SEVERE, null, ex);
             }
             return e;
-        } //fLogger.log(Level.SEVERE, "Cannot perform input. Class not found.", ex);
+        
+
+
+
+
+
+
+
+} //fLogger.log(Level.SEVERE, "Cannot perform input. Class not found.", ex);
         catch (FileNotFoundException ex) {
-            Logger.getLogger(TextDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TextDatabase.class
+
+
+
+.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 file.close();
-            } catch (IOException ex) {
-                Logger.getLogger(TextDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            
+
+
+
+
+
+
+
+} catch (IOException ex) {
+                Logger.getLogger(TextDatabase.class
+
+
+
+.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return e;

@@ -146,6 +146,7 @@ public class StockManager extends TextDatabase implements Imanager {
                 //32. Modificar Item Stock
                 case 32:
                     updateStock();
+                    
                     break;
                 //33. Eliminar Item Stock
                 case 33:
@@ -170,7 +171,7 @@ public class StockManager extends TextDatabase implements Imanager {
 
     private void updateStock() throws IOException {
         //introducir el código del producto a actualizar
-        Electrodomestict electrodomestict;
+        Electrodomestic electrodomestic;
         String code;
 
 //Creamos un lector
@@ -180,10 +181,17 @@ public class StockManager extends TextDatabase implements Imanager {
         System.out.println("Por favor introduzca código");//Se pide un dato al usuario
         code = br.readLine();
 //Control de errores
-        electrodomestict = (Electrodomestict) search(code);
-        
+        electrodomestic = (Electrodomestic) search(code);
+
+        System.out.println("Codigo==================descripción==========Cantidad======Precio Unidad");
+        System.out.println(electrodomestic.getCode() + "    " + electrodomestic.getName() + "  " + electrodomestic.getQuantity() + "  " + electrodomestic.getSellPrice());
         //Modificar el stock
+        System.out.println("1. Modificar el stock");
         //Modificar la descripción
+        System.out.println("2. Modificar el Nombre");
+        System.out.println("3. Modificar el precio de venta");
+
+        int i = readConsole();
 
 //        if (electrodomestics.containsKey(code)) {
     }
@@ -283,6 +291,14 @@ public class StockManager extends TextDatabase implements Imanager {
 //            System.out.println(mentry2.getValue());
 //        }
         // }
+    }
+
+    //propósito: leer los datos introducidos por consola
+    private int readConsole() {
+        Scanner scanner = new Scanner(System.in);
+        int i = scanner.nextInt();
+
+        return i;
     }
 
 }
