@@ -24,6 +24,8 @@ import java.util.logging.Logger;
  */
 public class ClientManager extends PersonManager {
 
+  
+
     //  private final AppInterface myInterface;
 //Constructor
     //   public ClientManager(AppInterface myInterface) {

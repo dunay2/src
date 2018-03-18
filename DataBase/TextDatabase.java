@@ -53,7 +53,7 @@ public abstract class TextDatabase implements IDatabase {
 //Comprobamos si el archivo de datos existe para escribir su cabecera solo en ese caso
 
 //Escribimos los objetos
-            while (it.hasNext()) {
+            do {
                 if (fexist) {
                     OWriteStream oos = new OWriteStream(fout);
                     oos.writeObject(person);
@@ -64,7 +64,8 @@ public abstract class TextDatabase implements IDatabase {
                 ite = it.next();
                 person = ite.getValue();
 
-            }
+            } while (it.hasNext());
+            
             fout.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(TextDatabase.class.getName()).log(Level.SEVERE, null, ex);
@@ -73,14 +74,8 @@ public abstract class TextDatabase implements IDatabase {
         }
     }
 
-}
-
-}
-}
-
     @Override
-        public HashMap<String, Person> load(String fileName
-    ) {
+        public HashMap<String, Person> load(String fileName ) {
         HashMap<String, Person> e = null;
         FileInputStream file = null;
         ObjectInputStream in = null;
