@@ -34,7 +34,21 @@ import java.util.Scanner;
  * @author ashh412
  */
 public abstract class Item {
+  //private int amount;
+    private String code;
+    private String name;
+    private double boughtPrice;
+    private double sellPrice;
+    private int quantity;
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+    
     public String getCode() {
         return code;
     }
@@ -50,11 +64,7 @@ public abstract class Item {
         this.code = code;
     }
 
-    //private int amount;
-    private String code;
-    private String name;
-    private double boughtPrice;
-    private double sellPrice;
+  
 
     public double getBoughtPrice() {
         return boughtPrice;

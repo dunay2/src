@@ -27,9 +27,16 @@ import java.util.logging.Logger;
 public abstract class TextDatabase implements IDatabase {
 
 //Implementamos el método save para guardar objetos tipo person
-    @Override
-    public void save(HashMap<String, Person> hm) {
-
+//
+// @Override
+//    public void save(HashMap e) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+//    
+   // public void save(HashMap<String, Person> hm) {
+@Override
+public void save(HashMap hm) 
+{
         FileOutputStream fout = null;
         try {
 

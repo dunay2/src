@@ -40,7 +40,7 @@ public class StockManager extends TextDatabase implements Imanager {
        //     listaProductos.put(codigo, precio);
        // }
     }*/
-        // save(electrodomestic);
+         save(electrodomestics);
     }
 
 //Cargar la base de datos de personas

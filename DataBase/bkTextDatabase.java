@@ -28,7 +28,7 @@ public abstract class bkTextDatabase implements IDatabase {
 
 //Implementamos el método save para guardar objetos tipo person
     @Override
-    public void save(HashMap<String, Person> hm) {
+    public void save(HashMap  hm) {
 
         FileOutputStream fout = null;
         try {
