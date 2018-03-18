@@ -170,6 +170,7 @@ public class StockManager extends TextDatabase implements Imanager {
 
     private void updateStock() throws IOException {
         //introducir el código del producto a actualizar
+        Electrodomestict electrodomestict;
         String code;
 
 //Creamos un lector
@@ -178,12 +179,17 @@ public class StockManager extends TextDatabase implements Imanager {
 //Buscamos un item
         System.out.println("Por favor introduzca código");//Se pide un dato al usuario
         code = br.readLine();
+//Control de errores
+        electrodomestict = (Electrodomestict) search(code);
+        
+        //Modificar el stock
+        //Modificar la descripción
 
-        if (electrodomestics.containsKey(code)) {
-        }
+//        if (electrodomestics.containsKey(code)) {
     }
-//Propósito: Listar los Electrodomestic por consola
+    //tomar
 
+//Propósito: Listar los Electrodomestic por consola
     @Override
     public void list() {
 
