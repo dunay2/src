@@ -53,11 +53,12 @@ public abstract class Item {
         return code;
     }
 
-    public Item(String code, String name, double boughtPrice, double sellPrice) {
+    public Item(String code, String name, double boughtPrice, double sellPrice,int quantity) {
         this.code = code;
         this.name = name;
         this.boughtPrice = boughtPrice;
         this.sellPrice = sellPrice;
+        this.quantity=quantity;
     }
 
     public void setCode(String code) {

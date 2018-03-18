@@ -11,10 +11,11 @@ package item;
  */
 public class Electrodomestic extends Item {
 
-    public Electrodomestic(String code, String name, double boughtPrice, double sellPrice) {
-        super(code, name, boughtPrice, sellPrice);
+    public Electrodomestic(String code, String name, double boughtPrice, double sellPrice, int quantity) {
+        super(code, name, boughtPrice, sellPrice, quantity);
     }
-  
+
+ 
 }
 
    
