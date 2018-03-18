@@ -133,40 +133,57 @@ public class StockManager extends TextDatabase implements Imanager {
     @Override
     public boolean handleProcess(int e) {
 
-        Scanner scanner = new Scanner(System.in);
-        String a = "";
+        try {
+            Scanner scanner = new Scanner(System.in);
+            String a = "";
 
-        switch (e) {
-            //31. Agregar Item a Stock
-            case 31:
-                try {
+            switch (e) {
+                //31. Agregar Item a Stock
+                case 31:
+
                     createObject();
-
-                } catch (IOException ex) {
-                    Logger.getLogger(ClientManager.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                return true;
-            //32. Modificar Item Stock
-            case 32:
-                break;
-            //33. Eliminar Item Stock
-            case 33:
-                break;
-            //34. Listar eletrodomésticos
-            case 34:
-                list();
-                a = scanner.nextLine();
-                return true;
-            //Crear electrodoméstico aleatorio
-            //case 25:
-            // createRandomClient();
-            //  a = scanner.nextLine();
-            //return true;
+                    return true;
+                //32. Modificar Item Stock
+                case 32:
+                    updateStock();
+                    break;
+                //33. Eliminar Item Stock
+                case 33:
+                    break;
+                //34. Listar eletrodomésticos
+                case 34:
+                    list();
+                    a = scanner.nextLine();
+                    return true;
+                //Crear electrodoméstico aleatorio
+                //case 25:
+                // createRandomClient();
+                //  a = scanner.nextLine();
+                //return true;
+            }
+            return false;
+        } catch (IOException ex) {
+            Logger.getLogger(StockManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
 
+    private void updateStock() throws IOException {
+        //introducir el código del producto a actualizar
+        String code;
+
+//Creamos un lector
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+//Buscamos un item
+        System.out.println("Por favor introduzca código");//Se pide un dato al usuario
+        code = br.readLine();
+
+        if (electrodomestics.containsKey(code)) {
+        }
+    }
 //Propósito: Listar los Electrodomestic por consola
+
     @Override
     public void list() {
 
