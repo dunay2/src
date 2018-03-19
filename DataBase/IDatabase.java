@@ -21,6 +21,6 @@ public interface IDatabase<T> {
 void save (HashMap<String, T> e);
 
    // ArrayList<Person> Load(String id);
-    HashMap<String, Person> load(String id);//persons = new HashMap<>();
+    HashMap<String, T> load(String id);//persons = new HashMap<>();
 
 }

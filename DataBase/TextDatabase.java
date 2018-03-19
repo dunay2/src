@@ -77,8 +77,8 @@ public abstract class TextDatabase implements IDatabase {
 //while (it.hasNext());
 
     @Override
-    public HashMap<String, Person> load(String fileName) {
-        HashMap<String, Person> e = new HashMap();;
+    public HashMap load(String fileName) {
+        HashMap<String, Object> e = new HashMap();;
         FileInputStream file = null;
         ObjectInputStream in = null;
         //  Person person = null;
@@ -93,7 +93,7 @@ public abstract class TextDatabase implements IDatabase {
                 in = new ObjectInputStream(file);
 
                 //    while (true) {
-                e = (HashMap<String, Person>) in.readObject();
+                e = (HashMap<String, Object>) in.readObject();
 
                 //person = (Person) in.readObject();
                 //      e.put(person.getDni(), person);
