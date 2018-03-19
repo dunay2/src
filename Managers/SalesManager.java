@@ -11,7 +11,9 @@ import Person.Employee.Cashier;
 import Person.Person;
 import ScreenInterfaces.Node;
 import ishop.Shoppingcart;
+import item.Electrodomestic;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -23,15 +25,14 @@ import java.util.logging.Logger;
  */
 public class SalesManager extends TextDatabase implements Imanager {
 
-    private final Client client;
-    private final Cashier cashier;
+    private final Client client;//Lo declaramos como objeto para poder usar sus métodos
+    private final Cashier cashier;//Lo declaramos como objeto para poder usar sus métodos
     private final Shoppingcart shoppingcart;
- 
-    
+
     public SalesManager(Client client, Cashier cashier) {
         this.cashier = cashier;
         this.client = client;
-        shoppingcart = new Shoppingcart(this.cashier);
+        shoppingcart = new Shoppingcart(this.cashier.getDni());
     }
 
     @Override
@@ -77,9 +78,6 @@ public class SalesManager extends TextDatabase implements Imanager {
     @Override
     public boolean handleProcess(int e) {
 
-        Scanner scanner = new Scanner(System.in);
-        String a = "";
-
         switch (e) {
 
             //Gestion de clientes introducción de DNI
@@ -95,13 +93,13 @@ public class SalesManager extends TextDatabase implements Imanager {
 
             // (11, childNode, "1. Consultar el contenido del carrito y el importe actual"));
             case 11:
-                getTotalAmount();
-                a = scanner.nextLine();
+                queryShoppingCart();
                 return true;
-
             //"12. Añadir electrodomestico al carrito"
             case 12:
                 //elegir entre las secciones
+                addItem();
+
                 break;
 
             //13. Pagar Compra
@@ -116,8 +114,39 @@ public class SalesManager extends TextDatabase implements Imanager {
     //intervinient
     //role (clasgetname)
 
-    private void getTotalAmount() {
-        System.out.println(shoppingcart.getTotalAmount());
+    private double getTotalAmount() {
+        
+        return shoppingcart.getTotalAmount();
+        
+    }
+
+    private void addItem() {
+        shoppingcart.addItem((String) "ITEMCODE", (Double) 10.23, (byte) 2);
+    }
+
+    private void queryShoppingCart() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Fecha:" + shoppingcart.getSalesDate()) ;
+        
+        
+System.out.println("LINE           CODE                 PRICE            AMOUNT    TOTAL ");
+            
+        shoppingcart.getItems().forEach((line) -> {
+            
+            System.out.println(line.getLineNumber());
+            System.out.println(line.getItemCode());
+            System.out.println(line.getPrice());
+            System.out.println(line.getAmount());
+
+            System.out.println(line.getAmount() * line.getPrice());
+            ;
+        });
+
+        System.out.println("TOTAL AMOUNT:" + getTotalAmount());
+ 
+           
+        String a = scanner.nextLine();
 
     }
 
