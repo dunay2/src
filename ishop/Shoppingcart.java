@@ -18,7 +18,7 @@ import java.util.Date;
  */
 public class Shoppingcart {
 
-   public class Line {//Estructura privada que contiene la linea de pedido
+    public class Line {//Estructura privada que contiene la linea de pedido
 
         private byte lineNumber;
         private String itemCode;
@@ -57,9 +57,9 @@ public class Shoppingcart {
             this.price = price;
         }
     }
- // en el shopping cart los items son líneas(con un código), no electrodomesticos
-// Es una lista poco extensa a la que podemos acceder por indice
-//No hay que realizar búsquedas y el acceso a elementos es directo    
+    // en el shopping cart los items son líneas(con un código), no electrodomesticos
+    // Es una lista poco extensa a la que podemos acceder por indice
+    //No hay que realizar búsquedas y el acceso a elementos es directo    
     private String invoiceCode;
     private String cashierCode;
     private String clientCode;
@@ -67,43 +67,55 @@ public class Shoppingcart {
     private double totalAmount = 0; // Precio de la compra
     private byte lineNumber;//Control de entradas en el carrito
 
-    private ArrayList<Line> items; 
+    private ArrayList<Line> items;
+
     public Shoppingcart(String cashierCode) {
         this.cashierCode = cashierCode;
-        
+
         //establecer la fecha por defecto 
-        this.salesDate =LocalDateTime.now();
+        this.salesDate = LocalDateTime.now();
     }
+
     public String getInvoiceCode() {
         return invoiceCode;
     }
+
     public void setInvoiceCode(String invoiceCode) {
         this.invoiceCode = invoiceCode;
     }
+
     public String getClient() {
         return clientCode;
     }
+
     public void setClient(String clientCode) {
         this.clientCode = clientCode;
     }
+
     public String getCashier() {
         return cashierCode;
     }
+
     public void setCashier(String cashierCode) {
         this.cashierCode = cashierCode;
     }
+
     public LocalDateTime getSalesDate() {
         return salesDate;
     }
+
     public void setSalesDate(LocalDateTime salesDate) {
         this.salesDate = salesDate;
     }
+
     public ArrayList<Line> getItems() {
         return items;
     }
+
     public double getTotalAmount() {
         return totalAmount;
     }
+
     public void addItem(String itemCode, double itemPrice, byte amount) {
         Line line = new Line();
 
@@ -116,10 +128,11 @@ public class Shoppingcart {
 
         totalAmount = totalAmount + line.price;
     }
-    public void removeItem( byte lineNumber) {
-        
-      Line line=  items.get(lineNumber);
-      
+
+    public void removeItem(byte lineNumber) {
+
+        Line line = items.get(lineNumber);
+
         items.remove(line);
         totalAmount = totalAmount - line.getPrice();
     }
