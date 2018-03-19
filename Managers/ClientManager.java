@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  * @author ashh412 Propósito: gestor de operaciones de clientes
  */
 public class ClientManager extends PersonManager {
-
+private   HashMap<String, Person> hm;
     //  private final AppInterface myInterface;
 //Constructor
     //   public ClientManager(AppInterface myInterface) {
@@ -47,7 +47,7 @@ public class ClientManager extends PersonManager {
 
         System.out.println("===============Carga de clientes");
 
-        HashMap<String, Person> hm;
+
         hm = load("Client");
 
     }
@@ -89,12 +89,12 @@ public class ClientManager extends PersonManager {
     @Override
     public void list() {
 
-        HashMap<String, Person> persons = new HashMap<>();
+    //    HashMap<String, Person> persons = new HashMap<>();
         Person person;
 
-        persons = getAll();
+        //persons = getAll();
 
-        Iterator<Map.Entry<String, Person>> it = persons.entrySet().iterator();
+        Iterator<Map.Entry<String, Person>> it = hm.entrySet().iterator();
 
         System.out.println("================Listado de Clientes============");
 

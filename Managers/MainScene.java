@@ -29,7 +29,7 @@ public class MainScene {
 
     public MainScene() {
         this.cm = new ClientManager();
-        this.sm= new StockManager();
+        this.sm = new StockManager();
         myTextInterface = new TextInterface();
         //inicializar gestores
     }
@@ -63,28 +63,32 @@ public class MainScene {
         cajeros.addStaff(cashier);
         cajeros.addStaff(cashier1);
 
+        cm.loadClients();
+
         doBusiness(myTextInterface.printMenu(null));
 
     }
 //Procesamos las ordenes que nos van llegando de los menus desde de la entrada de teclado
 //debe tener un return
+    //Listar los procesos implementados
+    //2. Clientes
+    //21. Gestion de clientes introducción de DNI
+    //25.Crear cliente aleatorio
+    //3. Stock . 
+    //31. Agregar Item a Stock
+    //32. Modificar Item Stock
+    //33. Eliminar Item Stock
+    //34. Listar eletrodomésticos
+    //35. Volver al menú principal
 
     private void doBusiness(Node node) {
         boolean startNewSequence = false;
 
         startNewSequence = cm.handleProcess(node.getValue());
-        startNewSequence = sm.handleProcess(node.getValue());
+        if (!startNewSequence) {
+            startNewSequence = sm.handleProcess(node.getValue());
+        }
 
-        //Listar los procesos implementados
-        //2. Clientes
-        //21. Gestion de clientes introducción de DNI
-        //25.Crear cliente aleatorio
-        //3. Stock . 
-        //31. Agregar Item a Stock
-        //32. Modificar Item Stock
-        //33. Eliminar Item Stock
-        //34. Listar eletrodomésticos
-        //35. Volver al menú principal
         myTextInterface.clearScreen();
         //Imprimimos el menú del nodo seleccionado y mandamos a consola,
         //la cual nos devolverá el valor del nuevo nodo seleccionado

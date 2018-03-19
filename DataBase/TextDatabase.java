@@ -43,58 +43,64 @@ public abstract class TextDatabase implements IDatabase {
             Iterator<Entry<String, Object>> it = hm.entrySet().iterator();
 //Tomamos el primer valor para conocer la clase hija que vamos a guardar
             Entry<String, Object> ite = it.next();
-            Object person = ite.getValue();
+            Object objectType = ite.getValue();
 //Guardamos el nombre de la clase hija
-            String filename = person.getClass().getSimpleName() + ".data";
+            String filename = objectType.getClass().getSimpleName() + ".data";
 
-            File f = new File(filename);
-            boolean fexist = f.exists();
+            //   File f = new File(filename);
+            //  boolean fexist = f.exists();
             fout = new FileOutputStream(filename, true);
 //Comprobamos si el archivo de datos existe para escribir su cabecera solo en ese caso
 
 //Escribimos los objetos
-            do {
-                if (fexist) {
-                    OWriteStream oos = new OWriteStream(fout);
-                    oos.writeObject(person);
-                } else {
-                    ObjectOutputStream oosh = new ObjectOutputStream(fout);
-                    oosh.writeObject(person);
-                }
-                ite = it.next();
-                person = ite.getValue();
-
-            } while (it.hasNext());
-            
+//  do {
+// if (fexist) {
+//      OWriteStream oos = new OWriteStream(fout);
+//        oos.writeObject(objectType);
+//} else {
+            ObjectOutputStream oosh = new ObjectOutputStream(fout);
+            oosh.writeObject(objectType);
             fout.close();
+
+// }
+//   if (it.hasNext()) {
+//     ite = it.next();
+//    objectType = ite.getValue();
+//}
         } catch (FileNotFoundException ex) {
             Logger.getLogger(TextDatabase.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(TextDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
+//while (it.hasNext());
 
     @Override
-        public HashMap<String, Person> load(String fileName ) {
-        HashMap<String, Person> e = null;
+    public HashMap<String, Person> load(String fileName) {
+        HashMap<String, Person> e = new HashMap();;
         FileInputStream file = null;
         ObjectInputStream in = null;
-        Person person = null;
+        //  Person person = null;
 
-        try {
-            // Deserialization
-            file = new FileInputStream(fileName + ".data");
+        // Deserialization
+        File f = new File(fileName + ".data");
+        if (f.exists()) {
 
             try {
+                file = new FileInputStream(fileName + ".data");
+
                 in = new ObjectInputStream(file);
 
-                while (true) {
+                //    while (true) {
+                e = (HashMap<String, Person>) in.readObject();
 
-                    //    e = (HashMap<String, Person>) in.readObject();
-                    person = (Person) in.readObject();
-                    e.put(person.getDni(), person);
-                    
-                    // HashMap<String, Person> result = e;
+                //person = (Person) in.readObject();
+                //      e.put(person.getDni(), person);
+                //  }
+                file.close();
+
+                // HashMap<String, Person> result = e;
 //
 //                    Iterator<Map.Entry<String, Person>> it = result.entrySet().iterator();
 //                    while (it.hasNext()) {
@@ -102,59 +108,27 @@ public abstract class TextDatabase implements IDatabase {
 //
 //                        Person per = me.getValue();
 //                    }
-
-                
-
-
-
-
-
-
-
-}
-
+                // HashMap<String, Person> result = e;
+//
+//                    Iterator<Map.Entry<String, Person>> it = result.entrySet().iterator();
+//                    while (it.hasNext()) {
+//                        Map.Entry<String, Person> me = it.next();
+//
+//                        Person per = me.getValue();
+//                    }
+                //  }catch (EOFException exc)
+//{
+                // end of stream
+//}
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(TextDatabase.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException | ClassNotFoundException ex) {
-                Logger.getLogger(TextDatabase.class
-
-
-
-.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TextDatabase.class.getName()).log(Level.SEVERE, null, ex);
             }
-            return e;
-        
 
-
-
-
-
-
-
-} //fLogger.log(Level.SEVERE, "Cannot perform input. Class not found.", ex);
-        catch (FileNotFoundException ex) {
-            Logger.getLogger(TextDatabase.class
-
-
-
-.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                file.close();
-            
-
-
-
-
-
-
-
-} catch (IOException ex) {
-                Logger.getLogger(TextDatabase.class
-
-
-
-.getName()).log(Level.SEVERE, null, ex);
-            }
         }
+        //
+
         return e;
     }
 }
