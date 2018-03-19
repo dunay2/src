@@ -57,7 +57,7 @@ public class Shoppingcart {
             this.price = price;
         }
     }
-    // en el shopping cart los items son líneas(con un código), no electrodomesticos
+    // En el shopping cart los items son líneas(con un código), no electrodomesticos
     // Es una lista poco extensa a la que podemos acceder por indice
     //No hay que realizar búsquedas y el acceso a elementos es directo    
     private String invoiceCode;

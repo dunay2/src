@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -115,9 +116,9 @@ public class SalesManager extends TextDatabase implements Imanager {
     //role (clasgetname)
 
     private double getTotalAmount() {
-        
+
         return shoppingcart.getTotalAmount();
-        
+
     }
 
     private void addItem() {
@@ -127,25 +128,17 @@ public class SalesManager extends TextDatabase implements Imanager {
     private void queryShoppingCart() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Fecha:" + shoppingcart.getSalesDate()) ;
-        
-        
-System.out.println("LINE           CODE                 PRICE            AMOUNT    TOTAL ");
-            
-        shoppingcart.getItems().forEach((line) -> {
-            
-            System.out.println(line.getLineNumber());
-            System.out.println(line.getItemCode());
-            System.out.println(line.getPrice());
-            System.out.println(line.getAmount());
+        System.out.println("Fecha:" + shoppingcart.getSalesDate());
 
-            System.out.println(line.getAmount() * line.getPrice());
-            ;
+        System.out.println("LINE           CODE                 PRICE            AMOUNT    TOTAL ");
+
+        shoppingcart.getItems().forEach((Shoppingcart.Line line) -> {
+            System.out.println(line.getLineNumber() + line.getItemCode() + line.getPrice() + line.getAmount() + (line.getPrice() * line.getAmount()));
+
         });
 
         System.out.println("TOTAL AMOUNT:" + getTotalAmount());
- 
-           
+
         String a = scanner.nextLine();
 
     }
