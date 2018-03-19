@@ -19,7 +19,15 @@ public class Shoppingcart {
 
     private Cashier cashier;
     private Client client;
-
+    private Date salesDate;
+    private double totalAmount = 0;
+    private ArrayList<Object> items; 
+// Es una lista poco extensa a la que podemos acceder por indice
+//No hay que realizar búsquedas y el acceso a elementos es directo    
+    public Shoppingcart(Cashier cashier) {
+        this.cashier = cashier;
+    }
+  
     public Cashier getCashier() {
         return cashier;
     }
@@ -43,14 +51,8 @@ public class Shoppingcart {
     public void setItems(ArrayList<Object> items) {
         this.items = items;
     }
-    private Date salesDate;
 
-    private double totalAmount = 0;
-    private ArrayList<Object> items;
-
-    public Shoppingcart(Cashier cashier) {
-        this.cashier = cashier;
-    }
+  
 
     public double getTotalAmount() {
         return totalAmount;

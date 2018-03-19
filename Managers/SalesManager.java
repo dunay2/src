@@ -26,7 +26,8 @@ public class SalesManager extends TextDatabase implements Imanager {
     private final Client client;
     private final Cashier cashier;
     private final Shoppingcart shoppingcart;
-
+ 
+    
     public SalesManager(Client client, Cashier cashier) {
         this.cashier = cashier;
         this.client = client;
@@ -109,10 +110,6 @@ public class SalesManager extends TextDatabase implements Imanager {
                 break;
 
             //Crear carrito aleatorio
-            case 25:
-                //  createRandomClient();
-                a = scanner.nextLine();
-                return true;
         }
         return false;
     }
