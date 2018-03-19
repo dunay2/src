@@ -8,15 +8,10 @@ package Managers;
 import DataBase.TextDatabase;
 import Person.Client.Client;
 import Person.Employee.Cashier;
-import Person.Person;
-import ScreenInterfaces.Node;
 import ishop.Shoppingcart;
-import item.Electrodomestic;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
