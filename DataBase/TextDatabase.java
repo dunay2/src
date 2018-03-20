@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import Person.Client.Client;
 
 /**
  *
@@ -78,7 +79,7 @@ public abstract class TextDatabase implements IDatabase {
 
     @Override
     public HashMap load(String fileName) {
-        HashMap<String, Object> e = new HashMap();;
+        HashMap<String, Client> e = new HashMap();;
         FileInputStream file = null;
         ObjectInputStream in = null;
         //  Person person = null;
@@ -91,44 +92,21 @@ public abstract class TextDatabase implements IDatabase {
                 file = new FileInputStream(fileName + ".data");
 
                 in = new ObjectInputStream(file);
-
+//(HashMap<String, Client>)
                 //    while (true) {
-                e = (HashMap<String, Object>) in.readObject();
+                e = (HashMap<String, Client>) in.readObject();
 
                 //person = (Person) in.readObject();
                 //      e.put(person.getDni(), person);
                 //  }
                 file.close();
 
-                // HashMap<String, Person> result = e;
-//
-//                    Iterator<Map.Entry<String, Person>> it = result.entrySet().iterator();
-//                    while (it.hasNext()) {
-//                        Map.Entry<String, Person> me = it.next();
-//
-//                        Person per = me.getValue();
-//                    }
-                // HashMap<String, Person> result = e;
-//
-//                    Iterator<Map.Entry<String, Person>> it = result.entrySet().iterator();
-//                    while (it.hasNext()) {
-//                        Map.Entry<String, Person> me = it.next();
-//
-//                        Person per = me.getValue();
-//                    }
-                //  }catch (EOFException exc)
-//{
-                // end of stream
-//}
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(TextDatabase.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException | ClassNotFoundException ex) {
                 Logger.getLogger(TextDatabase.class.getName()).log(Level.SEVERE, null, ex);
             }
-
         }
-        //
-
         return e;
     }
 }

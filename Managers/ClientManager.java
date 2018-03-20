@@ -139,8 +139,8 @@ private   HashMap<String, Person> hm;
 
         return client;
     }
+    
 //Propósito: Crear un cliente aleatorio
-
     private void createRandomClient() {
         Client client = generateRandomClient();
         //Guardamos el cliente en la coleccion
