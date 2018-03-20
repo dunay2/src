@@ -43,18 +43,9 @@ public class StockManager extends TextDatabase implements Imanager {
         save(electrodomestics);
     }
 
-//Cargar la base de datos de personas
-    public HashMap<String, Electrodomestic> load() {
-        // return load("Electrodomestic");//Pasamos el nombre del fichero
-        return null;
-    }
 
-    //   @Override
-//       public HashMap<String, Electrodomestic> load(String filename) {
-//     return super.load(filename);//Pasamos el nombre del fichero
-//          return null;
-//     }
-//Devuelve todo el listado de personas
+
+//Devuelve todo el listado de Electrodomestic
     @Override
     public HashMap<String, Electrodomestic> getAll() {
 
@@ -113,12 +104,12 @@ public class StockManager extends TextDatabase implements Imanager {
         return item;
     }
 
-    public void loadItems() {
+    public void load() {
 
-        System.out.println("===============Carga de Items");
+        System.out.println("===============Carga de Electrodomesticos");
 
-        HashMap<String, Electrodomestic> hm = null;
-//        hm = load("Item");
+        HashMap<String, Electrodomestic> hm = load("Electrodomestic");
+        
 
         Iterator<Map.Entry<String, Electrodomestic>> it = hm.entrySet().iterator();
 
@@ -146,7 +137,7 @@ public class StockManager extends TextDatabase implements Imanager {
                 //32. Modificar Item Stock
                 case 32:
                     updateStock();
-                    
+
                     break;
                 //33. Eliminar Item Stock
                 case 33:

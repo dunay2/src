@@ -64,7 +64,7 @@ public class MainScene {
         cajeros.addStaff(cashier1);
 
         cm.load();
-
+        sm.load();
         doBusiness(myTextInterface.printMenu(null));
 
     }

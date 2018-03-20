@@ -3,7 +3,6 @@
  */
 package DataBase;
 
-import Person.Person;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,7 +16,7 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Person.Client.Client;
-import Store.Store;
+import item.Electrodomestic;
 
 /**
  *
@@ -50,8 +49,8 @@ public class TextDatabase implements IDatabase {
                     hmfile = (HashMap<String, Client>) hm;
 
                     break;
-                case "Store.data":
-                    hmfile = (HashMap<String, Store>) hm;
+                case "Electrodomestic.data":
+                    hmfile = (HashMap<String, Electrodomestic>) hm;
                     break;
                 case "Employee.data":
                     // hmfile = (HashMap<String, Employee>) hm;
@@ -87,7 +86,7 @@ public class TextDatabase implements IDatabase {
 
     @Override
     public HashMap load(String fileName) {
-        HashMap<String, Client> e = new HashMap();;
+        HashMap<String, ?> e = new HashMap();;
         FileInputStream file = null;
         ObjectInputStream in = null;
         //  Person person = null;
@@ -102,7 +101,7 @@ public class TextDatabase implements IDatabase {
                 in = new ObjectInputStream(file);
 //(HashMap<String, Client>)
                 //    while (true) {
-                e = (HashMap<String, Client>) in.readObject();
+                e = (HashMap<String, ?>) in.readObject();
 
                 //person = (Person) in.readObject();
                 //      e.put(person.getDni(), person);
