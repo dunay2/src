@@ -10,6 +10,11 @@ import java.util.HashMap;
 //Cosas que puede hacer un gestor 
 public interface Imanager<T> {
 
+     
+            default String getClassName() {
+        return this.getClass().getSimpleName();
+              }
+        
     //para realizar una búsqueda
     public Object get(int rollNo);
     
@@ -32,4 +37,6 @@ public interface Imanager<T> {
     public Object createObject() throws IOException;
 
     public boolean handleProcess(int e);
+    
+    
 }

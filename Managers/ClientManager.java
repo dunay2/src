@@ -7,13 +7,9 @@ package Managers;
 
 import Generator.PersonGenerator;
 import Person.Client.Client;
-import Person.Person;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,9 +17,9 @@ import java.util.logging.Logger;
 /**
  *
  * @author ashh412 Propósito: gestor de operaciones de clientes
- */
+ *///
 public class ClientManager extends PersonManager {
-private   HashMap<String, Person> hm;
+//private   HashMap<String, Person> hm;
     //  private final AppInterface myInterface;
 //Constructor
     //   public ClientManager(AppInterface myInterface) {
@@ -31,6 +27,7 @@ private   HashMap<String, Person> hm;
     //  this.myInterface = myInterface;
     // }
     //Propósito: crear un cliente aleatorio
+
     public Client generateRandomClient() {
 
         Client client;
@@ -43,21 +40,18 @@ private   HashMap<String, Person> hm;
     }
 
     //Propósito: cargar el fichero de clientes
-    public void loadClients() {
-
-        System.out.println("===============Carga de clientes");
-
-
-        hm = load("Client");
-
-    }
+//    public void loadClients() {
+//
+//        System.out.println("===============Carga de clientes");
+//
+//
+//    //    hm = load("Client");
+//            load();
+//
+//    }
 //Propósito: gestionar las peticiones del controlador principal
-
     @Override
     public boolean handleProcess(int e) {
-
-        Scanner scanner = new Scanner(System.in);
-        String a = "";
 
         switch (e) {
 
@@ -73,42 +67,15 @@ private   HashMap<String, Person> hm;
             }
             //Listar clientes 
             case 24:
-                list();
-                a = scanner.nextLine();
+                ListClient();
+
                 return true;
             //Crear cliente aleatorio
             case 25:
                 createRandomClient();
-                a = scanner.nextLine();
                 return true;
         }
         return false;
-    }
-//Propósito: Listar los clientes por consola
-
-    @Override
-    public void list() {
-
-    //    HashMap<String, Person> persons = new HashMap<>();
-        Person person;
-
-        //persons = getAll();
-
-        Iterator<Map.Entry<String, Person>> it = hm.entrySet().iterator();
-
-        System.out.println("================Listado de Clientes============");
-
-        while (it.hasNext()) {
-            Map.Entry<String, Person> e = it.next();
-
-            person = e.getValue();
-
-            System.out.println("Dni: " + person.getDni());
-            System.out.println("Name: " + person.getFirstName());
-            System.out.println("Address: " + person.getAddress());
-
-        }
-        System.out.println("Pulsa una tecla para continuar ...");
     }
 
 //Propósito: crear un nuevo cliente con los datos de entrada de consola
@@ -116,7 +83,6 @@ private   HashMap<String, Person> hm;
     public Object createObject() throws IOException {
 
         Client client;
-
 //Creamos un lector
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -139,9 +105,10 @@ private   HashMap<String, Person> hm;
 
         return client;
     }
-    
+
 //Propósito: Crear un cliente aleatorio
     private void createRandomClient() {
+        Scanner scanner = new Scanner(System.in);
         Client client = generateRandomClient();
         //Guardamos el cliente en la coleccion
         add(client);
@@ -149,6 +116,19 @@ private   HashMap<String, Person> hm;
         save();
         System.out.println("Cliente generado: " + client.getDni() + " " + client.getfirstName());
         System.out.println("Pulse una tecla para continuar");
+        String a = scanner.nextLine();
+    }
+
+    void ListClient() {
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("================Listado de Clientes============");
+
+        list();
+        System.out.println("Pulsa una tecla para continuar ...");
+        String a = scanner.nextLine();
+
     }
 
 }

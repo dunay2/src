@@ -24,6 +24,7 @@ public abstract class Person implements Serializable {
     private String Email;
     private String Web;
     private Double nomina;
+    private boolean active;
 
     public Person(String dni) {
         this.dni = dni;
@@ -214,6 +215,14 @@ public abstract class Person implements Serializable {
 
     public String getWeb() {
         return Web;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
 }

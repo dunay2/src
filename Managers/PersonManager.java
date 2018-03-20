@@ -8,6 +8,8 @@ package Managers;
 import java.util.HashMap;
 import DataBase.TextDatabase;
 import Person.Person;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  *
@@ -17,7 +19,7 @@ import Person.Person;
  */
 public abstract class PersonManager extends TextDatabase implements Imanager {
 
-    private final HashMap<String, Person> persons = new HashMap<>();
+    private HashMap<String, Person> persons = new HashMap<>();
 
     //Extension de database
     //Guardamos
@@ -27,10 +29,12 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
 
     @Override
     public abstract boolean handleProcess(int e);
-
+//el nombre de los managers debe ser NombreClaseManager
+//para que essta clase los guarde correctamente
 //Cargar la base de datos de personas
-    public HashMap<String, Person> load() {
-        return load("Person");//Pasamos el nombre del fichero
+
+    public void load() {
+        persons = load(getClassName().replace("Manager", ""));//Pasamos el nombre del fichero   
     }
 
     @Override
@@ -55,12 +59,12 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
     }
 
     @Override //necesitamos el codigo del elemento, 
- 
+
     public void delete(Object person) {
         Person lperson;
         lperson = (Person) person;
         persons.remove(lperson);
-       
+
     }
 
     @Override
@@ -102,6 +106,23 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
         return null;
     }
 
+    //Propósito: Listar las personas por consola
+    public void list() {
+        Person person;
+
+        Iterator<Map.Entry<String, Person>> it = persons.entrySet().iterator();
+        System.out.println("DNI*************NAME****************************************ADDRESS********");
+
+        while (it.hasNext()) {
+            Map.Entry<String, Person> e = it.next();
+
+            person = e.getValue();
+
+            System.out.println( person.getDni() + "    " + person.getFirstName() + "                           " + person.getAddress());
+
+        }
+
+    }
 //  /*
 //
 //        /* Display content using Iterator*/
@@ -128,4 +149,5 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
 //            System.out.println(mentry2.getValue());
 //        }
     // }
+
 }
