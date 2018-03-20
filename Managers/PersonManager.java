@@ -39,7 +39,8 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
 
     @Override
     public HashMap<String, Person> load(String filename) {
-        return super.load(filename);//Pasamos el nombre del fichero
+        persons=super.load(filename);
+        return persons;//Pasamos el nombre del fichero
     }
 
 //Devuelve todo el listado de personas

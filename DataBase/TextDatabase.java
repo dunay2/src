@@ -27,8 +27,6 @@ import Store.Store;
 public class TextDatabase implements IDatabase {
 
 //Implementamos el método save para guardar objetos
- 
-
     @Override
     public void save(HashMap hm) {
 
@@ -46,32 +44,31 @@ public class TextDatabase implements IDatabase {
             String filename = objectType.getClass().getSimpleName() + ".data";
 
             //Convertimos el HashMap en el tipo que vamos a guardar
-      
             HashMap<String, ?> hmfile = null;
             switch (filename) {
                 case "Client.data":
                     hmfile = (HashMap<String, Client>) hm;
+
                     break;
                 case "Store.data":
                     hmfile = (HashMap<String, Store>) hm;
                     break;
                 case "Employee.data":
-                   // hmfile = (HashMap<String, Employee>) hm;
+                    // hmfile = (HashMap<String, Employee>) hm;
                     break;
-                    
+
             }
 
-            fout = new FileOutputStream(filename, true);
-//Comprobamos si el archivo de datos existe para escribir su cabecera solo en ese caso
+            try {
+                fout = new FileOutputStream(filename, false);
 
-//Escribimos los objetos
-//  do {
-// if (fexist) {
-//      OWriteStream oos = new OWriteStream(fout);
-//        oos.writeObject(objectType);
-//} else {
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(TextDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             ObjectOutputStream oosh = new ObjectOutputStream(fout);
             oosh.writeObject(hmfile);
+
             fout.close();
 
 // }

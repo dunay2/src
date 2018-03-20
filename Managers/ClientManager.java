@@ -39,16 +39,7 @@ public class ClientManager extends PersonManager {
         return client;
     }
 
-    //Propósito: cargar el fichero de clientes
-//    public void loadClients() {
-//
-//        System.out.println("===============Carga de clientes");
-//
-//
-//    //    hm = load("Client");
-//            load();
-//
-//    }
+  
 //Propósito: gestionar las peticiones del controlador principal
     @Override
     public boolean handleProcess(int e) {
