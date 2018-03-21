@@ -25,7 +25,7 @@ import java.util.logging.Logger;
  */
 public class StockManager extends TextDatabase implements Imanager {
 
-    private final HashMap<String, Electrodomestic> electrodomestics = new HashMap<>();
+    private  HashMap<String, Electrodomestic> electrodomestics = new HashMap<>();
 
     public void buyItems(String itemCode, int amount) {
 
@@ -108,10 +108,10 @@ public class StockManager extends TextDatabase implements Imanager {
 
         System.out.println("===============Carga de Electrodomesticos");
 
-        HashMap<String, Electrodomestic> hm = load("Electrodomestic");
+       electrodomestics = load("Electrodomestic");
         
 
-        Iterator<Map.Entry<String, Electrodomestic>> it = hm.entrySet().iterator();
+        Iterator<Map.Entry<String, Electrodomestic>> it = electrodomestics.entrySet().iterator();
 
         while (it.hasNext()) {
             Map.Entry<String, Electrodomestic> e = it.next();

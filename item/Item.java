@@ -5,6 +5,7 @@
  */
 package item;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -33,8 +34,8 @@ import java.util.Scanner;
  *
  * @author ashh412
  */
-public abstract class Item {
-  //private int amount;
+public abstract class Item implements Serializable {
+
     private String code;
     private String name;
     private double boughtPrice;
