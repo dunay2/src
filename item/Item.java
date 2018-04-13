@@ -38,9 +38,15 @@ public abstract class Item implements Serializable {
 
     private String code;
     private String name;
+    private String description;
+    
     private double boughtPrice;
     private double sellPrice;
     private int quantity;
+    private String color;
+    private String weith;
+
+    
 
     public int getQuantity() {
         return quantity;

@@ -5,14 +5,16 @@
  */
 package item.family;
 
+import item.Electrodomestic;
+
 /**
  *
  * @author ashh412
  */
-public class Pda extends Computers{
+public class VacuumCleaner extends Electrodomestic {
     
-    public Pda(double ram, double mhz, double hddSize, String code, String name, double boughtPrice, double sellPrice, int quantity) {
-        super(ram, mhz, hddSize, code, name, boughtPrice, sellPrice, quantity);
+    public VacuumCleaner(String code, String name, double boughtPrice, double sellPrice, int quantity) {
+        super(code, name, boughtPrice, sellPrice, quantity);
     }
     
 }

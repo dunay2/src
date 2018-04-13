@@ -9,6 +9,11 @@ package item.family;
  *
  * @author ashh412
  */
-public class Desktop {
+public class Desktop extends Computers{
+    
+    public Desktop(double ram, double mhz, double hddSize, String code, String name, double boughtPrice, double sellPrice, int quantity) {
+        super(ram, mhz, hddSize, code, name, boughtPrice, sellPrice, quantity);
+    }
+    
     
 }

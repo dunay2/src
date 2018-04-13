@@ -9,8 +9,14 @@ package item;
  *
  * @author ashh412
  */
-public class Electrodomestic extends Item {
 
+
+public class Electrodomestic extends Item {
+    private String power;
+    private String typeOfBatery;
+    private String autonomy;
+    private String recharTime;
+    
     public Electrodomestic(String code, String name, double boughtPrice, double sellPrice, int quantity) {
         super(code, name, boughtPrice, sellPrice, quantity);
     }

@@ -9,6 +9,10 @@ package item.family;
  *
  * @author ashh412
  */
-public class Labtop {
+public class Labtop extends Computers{
+    
+    public Labtop(double ram, double mhz, double hddSize, String code, String name, double boughtPrice, double sellPrice, int quantity) {
+        super(ram, mhz, hddSize, code, name, boughtPrice, sellPrice, quantity);
+    }
     
 }

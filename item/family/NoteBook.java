@@ -9,6 +9,10 @@ package item.family;
  *
  * @author ashh412
  */
-public class NoteBook {
+public class NoteBook extends Computers{
+    
+    public NoteBook(double ram, double mhz, double hddSize, String code, String name, double boughtPrice, double sellPrice, int quantity) {
+        super(ram, mhz, hddSize, code, name, boughtPrice, sellPrice, quantity);
+    }
     
 }
