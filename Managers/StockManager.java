@@ -105,6 +105,7 @@ public class StockManager extends TextDatabase implements Imanager {
         return item;
     }
 
+    //Propósito: Cargar el HM con el stock
     public void load() {
 
         System.out.println("===============Carga de Electrodomesticos");
@@ -122,6 +123,8 @@ public class StockManager extends TextDatabase implements Imanager {
         }
     }
 
+    
+    
     @Override
     public boolean handleProcess(int e) {
 

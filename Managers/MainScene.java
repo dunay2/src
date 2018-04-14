@@ -28,6 +28,8 @@ public class MainScene {
     private final StockManager sm;
 
     public MainScene() {
+        //Obtenemos una instancia a los gestores
+        
         this.cm = new ClientManager();
         this.sm = new StockManager();
         myTextInterface = new TextInterface();

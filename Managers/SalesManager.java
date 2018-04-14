@@ -87,7 +87,7 @@ public class SalesManager extends TextDatabase implements Imanager {
                 return true;
             }
 
-            // (11, childNode, "1. Consultar el contenido del carrito y el importe actual"));
+            //Consultar el importe actual
             case 11:
                 queryShoppingCart();
                 return true;
@@ -95,15 +95,16 @@ public class SalesManager extends TextDatabase implements Imanager {
             case 12:
                 //elegir entre las secciones
                 addItem();
-
                 break;
-
             //13. Pagar Compra
             case 13:
                 //identificar al cliente o solicitar alta 
                 break;
 
             //Crear carrito aleatorio
+            //Cancelar venta
+            case 14: 
+                return true;
         }
         return false;
     }
