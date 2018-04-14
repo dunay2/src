@@ -8,6 +8,7 @@ package Managers;
 import DataBase.TextDatabase;
 import Person.Client.Client;
 import Person.Employee.Cashier;
+import ScreenInterfaces.Node;
 import ishop.Shoppingcart;
 import java.io.IOException;
 import java.util.HashMap;
@@ -73,14 +74,14 @@ public class SalesManager extends TextDatabase implements Imanager {
     }
 
     @Override
-    public Object createObject() throws IOException {
+    public Object createObject(Node node) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean handleProcess(int e) {
+    public boolean handleProcess(Node node) {
 
-        switch (e) {
+        switch (node.getValue()) {
 
             //Gestion de clientes introducción de DNI
 //            case 1: {

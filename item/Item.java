@@ -91,7 +91,7 @@ public abstract class Item implements Serializable {
         return code;
     }
 
-    public Item(String code, String name, double boughtPrice, double sellPrice, int quantity,String familyCode) {
+    public Item(String familyCode, String code, String name, String description, double boughtPrice, double sellPrice, int quantity) {
         this.code = code;
          this.familyCode=familyCode;
         this.name = name;

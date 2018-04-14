@@ -11,6 +11,7 @@ import item.Electrodomestic;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -121,17 +122,17 @@ public class StockManager extends TextDatabase implements Imanager {
     }
 
     @Override
-    public boolean handleProcess(int e) {
+    public boolean handleProcess(Node node) {
 
         try {
             Scanner scanner = new Scanner(System.in);
             String a = "";
 
-            switch (e) {
+            switch (node.getValue()) {
                 //31. Agregar Item a Stock
                 case 31:
 
-                    createObject();
+                    createObject(node);
                     return true;
                 //32. Modificar Item Stock
                 case 32:
@@ -212,34 +213,51 @@ public class StockManager extends TextDatabase implements Imanager {
 
     //Propósito: crear un nuevo electrodoméstico con los datos de entrada de consola
     @Override
-    public Object createObject() throws IOException {
+    public Object createObject(Node node) throws IOException {
 //ya comprobaremos el tipo
-        String code;
-        String name;
-        String description;
-        double price;
-        int quantity;
 
-//Creamos un lector
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        ArrayList<String> ElectrProp = new ArrayList();
 
+        Node childNode;
+        Iterator<Node> it = node.getChildNodes().iterator();
+
+        while (it.hasNext()) {
+            childNode = it.next();
+            ElectrProp.add(childNode.getLabel());
+        }
+        
+        String familyCode = ElectrProp.get(0);
+          String code = ElectrProp.get(1);
+        String name = ElectrProp.get(2);
+        String description = ElectrProp.get(3);
+        double boughtPrice = Double.valueOf(ElectrProp.get(4));
+        double sellPrice = Double.valueOf(ElectrProp.get(5));
+        int quantity = Integer.valueOf(ElectrProp.get(6));
+        
+
+        //   System.out.println("============Listado de electrodomésticos============");
+//        while (it.hasNext()) {
+//            Map.Entry<String, Electrodomestic> e = it.next();
+//
+////Creamos un lector
+//            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 //Creamos un item
-        Node printMenu;
-
-        System.out.println("Por favor introduzca código");//Se pide un dato al usuario
-
-        //llamada a new item 
-        code = br.readLine();
-        System.out.println("Introduzca nombre");//Se pide un dato al usuario
-        name = br.readLine();
-        System.out.println("Introduzca Descripción");//Se pide un dato al usuario
-        description = br.readLine();
-        System.out.println("Introduzca precio de compra");//Se pide un dato al usuario
-        price = Double.parseDouble(br.readLine());
-        System.out.println("Introduzca cantidad en stock");//Se pide un dato al usuario
-        quantity = Integer.parseInt(br.readLine());
-//   
-        Electrodomestic item = new Electrodomestic(code, description, price, price, quantity, "");
+//        Node printMenu;
+//            System.out.println("Por favor introduzca código");//Se pide un dato al usuario
+//
+//            //llamada a new item 
+//            code = br.readLine();
+//            System.out.println("Introduzca nombre");//Se pide un dato al usuario
+//            name = br.readLine();
+//            System.out.println("Introduzca Descripción");//Se pide un dato al usuario
+//            description = br.readLine();
+//            System.out.println("Introduzca precio de compra");//Se pide un dato al usuario
+//            price = Double.parseDouble(br.readLine());
+//            System.out.println("Introduzca cantidad en stock");//Se pide un dato al usuario
+//            quantity = Integer.parseInt(br.readLine());
+//      //  public Electrodomestic(String code, String name, String desc,double boughtPrice, double sellPrice, int quantity, String familyCode) {
+   
+        Electrodomestic item = new Electrodomestic(familyCode,code, name,description,boughtPrice, sellPrice,quantity );
 
         //Guardamos el item en la coleccion
         add(item);
@@ -250,12 +268,14 @@ public class StockManager extends TextDatabase implements Imanager {
     }
 
     @Override
-    public Object get(int rollNo) {
+    public Object get(int rollNo
+    ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void update(Object e) {
+    public void update(Object e
+    ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 
         /* Display content using Iterator*/
@@ -283,8 +303,8 @@ public class StockManager extends TextDatabase implements Imanager {
 //        }
         // }
     }
-
     //propósito: leer los datos introducidos por consola
+
     private int readConsole() {
         Scanner scanner = new Scanner(System.in);
         int i = scanner.nextInt();

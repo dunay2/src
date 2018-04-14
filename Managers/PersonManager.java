@@ -10,12 +10,12 @@ import DataBase.TextDatabase;
 import Generator.PersonGenerator;
 import Person.Client.Client;
 import Person.Person;
+import ScreenInterfaces.Node;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Scanner;
 
 /**
  *
@@ -34,7 +34,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
     }
 
     @Override
-    public abstract boolean handleProcess(int e);
+    public abstract boolean handleProcess(Node node);
 //el nombre de los managers debe ser NombreClaseManager
 //para que essta clase los guarde correctamente
 //Cargar la base de datos de personas
@@ -57,7 +57,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
 
     //Propósito: crear un nuevo cliente con los datos de entrada de consola
     @Override
-    public Object createObject() throws IOException {
+    public Object createObject(Node node) throws IOException {
 
         Person person;
 

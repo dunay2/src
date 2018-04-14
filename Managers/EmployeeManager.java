@@ -6,6 +6,7 @@
 package Managers;
 
 import Person.Employee.Employee;
+import ScreenInterfaces.Node;
 import java.io.IOException;
 
 /**
@@ -31,9 +32,9 @@ public class EmployeeManager extends PersonManager {
 
 ////Propósito: crear un nuevo cliente con los datos de entrada de consola
     @Override
-    public Object createObject() throws IOException {
+    public Object createObject(Node node) throws IOException {
         Employee employee;
-        employee = (Employee) super.createObject();
+        employee = (Employee) super.createObject(node);
 
 //Guardamos el cliente en la coleccion
         add(employee);
@@ -48,7 +49,7 @@ public class EmployeeManager extends PersonManager {
     }
 
     @Override
-    public boolean handleProcess(int e) {
+    public boolean handleProcess(Node node) {
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     return false;
     }

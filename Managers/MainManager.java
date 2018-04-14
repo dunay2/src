@@ -80,16 +80,16 @@ public class MainManager {
     private void doBusiness(Node node) {
         boolean startNewSequence = false;
 
-        if (salesManager.handleProcess(node.getValue())) {
+        if (salesManager.handleProcess(node)) {
             startNewSequence = true;
         }
-        if (clientManager.handleProcess(node.getValue())) {
+        if (clientManager.handleProcess(node)) {
             startNewSequence = true;
         }
-        if (stockManager.handleProcess(node.getValue())) {
+        if (stockManager.handleProcess(node)) {
             startNewSequence = true;
         }
-        if (employeeManager.handleProcess(node.getValue())) {
+        if (employeeManager.handleProcess(node)) {
             startNewSequence = true;
         }
 

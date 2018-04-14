@@ -5,6 +5,7 @@
  */
 package Managers;
 
+import ScreenInterfaces.Node;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -50,12 +51,12 @@ public class RepairManager implements Imanager {
     }
 
     @Override
-    public Object createObject() throws IOException {
+    public Object createObject(Node node) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean handleProcess(int e) {
+    public boolean handleProcess(Node node) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

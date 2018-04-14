@@ -7,6 +7,7 @@ package Managers;
 
 import Generator.PersonGenerator;
 import Person.Client.Client;
+import ScreenInterfaces.Node;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -32,14 +33,15 @@ public class ClientManager extends PersonManager {
 
 //Propósito: gestionar las peticiones del controlador principal
     @Override
-    public boolean handleProcess(int e) {
+    public boolean handleProcess( Node node) {
 
-        switch (e) {
+        
+        switch (node.getValue()) {
 
             //Gestion de clientes introducción de DNI
             case 21: {
                 try {
-                    createObject();
+                    createObject(node);
                 } catch (IOException ex) {
                     Logger.getLogger(ClientManager.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -60,9 +62,9 @@ public class ClientManager extends PersonManager {
 
 ////Propósito: crear un nuevo cliente con los datos de entrada de consola
     @Override
-    public Object createObject() throws IOException {
+    public Object createObject(Node node) throws IOException {
         Client client;
-        client = (Client) super.createObject();
+        client = (Client) super.createObject(node);
 
 //Guardamos el cliente en la coleccion
         add(client);
@@ -137,5 +139,7 @@ public class ClientManager extends PersonManager {
         String a = scanner.nextLine();
 
     }
+
+  
 
 }
