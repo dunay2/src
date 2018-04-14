@@ -19,8 +19,8 @@ import java.util.Scanner;
  */
 public class SalesManager extends TextDatabase implements Imanager {
 
-    private  Client client;//Lo declaramos como objeto para poder usar sus métodos
-    private  Cashier cashier;//Lo declaramos como objeto para poder usar sus métodos
+    private Client client;//Lo declaramos como objeto para poder usar sus métodos
+    private Cashier cashier;//Lo declaramos como objeto para poder usar sus métodos
     private final Shoppingcart shoppingcart;
 
     public void setClient(Client client) {
@@ -30,7 +30,6 @@ public class SalesManager extends TextDatabase implements Imanager {
     public void setCashier(Cashier cashier) {
         this.cashier = cashier;
     }
-   
 
     public SalesManager(Client client, Cashier cashier) {
         this.cashier = cashier;
@@ -93,7 +92,6 @@ public class SalesManager extends TextDatabase implements Imanager {
 //                }
 //                return true;
 //            }
-
             //Consultar el importe actual
             case 11:
                 queryShoppingCart();
@@ -109,9 +107,8 @@ public class SalesManager extends TextDatabase implements Imanager {
                 break;
 
             //Crear carrito aleatorio
-                
             //Cancelar venta
-            case 14: 
+            case 14:
                 return true;
         }
         return false;
@@ -136,18 +133,18 @@ public class SalesManager extends TextDatabase implements Imanager {
 
         System.out.println("LINE           CODE                 PRICE            AMOUNT    TOTAL ");
 
-        shoppingcart.getItems().forEach((Shoppingcart.Line line) -> {
-            System.out.println(line.getLineNumber() + line.getItemCode() + line.getPrice() + line.getAmount() + (line.getPrice() * line.getAmount()));
+        if (shoppingcart.getItems().size() > 0) {
+            shoppingcart.getItems().forEach((Shoppingcart.Line line) -> {
+                System.out.println(line.getLineNumber() + line.getItemCode() + line.getPrice() + line.getAmount() + (line.getPrice() * line.getAmount()));
 
-        });
+            });
+        }
 
         System.out.println("TOTAL AMOUNT:" + getTotalAmount());
 
         String a = scanner.nextLine();
 
     }
-
-   
 
 }
 

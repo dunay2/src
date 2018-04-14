@@ -7,7 +7,6 @@ package Managers;
 
 import Generator.PersonGenerator;
 import Person.Client.Client;
-import Person.Employee.Employee;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.Level;

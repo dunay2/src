@@ -51,9 +51,9 @@ public class TextInterface extends AppInterface {
             switch (k) {
                 case 0://Volver al menú principal 
                     return super.getNode();
-                //Hay casos en los que devuelve al padre
+                //Retrocedemos en el menu
                 case -1://Devolver padre 
-                    return node;
+                    return node.getParent();
                 default:
                     return childNode;
             }

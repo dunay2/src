@@ -28,6 +28,7 @@ public abstract class Person implements Serializable {
 
     public Person(String dni) {
         this.dni = dni;
+        active=true;
     }
 
     /**

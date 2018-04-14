@@ -14,12 +14,13 @@ public abstract class AppInterface implements IInterface {
     private void mnuMain(Node node) {
         // <editor-fold defaultstate="collapsed" desc=" ${Consultar Importe} ">  
 
-        String text[] = {". Realizar una Transacción", ". Gestión de Clientes", ". Gestión de Stock", ". Gestión de Empleados"};
+        String text[] = {". Realizar una Transacción", ". Gestión de Clientes", ". Gestión de Stock", ". Gestión de Empleados",". Salir de la aplicación"};
 
-        for (int i = 0; i < text.length; i++) {
-            node.addChild(new Node(i + 1, node, i + 1 + text[i]));
+        for (int i = 1; i < text.length; i++) {
+            node.addChild(new Node(i, node, i + text[i - 1]));
         }
-        
+        node.addChild(new Node(0, node, 0 + text[text.length-1]));
+
         //Realizar una transaccion
         mnuTransaction(node.getChildNodes().get(0), 10); //venta
 
@@ -27,41 +28,46 @@ public abstract class AppInterface implements IInterface {
         mnuAddGeneric(node.getChildNodes().get(1), "Cliente", 20);
 
         mnuAddGeneric(node.getChildNodes().get(2), "Electrodoméstico", 30);
-        
+
         mnuAddGeneric(node.getChildNodes().get(3), "Empleado", 40);
 
-        node.addChild(new Node(text.length + 1, node, "0. Salir de la aplicación"));
+    
     }
-  private void mnuTransaction(Node node, int mnuIndex) {
 
-        String text[] = {". Consultar el importe actual", ". Añadir electrodomestico al carrito", ". Pagar Compra" ,". Cancelar venta"};
+    private void mnuTransaction(Node node, int mnuIndex) {
 
-        for (int i = 1; i <= text.length; i++) {
-            node.addChild(new Node(i + mnuIndex, node, i + text[i - 1]));
+        String mnuText[] = {". Consultar el importe actual", ". Añadir electrodomestico al carrito", ". Pagar Compra", ". Cancelar venta"};
+
+        for (int i = 1; i < mnuText.length; i++) {
+            node.addChild(new Node(i + mnuIndex, node, i + mnuText[i - 1]));
         }
+        node.addChild(new Node(-1, node, mnuText.length + mnuText[mnuText.length-1]));
+
         //Hijos de consultar importe
         mnuBuying(node.getChildNodes().get(0), mnuIndex * 10);
 
     }
+
     private Node mnuPaymentType(Node node, int mnuIndex) {
 
         String text[] = {". Efectivo", ". Tarjeta", ". Financiado", ". Cancelar venta"};
 
-        for (int i = 1; i <= text.length; i++) {
+        for (int i = 1; i < text.length; i++) {
             node.addChild(new Node(i + mnuIndex, node, i + text[i - 1]));
         }
-
+        node.addChild(new Node(-1, node, text.length + text[text.length-1]));
         return node;
 
     }
-    private Node mnuAddGeneric(Node node, String text, int mnuIndex) {
 
-        String string2[] = {". Agregar " + text, ". Actualizar " + text, ". Eliminar " + text, ". Listar " + text + "s", ". Agregar " + text + " aleatorio"};
+    private Node mnuAddGeneric(Node node, String textGeneric, int mnuIndex) {
 
-        for (int i = 1; i <= string2.length; i++) {
-            node.addChild(new Node(i + mnuIndex, node, i + string2[i-1]));
+        String mnuText[] = {". Agregar " + textGeneric, ". Actualizar " + textGeneric, ". Eliminar " + textGeneric, ". Listar " + textGeneric + "s", ". Agregar " + textGeneric + " aleatorio", ". Volver al menú principal"};
+
+        for (int i = 1; i < mnuText.length; i++) {
+            node.addChild(new Node(i + mnuIndex, node, i + mnuText[i - 1]));
         }
-        node.addChild(new Node(-1, node, 0 + ". Volver al menú principal"));
+        node.addChild(new Node(-1, node, mnuText.length + mnuText[mnuText.length-1]));
         return node;
 //si cliente...
         //<editor-fold defaultstate="collapsed" desc=" ${Agregar Cliente} ">
@@ -90,7 +96,6 @@ public abstract class AppInterface implements IInterface {
 
     }
 
-  
     private Node mnuItemSection(Node node, int mnuIndex) {
         node.addChild(new Node(mnuIndex, node, "Seleccione seccion"));
         String text[] = {". PDA'S", ". Portatiles", ". Sobremesa", ". NoteBooks"};
@@ -102,8 +107,6 @@ public abstract class AppInterface implements IInterface {
 
     }
 
-
-
     public AppInterface() {
         loadMenu();
     }
@@ -113,13 +116,12 @@ public abstract class AppInterface implements IInterface {
     }
 
     private void loadMenu() {
-        
+
         /**
          * **********************Menu principal****************************
          */
-            mnuMain(node);
+        mnuMain(node);
         // <editor-fold defaultstate="collapsed" desc=" ${Creacion Menu} ">  
-    
 
         // </editor-fold> 
     }

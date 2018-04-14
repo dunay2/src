@@ -5,13 +5,9 @@
  */
 package ishop;
 
-import Person.Client.Client;
-import Person.Employee.Cashier;
-import item.Electrodomestic;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  *
@@ -19,7 +15,7 @@ import java.util.Date;
  */
 public class Shoppingcart implements Serializable {
 
-    public class Line {//Estructura privada que contiene la linea de pedido
+    public class Line {//Estructura privada que contiene el pedido
 
         private byte lineNumber;
         private String itemCode;

@@ -64,22 +64,21 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
 //Creamos un lector
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-//Creamos un cliente
+//Creamos una persona
         System.out.println("Por favor introduzca DNI");//Se pide un dato al usuario
-
         person = new Client(br.readLine());
+
         System.out.println("Introduzca nombre");//Se pide un dato al usuario
-      //  client.setfirstName(br.readLine());
+        person.setfirstName(br.readLine());
+
         System.out.println("Introduzca apellido");//Se pide un dato al usuario
-       // client.setLastName(br.readLine());
+        person.setLastName(br.readLine());
+
         System.out.println("Introduzca nómina");//Se pide un dato al usuario
-        
         person.setNomina(Double.parseDouble(br.readLine()));
 
-  
-       // return client;
         return person;
-       
+
     }
 
     @Override
@@ -122,8 +121,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
 
     }
 
-    
-     public Person generateRandomPerson() {
+    public Person generateRandomPerson() {
 
         Person person;
 
@@ -133,9 +131,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
 
         return person;
     }
-     
-   
-    
+
     //Propósito: 
     //Buscar la clave en el HashMapy devolver el objeto person si existe
     @Override
@@ -163,7 +159,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
             System.out.println(person.getDni() + "    " + person.getFirstName() + "                           " + person.getAddress());
 
         }
-
+        clearScreen();
     }
 //  /*
 //
@@ -192,4 +188,8 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
 //        }
     // }
 
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
 }
