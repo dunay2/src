@@ -1,16 +1,16 @@
 package Deparment;
 import Person.Person;
-import Person.Employee.Personal;
+import Person.Employee.Employee;
 import java.util.ArrayList;
 
 public abstract class Department {
 
     private String extension;
 
-    public ArrayList <Personal> personal= new ArrayList <> ();
+    public ArrayList <Employee> personal= new ArrayList <> ();
     
-    
-    public void addStaff(Personal person) {
+    //Propósito: Agregar el empleado a la plantilla
+    public void addStaff(Employee person) {
       
         personal.add(person);
         

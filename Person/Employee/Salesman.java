@@ -1,6 +1,6 @@
 package Person.Employee;
 
-public class Salesman extends Personal {
+public class Salesman extends Employee {
 
     public Salesman(String dni) {
         super(dni);

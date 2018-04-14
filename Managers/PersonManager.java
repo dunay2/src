@@ -7,9 +7,15 @@ package Managers;
 
 import java.util.HashMap;
 import DataBase.TextDatabase;
+import Generator.PersonGenerator;
+import Person.Client.Client;
 import Person.Person;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Scanner;
 
 /**
  *
@@ -39,7 +45,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
 
     @Override
     public HashMap<String, Person> load(String filename) {
-        persons=super.load(filename);
+        persons = super.load(filename);
         return persons;//Pasamos el nombre del fichero
     }
 
@@ -47,6 +53,33 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
     @Override
     public HashMap<String, Person> getAll() {
         return persons;
+    }
+
+    //Propósito: crear un nuevo cliente con los datos de entrada de consola
+    @Override
+    public Object createObject() throws IOException {
+
+        Person person;
+
+//Creamos un lector
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+//Creamos un cliente
+        System.out.println("Por favor introduzca DNI");//Se pide un dato al usuario
+
+        person = new Client(br.readLine());
+        System.out.println("Introduzca nombre");//Se pide un dato al usuario
+      //  client.setfirstName(br.readLine());
+        System.out.println("Introduzca apellido");//Se pide un dato al usuario
+       // client.setLastName(br.readLine());
+        System.out.println("Introduzca nómina");//Se pide un dato al usuario
+        
+        person.setNomina(Double.parseDouble(br.readLine()));
+
+  
+       // return client;
+        return person;
+       
     }
 
     @Override
@@ -89,14 +122,21 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
 
     }
 
-    /*        public static void guardarProducto(String codigo, float precio, HashMap<String, Float> listaProductos) {
-        if (listaProductos.containsKey(codigo)) {
-            System.out.println("No se puede introducir el producto. El código esta repetido.");
-        } else {
-            listaProductos.put(codigo, precio);
-        }
-    }*/
-    //Porpósito: 
+    
+     public Person generateRandomPerson() {
+
+        Person person;
+
+        person = new Client(PersonGenerator.generateDni());
+
+        person.setFirstName(PersonGenerator.generateName());
+
+        return person;
+    }
+     
+   
+    
+    //Propósito: 
     //Buscar la clave en el HashMapy devolver el objeto person si existe
     @Override
     public Object search(String e) {
@@ -108,6 +148,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
     }
 
     //Propósito: Listar las personas por consola
+    @Override
     public void list() {
         Person person;
 
@@ -119,7 +160,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
 
             person = e.getValue();
 
-            System.out.println( person.getDni() + "    " + person.getFirstName() + "                           " + person.getAddress());
+            System.out.println(person.getDni() + "    " + person.getFirstName() + "                           " + person.getAddress());
 
         }
 

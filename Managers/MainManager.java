@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+   //Propósito: Clase gestora de la aplicación
  */
 package Managers;
 
@@ -10,6 +8,7 @@ import Deparment.Finance;
 import Deparment.FrontDesk;
 import Deparment.Support;
 import Person.Employee.Cashier;
+import Person.Employee.Employee;
 import ScreenInterfaces.Node;
 import ScreenInterfaces.TextInterface;
 import ishop.ElectronicShop;
@@ -17,35 +16,39 @@ import ishop.Shop;
 
 /**
  *
- * @author ashh412 Propósito: gestor principal.
+ * @author ashh412 Propósito: Clase gestora principal de la aplicación .
  */
-public class MainScene {
+public class MainManager {
 
     //   private Shoppingcart shoppingcart;
     private final TextInterface myTextInterface;
     // private Client client;
-    private final ClientManager cm;
-    private final StockManager sm;
+    private final ClientManager clientManager;
+    private final EmployeeManager employeeManager;
+    private final StockManager stockManager;
+    private SalesManager salesManager = null;
+    private Employee activeEmployee; //Usuario que está gestionando la aplicación
 
-    public MainScene() {
+    //Constructor
+    public MainManager() {
         //Obtenemos una instancia a los gestores
-        
-        this.cm = new ClientManager();
-        this.sm = new StockManager();
+        this.clientManager = new ClientManager();
+        this.stockManager = new StockManager();
+        this.employeeManager = new EmployeeManager();
+
         myTextInterface = new TextInterface();
+
         //inicializar gestores
     }
 
-    //Propósito: Clase gestora de la aplicación
+    //Propósito: main method
     public void start() {
 
         //Instanciamos para crear un par de cajeros
-        Cashier cashier = new Cashier("12");
-        Cashier cashier1 = new Cashier("12");
+        Cashier cashier = new Cashier("CAJERO1_CODE");
 
         //Creamos unos cajeros
-        cashier.setfirstName("Juan");
-        cashier1.setfirstName("Pedro");
+        cashier.setfirstName("Juan el cajero 1");
 
         //Cramos una nueva tienda
         Shop myShop = new ElectronicShop();
@@ -61,34 +64,33 @@ public class MainScene {
         myShop.addDepartment(support);
         myShop.addDepartment(finance);
 
-        //Agregamos el cajero tipo Person y tipo Cashier
+        //Agregamos al cajero 
         cajeros.addStaff(cashier);
-        cajeros.addStaff(cashier1);
 
-        cm.load();
-        sm.load();
+        clientManager.load();
+        stockManager.load();
+
+        this.salesManager = new SalesManager(null, cashier);
+   
         doBusiness(myTextInterface.printMenu(null));
 
     }
-//Procesamos las ordenes que nos van llegando de los menus desde de la entrada de teclado
-//debe tener un return
-    //Listar los procesos implementados
-    //2. Clientes
-    //21. Gestion de clientes introducción de DNI
-    //25.Crear cliente aleatorio
-    //3. Stock . 
-    //31. Agregar Item a Stock
-    //32. Modificar Item Stock
-    //33. Eliminar Item Stock
-    //34. Listar eletrodomésticos
-    //35. Volver al menú principal
 
+    //Propósito: Hacer de listener y handler de las peticiones
     private void doBusiness(Node node) {
         boolean startNewSequence = false;
 
-        startNewSequence = cm.handleProcess(node.getValue());
-        if (!startNewSequence) {
-            startNewSequence = sm.handleProcess(node.getValue());
+        if (salesManager.handleProcess(node.getValue())) {
+            startNewSequence = true;
+        }
+        if (clientManager.handleProcess(node.getValue())) {
+            startNewSequence = true;
+        }
+        if (stockManager.handleProcess(node.getValue())) {
+            startNewSequence = true;
+        }
+        if (employeeManager.handleProcess(node.getValue())) {
+            startNewSequence = true;
         }
 
         myTextInterface.clearScreen();
@@ -96,7 +98,8 @@ public class MainScene {
         //la cual nos devolverá el valor del nuevo nodo seleccionado
         //cargamos nuevo menú o menú principal
         Node newNode = null;
-        if (!startNewSequence == true) {
+        if (!startNewSequence
+                == true) {
             newNode = myTextInterface.printMenu(node);
         } else {
             newNode = myTextInterface.printMenu(node.getParent());

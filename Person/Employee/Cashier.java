@@ -4,7 +4,7 @@ package Person.Employee;
 import Invoice.Invoice;
 import Person.Client.Client;
 
-public class Cashier extends Personal {
+public class Cashier extends Employee {
 
     public Cashier(String dni) {
         super(dni);

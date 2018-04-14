@@ -12,8 +12,6 @@ import ishop.Shoppingcart;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -21,9 +19,18 @@ import java.util.logging.Logger;
  */
 public class SalesManager extends TextDatabase implements Imanager {
 
-    private final Client client;//Lo declaramos como objeto para poder usar sus métodos
-    private final Cashier cashier;//Lo declaramos como objeto para poder usar sus métodos
+    private  Client client;//Lo declaramos como objeto para poder usar sus métodos
+    private  Cashier cashier;//Lo declaramos como objeto para poder usar sus métodos
     private final Shoppingcart shoppingcart;
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public void setCashier(Cashier cashier) {
+        this.cashier = cashier;
+    }
+   
 
     public SalesManager(Client client, Cashier cashier) {
         this.cashier = cashier;
@@ -77,15 +84,15 @@ public class SalesManager extends TextDatabase implements Imanager {
         switch (e) {
 
             //Gestion de clientes introducción de DNI
-            case 1: {
-                try {
-                    createObject();
-                    // Este es el nod raiz    myInterface.getNode();
-                } catch (IOException ex) {
-                    Logger.getLogger(ClientManager.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                return true;
-            }
+//            case 1: {
+//                try {
+//                    createObject();
+//                    // Este es el nod raiz    myInterface.getNode();
+//                } catch (IOException ex) {
+//                    Logger.getLogger(ClientManager.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//                return true;
+//            }
 
             //Consultar el importe actual
             case 11:
@@ -102,6 +109,7 @@ public class SalesManager extends TextDatabase implements Imanager {
                 break;
 
             //Crear carrito aleatorio
+                
             //Cancelar venta
             case 14: 
                 return true;
@@ -138,6 +146,8 @@ public class SalesManager extends TextDatabase implements Imanager {
         String a = scanner.nextLine();
 
     }
+
+   
 
 }
 

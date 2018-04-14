@@ -3,7 +3,7 @@ package Person.Employee;
 
 import Person.Client.Client;
 
-public class Clerk extends Personal {
+public class Clerk extends Employee {
 
     public Clerk(String dni) {
         super(dni);

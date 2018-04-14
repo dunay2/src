@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  */
 public class StockManager extends TextDatabase implements Imanager {
 
-    private  HashMap<String, Electrodomestic> electrodomestics = new HashMap<>();
+    private HashMap<String, Electrodomestic> electrodomestics = new HashMap<>();
 
     public void buyItems(String itemCode, int amount) {
 
@@ -43,8 +43,6 @@ public class StockManager extends TextDatabase implements Imanager {
     }*/
         save(electrodomestics);
     }
-
-
 
 //Devuelve todo el listado de Electrodomestic
     @Override
@@ -110,8 +108,7 @@ public class StockManager extends TextDatabase implements Imanager {
 
         System.out.println("===============Carga de Electrodomesticos");
 
-       electrodomestics = load("Electrodomestic");
-        
+        electrodomestics = load("Electrodomestic");
 
         Iterator<Map.Entry<String, Electrodomestic>> it = electrodomestics.entrySet().iterator();
 
@@ -123,8 +120,6 @@ public class StockManager extends TextDatabase implements Imanager {
         }
     }
 
-    
-    
     @Override
     public boolean handleProcess(int e) {
 
@@ -141,7 +136,6 @@ public class StockManager extends TextDatabase implements Imanager {
                 //32. Modificar Item Stock
                 case 32:
                     updateStock();
-
                     break;
                 //33. Eliminar Item Stock
                 case 33:
@@ -230,8 +224,8 @@ public class StockManager extends TextDatabase implements Imanager {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 //Creamos un item
-   Node printMenu;
-   
+        Node printMenu;
+
         System.out.println("Por favor introduzca código");//Se pide un dato al usuario
 
         //llamada a new item 
@@ -245,7 +239,7 @@ public class StockManager extends TextDatabase implements Imanager {
         System.out.println("Introduzca cantidad en stock");//Se pide un dato al usuario
         quantity = Integer.parseInt(br.readLine());
 //   
-        Electrodomestic item = new Electrodomestic(code, description, price, price, quantity,"");
+        Electrodomestic item = new Electrodomestic(code, description, price, price, quantity, "");
 
         //Guardamos el item en la coleccion
         add(item);

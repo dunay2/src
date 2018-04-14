@@ -3,7 +3,7 @@ package ishop;
 import Store.Store;
 import Person.Client.Clients;
 import Deparment.Department;
-import Person.Employee.Personal;
+import Person.Employee.Employee;
 import java.util.ArrayList;
 
 
@@ -19,7 +19,7 @@ public abstract class Shop implements IBusiness {
 
     private Clients client;
 
-    private Personal personal;
+    private Employee Employee;
 
     private Store store;
 
