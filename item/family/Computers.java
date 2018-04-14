@@ -11,16 +11,17 @@ import item.Electrodomestic;
  *
  * @author ashh412
  */
-public class Computers extends Electrodomestic{
-   private double ram;
-   private double mhz;
-   private double hddSize;
+public class Computers extends Electrodomestic {
 
-    public Computers(String code, String name, double boughtPrice, double sellPrice, int quantity, String familyCode) {
-        super(code, name, boughtPrice, sellPrice, quantity, familyCode);
+    private double ram;
+    private double mhz;
+    private double hddSize;
+
+    public Computers(String familyCode, String code, String name, String description, double boughtPrice, double sellPrice, int quantity) {
+
+        super(familyCode, code, name, description, boughtPrice, sellPrice, quantity);
+
     }
-
-
 
     public double getRam() {
         return ram;
@@ -45,6 +46,5 @@ public class Computers extends Electrodomestic{
     public void setHddSize(double hddSize) {
         this.hddSize = hddSize;
     }
-   
-    
+
 }

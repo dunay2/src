@@ -6,8 +6,8 @@ public class Image extends item.Electrodomestic{
     private String resolution;
     private String frequency;
 
-    public Image(String code, String name, double boughtPrice, double sellPrice, int quantity, String familyCode) {
-        super(code, name, boughtPrice, sellPrice, quantity, familyCode);
+    public Image(String familyCode, String code, String name, String description, double boughtPrice, double sellPrice, int quantity) {
+        super(familyCode, code, name, description, boughtPrice, sellPrice, quantity);
     }
 
   

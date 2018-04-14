@@ -13,10 +13,9 @@ import item.Electrodomestic;
  */
 public class DishWasher extends  Electrodomestic{
     
-    public DishWasher(String code, String name, double boughtPrice, double sellPrice, int quantity, String familyCode) {
-        super(code, name, boughtPrice, sellPrice, quantity, familyCode);
-    }
-    
+    public DishWasher(String familyCode, String code, String name, String description, double boughtPrice, double sellPrice, int quantity) {
+        super(familyCode, code, name, description, boughtPrice, sellPrice, quantity);
+   }
   
     
 }

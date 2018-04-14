@@ -12,11 +12,9 @@ import item.Electrodomestic;
  * @author ashh412
  */
 public class VacuumCleaner extends Electrodomestic {
-    
-    public VacuumCleaner(String code, String name, double boughtPrice, double sellPrice, int quantity, String familyCode) {
-        super(code, name, boughtPrice, sellPrice, quantity, familyCode);
+    public VacuumCleaner(String familyCode, String code, String name, String description, double boughtPrice, double sellPrice, int quantity) {
+        super(familyCode, code, name, description, boughtPrice, sellPrice, quantity);
     }
-    
  
     
 }

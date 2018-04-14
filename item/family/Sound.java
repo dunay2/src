@@ -4,10 +4,9 @@ import item.Electrodomestic;
 
 public class Sound extends Electrodomestic{
 
-    public Sound(String code, String name, double boughtPrice, double sellPrice, int quantity, String familyCode) {
-        super(code, name, boughtPrice, sellPrice, quantity, familyCode);
+   public Sound(String familyCode, String code, String name, String description, double boughtPrice, double sellPrice, int quantity) {
+        super(familyCode, code, name, description, boughtPrice, sellPrice, quantity);
     }
-
    
     
 }

@@ -11,11 +11,10 @@ import item.Electrodomestic;
  *
  * @author ashh412
  */
-public class WashingMachine extends Electrodomestic{
-    
-    public WashingMachine(String code, String name, double boughtPrice, double sellPrice, int quantity, String familyCode) {
-        super(code, name, boughtPrice, sellPrice, quantity, familyCode);
+public class WashingMachine extends Electrodomestic {
+
+    public WashingMachine(String familyCode, String code, String name, String description, double boughtPrice, double sellPrice, int quantity) {
+        super(familyCode, code, name, description, boughtPrice, sellPrice, quantity);
     }
-    
- 
+
 }
