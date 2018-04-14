@@ -16,10 +16,11 @@ public class Electrodomestic extends Item {
     private String typeOfBatery;
     private String autonomy;
     private String recharTime;
-    
-    public Electrodomestic(String code, String name, double boughtPrice, double sellPrice, int quantity) {
-        super(code, name, boughtPrice, sellPrice, quantity);
+
+    public Electrodomestic(String code, String name, double boughtPrice, double sellPrice, int quantity, String familyCode) {
+        super(code, name, boughtPrice, sellPrice, quantity, familyCode);
     }
+    
 
  
 }

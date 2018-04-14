@@ -1,14 +1,16 @@
 package item.family;
 
-public class Image extends item.Item{
+public class Image extends item.Electrodomestic{
 
     private double inches;
     private String resolution;
     private String frequency;
 
-    public Image(String code, String name, double boughtPrice, double sellPrice,int quantity) {
-        super(code, name, boughtPrice, sellPrice,quantity);
+    public Image(String code, String name, double boughtPrice, double sellPrice, int quantity, String familyCode) {
+        super(code, name, boughtPrice, sellPrice, quantity, familyCode);
     }
+
+  
 
     public double getInches() {
         return inches;

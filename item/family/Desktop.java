@@ -11,9 +11,11 @@ package item.family;
  */
 public class Desktop extends Computers{
     
-    public Desktop(double ram, double mhz, double hddSize, String code, String name, double boughtPrice, double sellPrice, int quantity) {
-        super(ram, mhz, hddSize, code, name, boughtPrice, sellPrice, quantity);
+    public Desktop(String code, String name, double boughtPrice, double sellPrice, int quantity, String familyCode) {
+        super(code, name, boughtPrice, sellPrice, quantity, familyCode);
     }
+    
+   
     
     
 }

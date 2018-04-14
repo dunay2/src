@@ -39,40 +39,73 @@ public abstract class Item implements Serializable {
     private String code;
     private String name;
     private String description;
-    
+
     private double boughtPrice;
     private double sellPrice;
     private int quantity;
     private String color;
     private String weith;
-
-    
+    private String familyCode;
 
     public int getQuantity() {
         return quantity;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getWeith() {
+        return weith;
+    }
+
+    public void setWeith(String weith) {
+        this.weith = weith;
+    }
+
+    public String getFamily() {
+        return familyCode;
+    }
+
+    public void setFamily(String familyCode) {
+        this.familyCode = familyCode;
+    }
+
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    
+
     public String getCode() {
         return code;
     }
 
-    public Item(String code, String name, double boughtPrice, double sellPrice,int quantity) {
+    public Item(String code, String name, double boughtPrice, double sellPrice, int quantity,String familyCode) {
         this.code = code;
+         this.familyCode=familyCode;
         this.name = name;
         this.boughtPrice = boughtPrice;
         this.sellPrice = sellPrice;
-        this.quantity=quantity;
+        this.quantity = quantity;
+       
+      
+        
     }
 
     public void setCode(String code) {
         this.code = code;
     }
-
-  
 
     public double getBoughtPrice() {
         return boughtPrice;

@@ -6,6 +6,7 @@
 package Managers;
 
 import DataBase.TextDatabase;
+import ScreenInterfaces.Node;
 import item.Electrodomestic;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -226,6 +227,8 @@ public class StockManager extends TextDatabase implements Imanager {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 //Creamos un item
+   Node printMenu;
+   
         System.out.println("Por favor introduzca código");//Se pide un dato al usuario
 
         //llamada a new item 
@@ -239,7 +242,7 @@ public class StockManager extends TextDatabase implements Imanager {
         System.out.println("Introduzca cantidad en stock");//Se pide un dato al usuario
         quantity = Integer.parseInt(br.readLine());
 //   
-        Electrodomestic item = new Electrodomestic(code, description, price, price, quantity);
+        Electrodomestic item = new Electrodomestic(code, description, price, price, quantity,"");
 
         //Guardamos el item en la coleccion
         add(item);

@@ -16,12 +16,11 @@ public class Computers extends Electrodomestic{
    private double mhz;
    private double hddSize;
 
-    public Computers(double ram, double mhz, double hddSize, String code, String name, double boughtPrice, double sellPrice, int quantity) {
-        super(code, name, boughtPrice, sellPrice, quantity);
-        this.ram = ram;
-        this.mhz = mhz;
-        this.hddSize = hddSize;
+    public Computers(String code, String name, double boughtPrice, double sellPrice, int quantity, String familyCode) {
+        super(code, name, boughtPrice, sellPrice, quantity, familyCode);
     }
+
+
 
     public double getRam() {
         return ram;

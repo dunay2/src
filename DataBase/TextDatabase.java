@@ -23,7 +23,7 @@ import item.Electrodomestic;
  * @author ashh412 Propósito: agregar persistencia al proyecto mediante acceso a
  * un fichero de texto donde se guardan los objetos serializados
  */
-public class TextDatabase implements IDatabase {
+public class TextDatabase implements IDatabase  {
 
 //Implementamos el método save para guardar objetos
     @Override

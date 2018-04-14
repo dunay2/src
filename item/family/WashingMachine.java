@@ -5,15 +5,17 @@
  */
 package item.family;
 
+import item.Electrodomestic;
+
 /**
  *
  * @author ashh412
  */
-public class Pda extends Computers{
+public class WashingMachine extends Electrodomestic{
     
-    public Pda(String code, String name, double boughtPrice, double sellPrice, int quantity, String familyCode) {
+    public WashingMachine(String code, String name, double boughtPrice, double sellPrice, int quantity, String familyCode) {
         super(code, name, boughtPrice, sellPrice, quantity, familyCode);
     }
     
-
+ 
 }

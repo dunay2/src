@@ -14,7 +14,7 @@ import java.util.HashMap;
  * Crea los métodos save y load
  * @param <T>
  */
-public interface IDatabase<T> {
+public interface IDatabase<T>  {
 
   
     //void save (HashMap<String, Person> e);

@@ -9,11 +9,6 @@ package item.family;
  *
  * @author ashh412
  */
-public class Pda extends Computers{
+public class Fridge {
     
-    public Pda(String code, String name, double boughtPrice, double sellPrice, int quantity, String familyCode) {
-        super(code, name, boughtPrice, sellPrice, quantity, familyCode);
-    }
-    
-
 }
