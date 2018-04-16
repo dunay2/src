@@ -9,7 +9,7 @@ import Deparment.FrontDesk;
 import Deparment.Support;
 import Person.Employee.Cashier;
 import Person.Employee.Employee;
-import ScreenInterfaces.Node;
+import Utils.Node;
 import ScreenInterfaces.TextInterface;
 import ishop.ElectronicShop;
 import ishop.Shop;

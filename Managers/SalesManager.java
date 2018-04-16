@@ -8,7 +8,7 @@ package Managers;
 import DataBase.TextDatabase;
 import Person.Client.Client;
 import Person.Employee.Cashier;
-import ScreenInterfaces.Node;
+import Utils.Node;
 import ishop.Shoppingcart;
 import java.io.IOException;
 import java.util.HashMap;

@@ -23,14 +23,21 @@ public abstract class Person implements Serializable {
     private String mobil;
     private String Email;
     private String Web;
-    private Double nomina;
+    private Double salary;
     private boolean active;
 
+    //Contructor básico
     public Person(String dni) {
         this.dni = dni;
         active=true;
     }
-
+ public Person(String dni, String firstName, String lastName, Double salary) {
+        this.dni=dni;
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.salary=salary;
+   active=true;
+    }
     /**
      * @param firstName the firstName to set
      */
@@ -123,10 +130,10 @@ public abstract class Person implements Serializable {
     }
 
     /**
-     * @param nomina the nomina to set
+     * @param salary the salary to set
      */
-    public void setNomina(Double nomina) {
-        this.nomina = nomina;
+    public void setSalary(Double salary) {
+        this.salary = salary;
     }
 
     public void setfirstName(String name) {
@@ -149,8 +156,8 @@ public abstract class Person implements Serializable {
         this.id = id;
     }
 
-    public double getNomina() {
-        return nomina;
+    public double getSalary() {
+        return salary;
     }
 
     public void getContactPoints() {

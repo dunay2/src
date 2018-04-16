@@ -11,7 +11,9 @@ public class Employee extends Person {
     public Employee(String dni) {
         super(dni);
     }
-    
+        public Employee(String dni, String firstName, String lastName, Double salary) {
+        super(dni, firstName, lastName, salary);
+    }
     public void pagarNomina() {
     }
 }

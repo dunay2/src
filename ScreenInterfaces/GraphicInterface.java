@@ -1,5 +1,7 @@
 package ScreenInterfaces;
 
+import Utils.Node;
+
 public class GraphicInterface  {
     //extends AppInterface
 

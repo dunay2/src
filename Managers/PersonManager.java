@@ -5,15 +5,16 @@
  */
 package Managers;
 
+import Utils.Node;
 import java.util.HashMap;
 import DataBase.TextDatabase;
 import Generator.PersonGenerator;
 import Person.Client.Client;
 import Person.Person;
-import ScreenInterfaces.Node;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -24,7 +25,7 @@ import java.util.Map;
  *
  */
 public abstract class PersonManager extends TextDatabase implements Imanager {
-
+    
     private HashMap<String, Person> persons = new HashMap<>();
 
     //Extension de database
@@ -32,7 +33,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
     public void save() {
         save(persons);
     }
-
+    
     @Override
     public abstract boolean handleProcess(Node node);
 //el nombre de los managers debe ser NombreClaseManager
@@ -42,7 +43,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
     public void load() {
         persons = load(getClassName().replace("Manager", ""));//Pasamos el nombre del fichero   
     }
-
+    
     @Override
     public HashMap<String, Person> load(String filename) {
         persons = super.load(filename);
@@ -54,81 +55,45 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
     public HashMap<String, Person> getAll() {
         return persons;
     }
-
-    //Propósito: crear un nuevo cliente con los datos de entrada de consola
-    @Override
-    public Object createObject(Node node) throws IOException {
-
-        Person person;
-
-//Creamos un lector
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-//Creamos una persona
-        System.out.println("Por favor introduzca DNI");//Se pide un dato al usuario
-        person = new Client(br.readLine());
-
-        System.out.println("Introduzca nombre");//Se pide un dato al usuario
-        person.setfirstName(br.readLine());
-
-        System.out.println("Introduzca apellido");//Se pide un dato al usuario
-        person.setLastName(br.readLine());
-
-        System.out.println("Introduzca nómina");//Se pide un dato al usuario
-        person.setNomina(Double.parseDouble(br.readLine()));
-
-        return person;
-
-    }
-
-    @Override
-    public Person get(int rollNo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void update(Object person) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     @Override //necesitamos el codigo del elemento, 
 
     public void delete(Object person) {
         Person lperson;
         lperson = (Person) person;
         persons.remove(lperson);
-
+        
     }
-
+    
     @Override
     public boolean add(Object pperson) {
         Person person = (Person) pperson;
-
+        
         if (persons.containsKey(person.getDni())) {
             System.out.println("No se puede introducir la persona. El código esta repetido.");
             return false;
         }
-
+        
         try {
             //Agregamos una persona al hasmap
             persons.put(person.getDni(), person);
             return true;
-
+            
         } catch (Exception e) {
             System.out.println("No se puede introducir la persona. Ha habido un error.");
             return false;
         }
-
+        
     }
-
+    
     public Person generateRandomPerson() {
-
+        
         Person person;
-
+        
         person = new Client(PersonGenerator.generateDni());
-
+        
         person.setFirstName(PersonGenerator.generateName());
-
+        person.setSalary(Double.NaN);
         return person;
     }
 
@@ -147,20 +112,31 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
     @Override
     public void list() {
         Person person;
-
+        
         Iterator<Map.Entry<String, Person>> it = persons.entrySet().iterator();
         System.out.println("DNI*************NAME****************************************ADDRESS********");
-
+        
         while (it.hasNext()) {
             Map.Entry<String, Person> e = it.next();
-
-            person = e.getValue();
-
-            System.out.println(person.getDni() + "    " + person.getFirstName() + "                           " + person.getAddress());
-
+            
+            listFormat(e.getValue());
         }
         clearScreen();
     }
+    
+    private void listFormat(Person person) {
+        String str = null;
+        try {
+            str = "ID:" + person.getDni();
+            str = str + "   Last name: " + person.getLastName();
+            str = str + "   Name: " + person.getFirstName();
+            str = str + "   Nomina: " + person.getSalary();
+            
+        } catch (Exception e) {
+        }
+        System.out.println(str);
+    }
+
 //  /*
 //
 //        /* Display content using Iterator*/
@@ -187,9 +163,18 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
 //            System.out.println(mentry2.getValue());
 //        }
     // }
-
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
+    }
+    
+    @Override
+    public Object get(int rollNo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public void update(Object e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

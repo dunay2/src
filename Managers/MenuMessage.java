@@ -5,7 +5,7 @@
  */
 package Managers;
 
-import ScreenInterfaces.Node;
+import Utils.Node;
 
 /**
  *

@@ -1,6 +1,6 @@
 package Managers;
 
-import ScreenInterfaces.Node;
+import Utils.Node;
 import java.io.IOException;
 import java.util.HashMap;
 

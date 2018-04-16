@@ -6,11 +6,12 @@
 package Managers;
 
 import DataBase.TextDatabase;
-import ScreenInterfaces.Node;
+import Utils.Node;
 import item.Electrodomestic;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,14 +36,7 @@ public class StockManager extends TextDatabase implements Imanager {
 
     public void save() {
 
-        /*        public static void guardarProducto(String codigo, float precio, HashMap<String, Float> listaProductos) {
-        if (listaProductos.containsKey(codigo)) {
-   //         System.out.println("No se puede introducir el producto. El código esta repetido.");
-     //   } else {
-       //     listaProductos.put(codigo, precio);
-       // }
-    }*/
-        save(electrodomestics);
+        super.save(electrodomestics);
     }
 
 //Devuelve todo el listado de Electrodomestic
@@ -55,8 +49,8 @@ public class StockManager extends TextDatabase implements Imanager {
     @Override //necesitamos el codigo del elemento, 
     //por tanto esto será string
     public void delete(Object electrodomestic) {
-        Electrodomestic lelectrodomestic;
-        lelectrodomestic = (Electrodomestic) electrodomestic;
+
+        Electrodomestic lelectrodomestic = (Electrodomestic) electrodomestic;
         // electrodomestics.remove(lelectrodomestic);
         //  System.out.println("Student: Roll No " + lperson.getfirstName() + ", deleted from database");
 
@@ -84,7 +78,7 @@ public class StockManager extends TextDatabase implements Imanager {
     }
 
     //Propósito: 
-    //Buscar la clave en el HashMapy devolver el objeto person si existe
+    //Buscar la clave en el HashMapy devolver el objeto si existe
     @Override
     public Object search(String e) {
         if (electrodomestics.containsKey(e)) {
@@ -107,18 +101,7 @@ public class StockManager extends TextDatabase implements Imanager {
     //Propósito: Cargar el HM con el stock
     public void load() {
 
-        System.out.println("===============Carga de Electrodomesticos");
-
-        electrodomestics = load("Electrodomestic");
-
-        Iterator<Map.Entry<String, Electrodomestic>> it = electrodomestics.entrySet().iterator();
-
-        while (it.hasNext()) {
-            Map.Entry<String, Electrodomestic> e = it.next();
-            Electrodomestic item = e.getValue();
-
-            System.out.println("nombre item " + item.getName());
-        }
+        electrodomestics = super.load("Electrodomestic");
     }
 
     @Override
@@ -203,68 +186,61 @@ public class StockManager extends TextDatabase implements Imanager {
             Map.Entry<String, Electrodomestic> e = it.next();
 
             item = e.getValue();
-
-            System.out.println("Name: " + item.getName());
-            System.out.println("Price: " + item.getSellPrice());
-
+            listFormat(item);
         }
         System.out.println("Pulsa una tecla para continuar ...");
     }
 
+    private void listFormat(Electrodomestic item) {
+        String str = "Name: " + item.getName();
+        str = str + "Price: " + item.getSellPrice();
+        str = str + "Stock: " + item.getQuantity();
+
+        System.out.println(str);
+    }
+
+    ///////////////////////////////////////////////////7
     //Propósito: crear un nuevo electrodoméstico con los datos de entrada de consola
     @Override
     public Object createObject(Node node) throws IOException {
-//ya comprobaremos el tipo
+        int i = 0;
+         //Convertimos los nodos en parametros
+        ArrayList<String> nodesData = node.convertTreeChildToList();
 
-        ArrayList<String> ElectrProp = new ArrayList();
+        Electrodomestic item = new Electrodomestic(nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)));
 
-        Node childNode;
-        Iterator<Node> it = node.getChildNodes().iterator();
-
-        while (it.hasNext()) {
-            childNode = it.next();
-            ElectrProp.add(childNode.getLabel());
-        }
-        
-        String familyCode = ElectrProp.get(0);
-          String code = ElectrProp.get(1);
-        String name = ElectrProp.get(2);
-        String description = ElectrProp.get(3);
-        double boughtPrice = Double.valueOf(ElectrProp.get(4));
-        double sellPrice = Double.valueOf(ElectrProp.get(5));
-        int quantity = Integer.valueOf(ElectrProp.get(6));
-        
-
-        //   System.out.println("============Listado de electrodomésticos============");
-//        while (it.hasNext()) {
-//            Map.Entry<String, Electrodomestic> e = it.next();
-//
-////Creamos un lector
-//            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//Creamos un item
-//        Node printMenu;
-//            System.out.println("Por favor introduzca código");//Se pide un dato al usuario
-//
-//            //llamada a new item 
-//            code = br.readLine();
-//            System.out.println("Introduzca nombre");//Se pide un dato al usuario
-//            name = br.readLine();
-//            System.out.println("Introduzca Descripción");//Se pide un dato al usuario
-//            description = br.readLine();
-//            System.out.println("Introduzca precio de compra");//Se pide un dato al usuario
-//            price = Double.parseDouble(br.readLine());
-//            System.out.println("Introduzca cantidad en stock");//Se pide un dato al usuario
-//            quantity = Integer.parseInt(br.readLine());
-//      //  public Electrodomestic(String code, String name, String desc,double boughtPrice, double sellPrice, int quantity, String familyCode) {
-   
-        Electrodomestic item = new Electrodomestic(familyCode,code, name,description,boughtPrice, sellPrice,quantity );
-
-        //Guardamos el item en la coleccion
         add(item);
         //Guardar los datos 
+
         save();
 
         return item;
+    }
+
+    public class Test {
+
+        public String var1;
+        public Integer var2;
+    }
+
+    public class Test2 {
+
+        Test2(String[] args) throws Exception {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("var1", "test");
+            map.put("var2", 1);
+
+            Test t = new Test();
+
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+                Field f = Test.class.getField(entry.getKey());
+
+                f.set(t, f.getType().cast(entry.getValue()));
+            }
+
+            System.out.println(t.var1);
+            System.out.println(t.var2);
+        }
     }
 
     @Override

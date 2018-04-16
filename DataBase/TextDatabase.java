@@ -23,7 +23,7 @@ import item.Electrodomestic;
  * @author ashh412 Propósito: agregar persistencia al proyecto mediante acceso a
  * un fichero de texto donde se guardan los objetos serializados
  */
-public class TextDatabase implements IDatabase  {
+public class TextDatabase implements IDatabase {
 
 //Implementamos el método save para guardar objetos
     @Override
@@ -53,6 +53,7 @@ public class TextDatabase implements IDatabase  {
                     hmfile = (HashMap<String, Electrodomestic>) hm;
                     break;
                 case "Employee.data":
+
                     // hmfile = (HashMap<String, Employee>) hm;
                     break;
 
@@ -70,27 +71,19 @@ public class TextDatabase implements IDatabase  {
 
             fout.close();
 
-// }
-//   if (it.hasNext()) {
-//     ite = it.next();
-//    objectType = ite.getValue();
-//}
         } catch (FileNotFoundException ex) {
             Logger.getLogger(TextDatabase.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(TextDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
-//while (it.hasNext());
 
     @Override
     public HashMap load(String fileName) {
         HashMap<String, ?> e = new HashMap();;
         FileInputStream file = null;
         ObjectInputStream in = null;
-        //  Person person = null;
-
+      
         // Deserialization
         File f = new File(fileName + ".data");
         if (f.exists()) {
@@ -99,13 +92,9 @@ public class TextDatabase implements IDatabase  {
                 file = new FileInputStream(fileName + ".data");
 
                 in = new ObjectInputStream(file);
-//(HashMap<String, Client>)
-                //    while (true) {
+
                 e = (HashMap<String, ?>) in.readObject();
 
-                //person = (Person) in.readObject();
-                //      e.put(person.getDni(), person);
-                //  }
                 file.close();
 
             } catch (FileNotFoundException ex) {

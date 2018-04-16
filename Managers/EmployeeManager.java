@@ -6,8 +6,9 @@
 package Managers;
 
 import Person.Employee.Employee;
-import ScreenInterfaces.Node;
+import Utils.Node;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  *
@@ -30,28 +31,27 @@ public class EmployeeManager extends PersonManager {
         //  String a = scanner.nextLine();
     }
 
-////Propósito: crear un nuevo cliente con los datos de entrada de consola
+////Propósito: crear un nuevo employee con los datos de entrada de consola
     @Override
     public Object createObject(Node node) throws IOException {
-        Employee employee;
-        employee = (Employee) super.createObject(node);
 
-//Guardamos el cliente en la coleccion
+        ArrayList<String> nodesData = node.convertTreeChildToList();
+        int i = 0;
+
+        Employee employee = new Employee(nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)));
+
+//Guardamos el employee en la coleccion
         add(employee);
-//        //Guardar los datos 
         save();
+
         return employee;
     }
 
-    @Override
-    public void list() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public boolean handleProcess(Node node) {
-       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    return false;
+        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return false;
     }
 
 }
