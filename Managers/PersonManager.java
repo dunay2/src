@@ -8,13 +8,9 @@ package Managers;
 import Utils.Node;
 import java.util.HashMap;
 import DataBase.TextDatabase;
-import Generator.PersonGenerator;
+import Utils.Generator.PersonGenerator;
 import Person.Client.Client;
 import Person.Person;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -24,7 +20,7 @@ import java.util.Map;
  * Extiende la clase TextDatabase lo que le da persistencia
  *
  */
-public abstract class PersonManager extends TextDatabase implements Imanager {
+public abstract class PersonManager extends TextDatabase implements Imanager<Person> {
     
     private HashMap<String, Person> persons = new HashMap<>();
 
@@ -34,8 +30,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
         save(persons);
     }
     
-    @Override
-    public abstract boolean handleProcess(Node node);
+    
 //el nombre de los managers debe ser NombreClaseManager
 //para que essta clase los guarde correctamente
 //Cargar la base de datos de personas
@@ -58,7 +53,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
     
     @Override //necesitamos el codigo del elemento, 
 
-    public void delete(Object person) {
+    public void delete(Person person) {
         Person lperson;
         lperson = (Person) person;
         persons.remove(lperson);
@@ -66,8 +61,8 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
     }
     
     @Override
-    public boolean add(Object pperson) {
-        Person person = (Person) pperson;
+    public boolean add(Person person) {
+
         
         if (persons.containsKey(person.getDni())) {
             System.out.println("No se puede introducir la persona. El código esta repetido.");
@@ -100,7 +95,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
     //Propósito: 
     //Buscar la clave en el HashMapy devolver el objeto person si existe
     @Override
-    public Object search(String e) {
+    public Person search(String e) {
         if (persons.containsKey(e)) {
             //Si encontramos el elemento en la búsqueda devolvemos el elemento
             return persons.get(e);
@@ -114,8 +109,8 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
         Person person;
         
         Iterator<Map.Entry<String, Person>> it = persons.entrySet().iterator();
-        System.out.println("DNI*************NAME****************************************ADDRESS********");
-        
+      //  System.out.println("DNI*************NAME****************************************ADDRESS********");
+        System.out.printf("%-20s%-20s%-20s%-20s\n","DNI","APELLIDOS","NOMBRE", "NOMINA");
         while (it.hasNext()) {
             Map.Entry<String, Person> e = it.next();
             
@@ -127,11 +122,18 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
     private void listFormat(Person person) {
         String str = null;
         try {
-            str = "ID:" + person.getDni();
-            str = str + "   Last name: " + person.getLastName();
-            str = str + "   Name: " + person.getFirstName();
-            str = str + "   Nomina: " + person.getSalary();
+//            str = "ID:" + person.getDni();
+//            str = str + "   Last name: " + person.getLastName();
+//            str = str + "   Name: " + person.getFirstName();
+//            str = str + "   Nomina: " + person.getSalary();
             
+            
+System.out.printf("%-20s%-20s%-20s%-20s\n",person.getDni(),person.getLastName(),person.getFirstName(), person.getSalary());
+
+//System.out.printf("%-20s%-20s%-20s\n","0001442","Andrea","Margarita");
+//System.out.printf("%-20s%-20s%-20s\n","0344127","Marco","Antonio");
+//System.out.printf("%-20s%-20s%-20s\n","9532114","Juan","Fernando");
+//            
         } catch (Exception e) {
         }
         System.out.println(str);
@@ -174,7 +176,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager {
     }
     
     @Override
-    public void update(Object e) {
+    public void update(Person e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

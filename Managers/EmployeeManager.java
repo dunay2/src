@@ -33,7 +33,7 @@ public class EmployeeManager extends PersonManager {
 
 ////Propósito: crear un nuevo employee con los datos de entrada de consola
     @Override
-    public Object createObject(Node node) throws IOException {
+    public Employee createObject(Node node) throws IOException {
 
         ArrayList<String> nodesData = node.convertTreeChildToList();
         int i = 0;

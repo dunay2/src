@@ -5,7 +5,7 @@
  */
 package Managers;
 
-import Generator.PersonGenerator;
+import Utils.Generator.PersonGenerator;
 import Person.Client.Client;
 import Utils.Node;
 import java.io.IOException;
@@ -31,14 +31,31 @@ public class ClientManager extends PersonManager {
 
         return client;
     }
+//Propósito: modificar los datos de un cliente
 
+    private void updateClient(Node node) {
+
+        Client client = search(node);
+
+        if (client != null) {
+            ArrayList<String> nodesData = node.convertTreeChildToListIdx();
+            int i = 0;
+
+            client.setFirstName(nodesData.get(i++));
+            client.setLastName(nodesData.get(i++));
+            client.setSalary(Double.valueOf(nodesData.get(i++)));
+            //Guardar los datos 
+            save();
+        }
+
+    }
 //Propósito: gestionar las peticiones del controlador principal
+
     @Override
     public boolean handleProcess(Node node) {
 
         switch (node.getValue()) {
 
-            //Gestion de clientes introducción de DNI
             case 21: {
                 try {
                     createObject(node);
@@ -47,22 +64,42 @@ public class ClientManager extends PersonManager {
                 }
                 return true;
             }
+            case 22: //Actualizar
+                updateClient(node);
+                return true;
+            case 23: //Eliminar
+                return true;
             //Listar clientes 
             case 24:
                 ListClient();
-
                 return true;
             //Crear cliente aleatorio
             case 25:
                 generateRandomPerson();
                 return true;
+            case 26://buscar
+                search(node);
+            case 27://menu superior
+                return true;
         }
         return false;
     }
 
+    private Client search(Node node) {
+
+        Client client = (Client) super.search(node.getChildNodes().get(0).getResponse());
+        if (client != null) {
+            String space = "                   ";
+            System.out.println("Nombre".concat(space).concat("apellido").concat(space).concat("Nómina"));
+            System.out.println(client.getFirstName().concat(space).concat(client.getLastName()).concat(space).concat(String.valueOf(client.getSalary())));
+        }
+
+        return client;
+    }
+
 ////Propósito: crear un nuevo cliente con los datos de entrada de consola
     @Override
-    public Object createObject(Node node) throws IOException {
+    public Client createObject(Node node) throws IOException {
 
         ArrayList<String> nodesData = node.convertTreeChildToList();
         int i = 0;
@@ -107,7 +144,5 @@ public class ClientManager extends PersonManager {
         String a = scanner.nextLine();
 
     }
-
-
 
 }

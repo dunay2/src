@@ -64,9 +64,11 @@ public class Shoppingcart implements Serializable {
     private double totalAmount = 0; // Precio de la compra
     private byte lineNumber;//Control de entradas en el carrito
 
-    private ArrayList<Line> items;
+    private ArrayList<Line> items ;
 
     public Shoppingcart(String cashierCode) {
+        items=new ArrayList();
+        
         this.cashierCode = cashierCode;
 
         //establecer la fecha por defecto 
@@ -123,7 +125,7 @@ public class Shoppingcart implements Serializable {
 
         items.add(line);
 
-        totalAmount = totalAmount + line.price;
+        totalAmount = totalAmount + line.price * line.amount;
     }
 
     public void removeItem(byte lineNumber) {

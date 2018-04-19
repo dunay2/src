@@ -1,165 +1,114 @@
 package ScreenInterfaces;
 
 //Autor: DRS
+import Utils.MenuMessage;
 import Utils.Node;
 
 public abstract class AppInterface implements IInterface {
 
     private final Node node = new Node(0, null, "Menú principal");
+    private final MenuMessage m = new MenuMessage();
+
+//Agregar el menu principal
+    private void mnuMain(Node node) {
+
+        String mnuText[] = MenuMessage.getMenu("mnuMain");
+
+        for (int i = 1; i < mnuText.length; i++) {
+            node.addChild(new Node(i, node, mnuText[i - 1]));
+        }
+        node.addChild(new Node(0, node, mnuText[mnuText.length - 1]));
+        //Agregamos los elementos de menú hijos
+
+        //Realizar una transaccion
+        mnuTransaction(node.getChildNodes().get(0), 10); //venta
+        //Gestionar clientes
+        mnuHndClient(node.getChildNodes().get(1), 20);
+        //Stock
+        mnuAddGeneric(node.getChildNodes().get(2), "Item", 30);
+        //Empleados
+        mnuAddGeneric(node.getChildNodes().get(3), "Employee", 40);
+
+    }
 
     //Agregar las ramas de menú segun el rol del usuario
-    
     @Override
-    public void addmenu(Node node, String t) {
+    public void addInputMenu(Node node, String mnuCode) {
 
-        switch (t) {
-            case "Cliente":
-                mnuAddClient(node);
-                break;
-            case "Empleado":
-                mnuAddEmployee(node);
-                break;
-            case "Electrodoméstico":
-                mnuAddItem(node);
-                break;
+        String text[] = MenuMessage.getMenu(mnuCode);
+
+        for (String textStr : text) {
+            //Se pide un dato al usuario
+            Node childNode = new Node(-5, node, textStr);
+            childNode.isInput(true);
+            node.addChild(childNode);
         }
 
     }
 
     private void mnuAddItem(Node node) {
+        setInputMenu(node, "mnuAddItem");
 
-        String text[] = {"Introduzca código de familia", "Introduzca código de artículo", "Introduzca nombre de artículo", "Introduzca descripción de artículo", "Introduzca precio de compra", "Introduzca precio de venta", "Introduzca cantidad en stock"};
-
-        for (String textStr : text) {
-            //Se pide un dato al usuario
-            Node childNode = new Node(-5, node, textStr);
-            childNode.seImput(true);
-            node.addChild(childNode);
-//        
-        }
     }
 
-    private void mnuAddClient(Node node) {
+    private void setInputMenu(Node node, String s) {
 
-        String text[] = {"Introduzca introduzca DNI", "Introduzca nombre", "Introduzca apellido", "Introduzca nómina"};        
-        
-        for (String textStr : text) {
-            //Se pide un dato al usuario
-            Node childNode = new Node(-5, node, textStr);
-            childNode.seImput(true);
-            node.addChild(childNode);
-//        
-        }
     }
 
     private void mnuAddEmployee(Node node) {
-
-        String text[] = {"Introduzca código de familia", "Introduzca código de artículo", "Introduzca nombre de artículo", "Introduzca descripción de artículo", "Introduzca precio de compra", "Introduzca precio de venta", "Introduzca cantidad en stock"};
-
-        for (String textStr : text) {
-            //Se pide un dato al usuario
-            Node childNode = new Node(-5, node, textStr);
-            childNode.seImput(true);
-            node.addChild(childNode);
-//        
-        }
+        setInputMenu(node, "mnuAddEmployee");
     }
 
-    private void mnuMain(Node node) {
-        // <editor-fold defaultstate="collapsed" desc=" ${Consultar Importe} ">  
+    private void mnuSearchItem(Node node) {
+        setInputMenu(node, "mnuSearchItem");
+    }
 
-        String text[] = {". Realizar una Transacción", ". Gestión de Clientes", ". Gestión de Stock", ". Gestión de Empleados", ". Salir de la aplicación"};
+    private void mnuSearchClient(Node node) {
+        setInputMenu(node, "mnuSearchClient");
+    }
 
-        for (int i = 1; i < text.length; i++) {
-            node.addChild(new Node(i, node, i + text[i - 1]));
-        }
-        node.addChild(new Node(0, node, 0 + text[text.length - 1]));
+    private void mnuItemSection(Node node, int mnuIndex) {
+        addMenu(node, MenuMessage.getMenu("mnuItemSection"), mnuIndex);
+    }
 
-        //Realizar una transaccion
-        mnuTransaction(node.getChildNodes().get(0), 10); //venta
+    private void mnuBuying(Node node, int mnuIndex) {
+        addMenu(node, MenuMessage.getMenu("mnuBuying"), mnuIndex);
+    }
 
-        //Agregamos los elementos de menú hijos
-        mnuAddGeneric(node.getChildNodes().get(1), "Cliente", 20);
-
-        mnuAddGeneric(node.getChildNodes().get(2), "Electrodoméstico", 30);
-
-        mnuAddGeneric(node.getChildNodes().get(3), "Empleado", 40);
-
+    private void mnuHndClient(Node node, int mnuIndex) {
+        mnuAddGeneric(node, "Client", 20);
     }
 
     private void mnuTransaction(Node node, int mnuIndex) {
-
-        String mnuText[] = {". Consultar el importe actual", ". Añadir electrodomestico al carrito", ". Pagar Compra", ". Cancelar venta"};
-
-        for (int i = 1; i < mnuText.length; i++) {
-            node.addChild(new Node(i + mnuIndex, node, i + mnuText[i - 1]));
-        }
-        node.addChild(new Node(-1, node, mnuText.length + mnuText[mnuText.length - 1]));
-
+        addMenu(node, MenuMessage.getMenu("mnuTransaction"), mnuIndex);
         //Hijos de consultar importe
-        mnuBuying(node.getChildNodes().get(0));
+        addMenu(node.getChildNodes().get(0), MenuMessage.getMenu("mnuBuying"), mnuIndex);
+        //Agregar un item al carrito 
+        addInputMenu(node.getChildNodes().get(1), "mnuAddItemToCart");
+        // addMenu(), MenuMessage.getMenu("mnuAddItemToCart"), mnuIndex);
 
     }
 
     private void mnuPaymentType(Node node, int mnuIndex) {
-
-        String text[] = {". Efectivo", ". Tarjeta", ". Financiado", ". Cancelar venta"};
-
-        for (int i = 1; i < text.length; i++) {
-            node.addChild(new Node(i + mnuIndex, node, i + text[i - 1]));
-        }
-        node.addChild(new Node(-1, node, text.length + text[text.length - 1]));
-//        return node;
-
+        addMenu(node, MenuMessage.getMenu("mnuPaymentType"), mnuIndex);
     }
 
     private void mnuAddGeneric(Node node, String textGeneric, int mnuIndex) {
 
-        String mnuText[] = {". Agregar " + textGeneric, ". Actualizar " + textGeneric, ". Eliminar " + textGeneric, ". Listar " + textGeneric + "s", ". Agregar " + textGeneric + " aleatorio", ". Volver al menú principal"};
+        String mnuText[] = MenuMessage.getMenu("mnuGenericABMS");
 
         for (int i = 1; i < mnuText.length; i++) {
-            node.addChild(new Node(i + mnuIndex, node, i + mnuText[i - 1]));
+            node.addChild(new Node(i + mnuIndex, node, mnuText[i - 1]));
         }
-        addmenu(node.getChildNodes().get(0), textGeneric);
-        node.addChild(new Node(-1, node, mnuText.length + mnuText[mnuText.length - 1]));
-
-        //Agregar nodos hijos para cada tipo
-        //return node;
-//si cliente...
-        //<editor-fold defaultstate="collapsed" desc=" ${Agregar Cliente} ">
-//            {//Tomamos una referencia al 1 elemento hijo del nodo padre 
-//                childNode = childNode.getChildNodes().get(0);
-//                //Agregamos los elementos de menú hijos
-//                childNode.addChild(new Node(211, childNode, "1. Introducir DNI "));
-//                childNode.addChild(new Node(212, childNode, "2. Introducir nombre"));
-//                childNode.addChild(new Node(213, childNode, "3. Introducir apellido"));
-//                childNode.addChild(new Node(214, childNode, "4. Introducir email"));
-//                childNode.addChild(new Node(215, childNode, "5. Guardar"));
-//                childNode.addChild(new Node(0, childNode, "6. Volver al menú principal"));
-//            }
-        // childNode = childNode.getParent();
-        // </editor-fold> 
-    }
-
-    private void mnuBuying(Node node) {
-
-        String text[] = {" Seguir Comprando", ". Cancelar Compra"};
-
-        for (int i = 0; i <= 1; i++) {
-            node.addChild(new Node(i - 1, node, i + 1 + text[i]));
-        }
-//        return node;
-
-    }
-
-    private void mnuItemSection(Node node, int mnuIndex) {
-        node.addChild(new Node(mnuIndex, node, "Seleccione seccion"));
-        String text[] = {". PDA'S", ". Portatiles", ". Sobremesa", ". NoteBooks"};
-
-        for (int i = 1; i <= text.length; i++) {
-            node.addChild(new Node(i + mnuIndex, node, i + text[i - 1]));
-        }
-//        return node;
+        addInputMenu(node.getChildNodes().get(0), "mnuAdd" + textGeneric);//Menu agregar
+        addInputMenu(node.getChildNodes().get(1), "mnuEdit" + textGeneric);//Menu Editar
+        addInputMenu(node.getChildNodes().get(2), "mnuDelete" + textGeneric);//Menu Eliminar
+        addInputMenu(node.getChildNodes().get(5), "mnuSearch" + textGeneric);//Menu Buscar
+        //Volver
+        Node lnode = new Node(mnuIndex + mnuText.length, node, mnuText[mnuText.length - 1]);
+        lnode.isTail(true);
+        node.addChild(lnode);
+        //node.addChild(new Node(-1, node, mnuText[mnuText.length - 1]));
 
     }
 
@@ -180,5 +129,15 @@ public abstract class AppInterface implements IInterface {
         // <editor-fold defaultstate="collapsed" desc=" ${Creacion Menu} ">  
 
         // </editor-fold> 
+    }
+
+    @Override
+    public void addMenu(Node node, String[] mnuText, int mnuIndex) {
+        for (int i = 1; i <= mnuText.length-1; i++) {
+            node.addChild(new Node(mnuIndex + i, node, mnuText[i - 1]));
+        }
+        Node lnode = new Node(mnuIndex + mnuText.length, node, mnuText[mnuText.length - 1]);
+        lnode.isTail(true);
+        node.addChild(lnode);
     }
 }

@@ -1,13 +1,13 @@
 package ScreenInterfaces;
 
 import Utils.Node;
-import java.io.IOException;
 
 public interface IInterface {
 
-    public void addmenu(Node node,String t);
+    public void addInputMenu(Node node, String t);
 
-    public Node printMenu(Node node) ;
-    
-    
+    public void addMenu(Node node,String[] mnuText, int index);
+
+    public Node printMenu(Node node);
+
 }

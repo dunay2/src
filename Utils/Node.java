@@ -23,8 +23,9 @@ public class Node {
     private final int value; //Valor del nodo
     private final Node parent;//Padre del nodo
     private final String label; //Etiqueta del nodo
-    private boolean isImput = false;//Es un nodo de lectura
+    private boolean isInput = false;//Es un nodo de lectura
     private String response; //Devolucion de datos de nodo de lectura
+    private boolean Tail = false;//Es un nodo de lectura
 
 //Constructor
     /**
@@ -40,25 +41,57 @@ public class Node {
         this.label = label;
     }
 
+    public boolean isTail() {
+        return Tail;
+    }
+
+    public void isTail(boolean Tail) {
+        this.Tail = Tail;
+    }
+
+    //Propósito: Convertir los hijos en una lista
+    //de nodos input que toman como valor devuelto
+    //la entrada de teclado
     public ArrayList<String> convertTreeChildToList() {
-        ArrayList<String> nodeData = new ArrayList();
+        ArrayList<String> nodeDataList = new ArrayList();
 
         Node childNode;
         //Convertimos los nodos en arraylist
         Iterator<Node> it = this.getChildNodes().iterator();
-        int i = 0;
+
         while (it.hasNext()) {
             childNode = it.next();
-            nodeData.add(childNode.getResponse());
+            nodeDataList.add(childNode.getResponse());
         }
-        return nodeData;
+        return nodeDataList;
+
+    }
+
+    //No devuelve el primer elemento
+    public ArrayList<String> convertTreeChildToListIdx() {
+        ArrayList<String> nodeDataList = new ArrayList();
+        int i = 0;
+        Node childNode;
+        //Convertimos los nodos en arraylist
+        Iterator<Node> it = this.getChildNodes().iterator();
+
+        while (it.hasNext()) {
+            if (i == 0) {
+                childNode = it.next();
+                i++;
+            }
+
+            childNode = it.next();
+            nodeDataList.add(childNode.getResponse());
+        }
+        return nodeDataList;
 
     }
 
     //propósito: leer los datos introducidos por consola
     public String getResponse() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        if (this.isImput()) {
+        if (this.isInput()) {
             System.out.println(this.getLabel());
             try {
                 this.setResponse(br.readLine());
@@ -73,12 +106,12 @@ public class Node {
         this.response = response;
     }
 
-    public boolean isImput() {
-        return isImput;
+    public boolean isInput() {
+        return isInput;
     }
 
-    public void seImput(boolean isImput) {
-        this.isImput = isImput;
+    public void isInput(boolean isInput) {
+        this.isInput = isInput;
     }
 
     public Node getParent() {

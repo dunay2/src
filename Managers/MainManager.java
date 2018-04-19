@@ -99,10 +99,10 @@ public class MainManager {
         //cargamos nuevo menú o menú principal
         Node newNode = null;
         if (!startNewSequence
-                == true) {
+                == true) {//Imprime los hijos de nodo
             newNode = myTextInterface.printMenu(node);
-        } else {
-            newNode = myTextInterface.printMenu(node.getParent());
+        } else {//Imprime los hijos del padre
+            newNode = myTextInterface.printMenu(node.getParent() );
         }
 
         doBusiness(newNode);
