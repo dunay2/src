@@ -25,7 +25,7 @@ public class SerializacionApp {
 
         String Stremp = "G:\\ESTUDIOS\\UNED\\POO\\PEC1\\Ishop\\Ishop\\Client.data";
         //Creamos el objeto
-        ClientManager clientManager = new ClientManager();
+        ClientManager clientManager =  ClientManager.getInstance();
         Client client;
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(Stremp))) {

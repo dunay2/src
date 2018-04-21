@@ -23,7 +23,7 @@ public class MenuMessage {
 
     public MenuMessage() {
         ArrayList<String[]> menuText = new ArrayList();
-        String[] mnuName = new String[19];
+        String[] mnuName = new String[20];
 //Inicializacion de menus definiendo las funciones que va a ejecutar el sistemas
         mnuName[0] = "mnuMain";
 
@@ -49,7 +49,9 @@ public class MenuMessage {
         mnuName[17] = "mnuBuying";
 
         mnuName[18] = "mnuItemSection";
-
+        mnuName[19] = "mnuGetClientId";
+        
+        // <editor-fold defaultstate="collapsed" desc=" ${************mnuMain***************} ">  
         //0. mnuMain 
         String[] code = new String[5];
         code[0] = "Realizar una Transacción";
@@ -58,7 +60,8 @@ public class MenuMessage {
         code[3] = "Gestión de Empleados";
         code[4] = "Salir de la aplicación";
         menuText.add(code);
-
+        // </editor-fold>  
+        // <editor-fold defaultstate="collapsed" desc=" ${************Client****************} ">      
         /**
          * ************Client*****************
          */
@@ -85,10 +88,9 @@ public class MenuMessage {
         code = new String[1];
         code[0] = "Introduzca DNI del cliente";
         menuText.add(code);
+        // </editor-fold> 
+        // <editor-fold defaultstate="collapsed" desc=" ${************Stock*****************} ">  
 
-        /**
-         * ************Stock*****************
-         */
         //5. mnuAddItem
         code = new String[7];
         code[0] = "Introduzca código de familia: 1.  Ordenadores   2. Hogar   3. Telefonía   4. Imagen   5. Sonido";
@@ -116,7 +118,8 @@ public class MenuMessage {
         code = new String[1];
         code[0] = "Introduzca el código de artículo";
         menuText.add(code);
-
+        // </editor-fold>        
+        // <editor-fold defaultstate="collapsed" desc=" ${************Employee**************} ">       
         /**
          * ************Employee*****************
          */
@@ -142,7 +145,8 @@ public class MenuMessage {
         code = new String[1];
         code[0] = "Introduzca DNI del Empleado";
         menuText.add(code);
-
+        // </editor-fold> 
+        // <editor-fold defaultstate="collapsed" desc=" ${************mnuGenericABMS********} ">      
         //13. mnuGenericABMS
         code = new String[7];
         code[0] = "Agregar";
@@ -153,7 +157,8 @@ public class MenuMessage {
         code[5] = "Buscar";
         code[6] = "Volver al menú principal";
         menuText.add(code);
-
+        // </editor-fold> 
+        // <editor-fold defaultstate="collapsed" desc=" ${************mnuPaymentType********} ">     
         //14. mnuPaymentType
         code = new String[4];
         code[0] = "Efectivo";
@@ -161,7 +166,8 @@ public class MenuMessage {
         code[2] = "Financiado";
         code[3] = "Cancelar venta";
         menuText.add(code);
-
+        // </editor-fold> 
+        // <editor-fold defaultstate="collapsed" desc=" ${************mnuTransaction********} ">     
         //15. mnuTransaction
         code = new String[4];
         code[0] = "Consultar el importe actual";
@@ -169,18 +175,23 @@ public class MenuMessage {
         code[2] = "Cobrar Compra";
         code[3] = "Cancelar venta";
         menuText.add(code);
-
+        // </editor-fold> 
+        // <editor-fold defaultstate="collapsed" desc=" ${************mnuAddItemToCart******} ">   
         //16 mnuAddItemToCart
         code = new String[2];
         code[0] = "Introduzca código de artículo";
         code[1] = "Introduzca cantidad";
         menuText.add(code);
+
+        // </editor-fold> 
+        // <editor-fold defaultstate="collapsed" desc=" ${************mnuBuying*************} ">  
         //17. mnuBuying
         code = new String[2];
         code[0] = "Seguir Comprando";
         code[1] = "Cancelar Compra";
         menuText.add(code);
-
+        // </editor-fold> 
+        // <editor-fold defaultstate="collapsed" desc=" ${************mnuItemSection********} ">  
         //18. mnuItemSection
         code = new String[4];
         code[0] = "PDA'S";
@@ -188,6 +199,13 @@ public class MenuMessage {
         code[2] = "Sobremesa";
         code[3] = "NoteBooks";
         menuText.add(code);
+        // </editor-fold> 
+        // <editor-fold defaultstate="collapsed" desc=" ${************mnuGetClientId****************} ">  
+        //19. mnuGetClientId    
+        code = new String[1];
+        code[0] = "Introduzca DNI del cliente";
+        menuText.add(code);
+        // </editor-fold>      
 
         for (int i = 0; i < mnuName.length; i++) {
             hashmap.put(

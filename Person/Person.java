@@ -157,6 +157,8 @@ public abstract class Person implements Serializable {
     }
 
     public double getSalary() {
+        if (salary==null)
+            salary=0D;
         return salary;
     }
 

@@ -32,8 +32,9 @@ public class MainManager {
     //Constructor
     public MainManager() {
         //Obtenemos una instancia a los gestores
-        this.clientManager = new ClientManager();
-        this.stockManager = new StockManager();
+        this.clientManager = ClientManager.getInstance();
+
+        this.stockManager = StockManager.getInstance();
         this.employeeManager = new EmployeeManager();
 
         myTextInterface = new TextInterface();
@@ -70,8 +71,8 @@ public class MainManager {
         clientManager.load();
         stockManager.load();
 
-        this.salesManager = new SalesManager(null, cashier);
-   
+        this.salesManager = new SalesManager(cashier, clientManager,stockManager);
+
         doBusiness(myTextInterface.printMenu(null));
 
     }
@@ -83,13 +84,13 @@ public class MainManager {
         if (salesManager.handleProcess(node)) {
             startNewSequence = true;
         }
-        if (clientManager.handleProcess(node)) {
+        if (clientManager.handleProcess(node) && !startNewSequence) {
             startNewSequence = true;
         }
-        if (stockManager.handleProcess(node)) {
+        if (stockManager.handleProcess(node) && !startNewSequence) {
             startNewSequence = true;
         }
-        if (employeeManager.handleProcess(node)) {
+        if (employeeManager.handleProcess(node) && !startNewSequence) {
             startNewSequence = true;
         }
 
@@ -102,7 +103,7 @@ public class MainManager {
                 == true) {//Imprime los hijos de nodo
             newNode = myTextInterface.printMenu(node);
         } else {//Imprime los hijos del padre
-            newNode = myTextInterface.printMenu(node.getParent() );
+            newNode = myTextInterface.printMenu(node.getParent());
         }
 
         doBusiness(newNode);

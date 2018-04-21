@@ -48,11 +48,9 @@ public abstract class AppInterface implements IInterface {
 
     private void mnuAddItem(Node node) {
         setInputMenu(node, "mnuAddItem");
-
     }
 
     private void setInputMenu(Node node, String s) {
-
     }
 
     private void mnuAddEmployee(Node node) {
@@ -79,18 +77,28 @@ public abstract class AppInterface implements IInterface {
         mnuAddGeneric(node, "Client", 20);
     }
 
+    private void mnuPaymentType(Node node, int mnuIndex) {
+        addMenu(node, MenuMessage.getMenu("mnuPaymentType"), mnuIndex);
+    }
+
     private void mnuTransaction(Node node, int mnuIndex) {
         addMenu(node, MenuMessage.getMenu("mnuTransaction"), mnuIndex);
         //Hijos de consultar importe
         addMenu(node.getChildNodes().get(0), MenuMessage.getMenu("mnuBuying"), mnuIndex);
         //Agregar un item al carrito 
         addInputMenu(node.getChildNodes().get(1), "mnuAddItemToCart");
-        // addMenu(), MenuMessage.getMenu("mnuAddItemToCart"), mnuIndex);
+        //Cobrar
+        mnuPay(node.getChildNodes().get(2),mnuIndex);
 
+        //node.getChildNodes().get(2).getChildNodes().get(1).isTail(true);
+        // addMenu(), MenuMessage.getMenu("mnuAddItemToCart"), mnuIndex);
     }
 
-    private void mnuPaymentType(Node node, int mnuIndex) {
+    private void mnuPay(Node node, int mnuIndex) {
+
+        addInputMenu(node, "mnuAddClient");
         addMenu(node, MenuMessage.getMenu("mnuPaymentType"), mnuIndex);
+   
     }
 
     private void mnuAddGeneric(Node node, String textGeneric, int mnuIndex) {
@@ -108,7 +116,6 @@ public abstract class AppInterface implements IInterface {
         Node lnode = new Node(mnuIndex + mnuText.length, node, mnuText[mnuText.length - 1]);
         lnode.isTail(true);
         node.addChild(lnode);
-        //node.addChild(new Node(-1, node, mnuText[mnuText.length - 1]));
 
     }
 
@@ -126,14 +133,12 @@ public abstract class AppInterface implements IInterface {
          * **********************Menu principal****************************
          */
         mnuMain(node);
-        // <editor-fold defaultstate="collapsed" desc=" ${Creacion Menu} ">  
-
-        // </editor-fold> 
+       
     }
 
     @Override
     public void addMenu(Node node, String[] mnuText, int mnuIndex) {
-        for (int i = 1; i <= mnuText.length-1; i++) {
+        for (int i = 1; i <= mnuText.length - 1; i++) {
             node.addChild(new Node(mnuIndex + i, node, mnuText[i - 1]));
         }
         Node lnode = new Node(mnuIndex + mnuText.length, node, mnuText[mnuText.length - 1]);

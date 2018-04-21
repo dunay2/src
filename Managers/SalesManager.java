@@ -5,39 +5,47 @@
  */
 package Managers;
 
-import DataBase.TextDatabase;
 import Person.Client.Client;
 import Person.Employee.Cashier;
+import Person.PersonOperation;
+import ScreenInterfaces.TextInterface;
 import Utils.Node;
-import ishop.Shoppingcart;
+import Utils.ShoppingCart;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
+import Utils.Record.Record;
+import Utils.Record.SalesRecord;
+import item.Electrodomestic;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+//Crear un numero de factura
 
 /**
  *
  * @author ashh412
  */
-public class SalesManager extends TextDatabase implements Imanager<Shoppingcart> {
+public class SalesManager extends OperationsManager implements Imanager<Record, Node> {
 
-    private Client client;//Lo declaramos como objeto para poder usar sus métodos
+    private PersonOperation client;//Lo declaramos como objeto para poder usar sus métodos
     private Cashier cashier;//Lo declaramos como objeto para poder usar sus métodos
-    private final Shoppingcart shoppingcart;
-    private final HashMap<String, Shoppingcart> history = new HashMap<>();
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
+    private final ShoppingCart shoppingCart;
+    private final HashMap<String, Record> history = new HashMap<>();
+    private final ClientManager clientManager;
+    private final StockManager stockManager;
 
     public void setCashier(Cashier cashier) {
         this.cashier = cashier;
     }
 
-    public SalesManager(Client client, Cashier cashier) {
+    public SalesManager(Cashier cashier, ClientManager clientManager, StockManager stockManager) {
         this.cashier = cashier;
-        this.client = client;
-        shoppingcart = new Shoppingcart(this.cashier.getDni());
+        shoppingCart = new ShoppingCart(this.cashier.getDni());
+        this.clientManager = clientManager;
+        this.stockManager = stockManager;
+
     }
 
     @Override
@@ -51,38 +59,31 @@ public class SalesManager extends TextDatabase implements Imanager<Shoppingcart>
     }
 
     @Override
-    public boolean add(Shoppingcart shoppingcart) {
+    public Record createObject(Node node) throws IOException {
+        //1. buscar cliente
+        //Si no existe crearlo
 
-//        if (history.containsKey(person.())) {
-//            System.out.println("No se puede introducir la persona. El código esta repetido.");
-//            return false;
-//        }
-        try {
-            //Agregamos el carrito al hasmap
-            history.put("random code", shoppingcart);
-            return true;
+        StringBuilder outString = new StringBuilder();
 
-        } catch (Exception e) {
-            System.out.println("Ha habido un error.");
-            return false;
+        //Devolvemos el código introducido por teclado en el StringBuilder de salida
+        client = (PersonOperation) clientManager.search(node, outString);
+        if (client == null) {
+            //crear cliente
+
+            client = new PersonOperation(outString.toString());
+            //Obtener el menu para añadir clientes
+//Paramos la operacion y creamos cliente
+            clientManager.add(client);
+            clientManager.save();
         }
-
-    }
-
-    @Override
-    public void list() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Shoppingcart createObject(Node node) throws IOException {
-
-//Guardamos la compra en la coleccion
-        add(shoppingcart);
-        //Guardar los datos 
+//Guardamos la compra
+        String operCode = "INVOICE".concat(String.valueOf(getSequence()));
+//guardar la operacion de la tienda
+        Record record = new SalesRecord(operCode, client.getDni(), cashier.getDni(), shoppingCart);
+//guardar la ficha de cliente
+        history.put(operCode, record);
         save(history);
-
-        return shoppingcart;
+        return record;
     }
 
     @Override
@@ -92,56 +93,107 @@ public class SalesManager extends TextDatabase implements Imanager<Shoppingcart>
 
             //Consultar el importe actual
             case 11:
-                queryShoppingCart();
+                list();
                 return true;
             //"12. Añadir electrodomestico al carrito"
             case 12:
-
                 addItem(node);
                 return true;
-            //break;
+
             //13. Cobrar Compra
             case 13:
                 //identificar al cliente o solicitar alta 
-                //  addItem();
-                //return true;
-                break;
-            //Crear carrito aleatorio
+                try {
+                    createObject(node);
+                } catch (IOException ex) {
+                    Logger.getLogger(ClientManager.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                return true;
 
+            //Crear carrito aleatorio
             //Cancelar venta
             case 14:
+                clearShoppingCart();
                 return true;
         }
         return false;//Profundiza
     }
+
+    private void clearShoppingCart() {
+        for (byte i = 0; i < shoppingCart.getItems().size(); i++) {
+            shoppingCart.removeItem(i);
+        }
+
+    }
+
     //intervinient
     //role (clasgetname)
+//deprecated
+    private void saveTransaction() { ////         
+///ESTRUCTURA DEL NODO: 0 (REPAIR || SELL)
+// cliCode  empCode  List --> (0)ShoppingCart
+///llamada
+////              List l = null;
+////          ShoppingCart shoppingCart;
+////          l.add(shoppingCart);
+////
+////          node.setList(l);
+////            }
+        ////         
+///ESTRUCTURA DEL NODO: 0 (REPAIR || SELL)
+// cliCode  empCode  List --> (0)ShoppingCart
+
+        Node node = new Node(0, null, "SALES");
+        Node childNode = new Node(0, node, client.getDni());
+        node.addChild(node);
+        childNode = new Node(1, node, client.getDni());
+        node.addChild(node);
+        childNode = new Node(2, node, cashier.getDni());
+        node.addChild(node);
+///llamada
+        List<ShoppingCart> list = new ArrayList<>();
+
+        list.add(shoppingCart);
+
+     //   node.setList(list);
+
+    }
 
     private double getTotalAmount() {
 
-        return shoppingcart.getTotalAmount();
-
+        return shoppingCart.getTotalAmount();
     }
 
     private void addItem(Node node) {
-        //shoppingcart.addItem((String) "ITEMCODE", (Double) 10.23, (byte) 2);
-        ArrayList<String> nodesData = node.convertTreeChildToList();
 
         int i = 0;
-        //shoppingcart.addItem(nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Byte.parseByte(nodesData.get(i++)));
-        shoppingcart.addItem(nodesData.get(i++), (Double) 10.23, Byte.parseByte(nodesData.get(i++)));
 
+        StringBuilder outString = new StringBuilder();
+        Electrodomestic item = stockManager.search(node, outString);
+        if (item == null) {
+            return;
+        }
+
+        ArrayList<String> nodesData = node.convertTreeChildToListIdx();
+
+        String itemCode = item.getCode();
+        Byte amount = Byte.parseByte(nodesData.get(i++));
+        Double cost = amount * item.getSellPrice();
+
+        shoppingCart.addItem(itemCode, cost, amount);
     }
+//Proposito: Listar elementos del carrito. Dar formato
 
-    private void queryShoppingCart() {
+    @Override
+    public void list() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Fecha:" + shoppingcart.getSalesDate());
+        System.out.println("Fecha:" + shoppingCart.getSalesDate());
+        printHeader();
 
-        System.out.println("LINE           CODE                 PRICE            AMOUNT    TOTAL ");
-        if (!shoppingcart.getItems().isEmpty()) {
-            if (shoppingcart.getItems().size() > 0) {
-                shoppingcart.getItems().forEach((Shoppingcart.Line line) -> {
+        if (!shoppingCart.getItems().isEmpty()) {
+            if (shoppingCart.getItems().size() > 0) {
+                shoppingCart.getItems().forEach((ShoppingCart.Line line) -> {
 
                     String s = line.getLineNumber() + " ";
                     s = s.concat(line.getItemCode().concat(" "));
@@ -155,29 +207,23 @@ public class SalesManager extends TextDatabase implements Imanager<Shoppingcart>
             }
         }
 
-        System.out.println("TOTAL AMOUNT:" + getTotalAmount() + " Pulse una tecla");
+        System.out.println("TOTAL AMOUNT:" + getTotalAmount());
+        TextInterface.pressKey();
 
-        String a = scanner.nextLine();
+    }
+
+    private void printHeader() {
+
+        System.out.printf("%-2s%-10s%-40s%-20s\n", "LINE", "CODE", "DESCRIPTION", "PRICE");
 
     }
 
     @Override
-    public void update(Shoppingcart e) {
+    public void update(Node e) {
         Byte i = 1;
 
-        e.addItem("", 0, i);
-
+        //  e.addItem("", 0, i);
         //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void delete(Shoppingcart e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Shoppingcart search(String e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

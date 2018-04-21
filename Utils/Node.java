@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  *
@@ -26,7 +27,8 @@ public class Node {
     private boolean isInput = false;//Es un nodo de lectura
     private String response; //Devolucion de datos de nodo de lectura
     private boolean Tail = false;//Es un nodo de lectura
-
+    //private List list; //Contenedor
+    
 //Constructor
     /**
      *
@@ -40,6 +42,14 @@ public class Node {
         this.parent = parent;
         this.label = label;
     }
+
+//    public List getList() {
+//        return list;
+//    }
+
+//    public void setList(List list) {
+//        this.list = list;
+//    }
 
     public boolean isTail() {
         return Tail;

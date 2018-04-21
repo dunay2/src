@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ishop;
+package Utils;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author ashh412
  */
-public class Shoppingcart implements Serializable {
+public class ShoppingCart implements Serializable {
 
     public class Line {//Estructura privada que contiene el pedido
 
@@ -66,7 +66,7 @@ public class Shoppingcart implements Serializable {
 
     private ArrayList<Line> items ;
 
-    public Shoppingcart(String cashierCode) {
+    public ShoppingCart(String cashierCode) {
         items=new ArrayList();
         
         this.cashierCode = cashierCode;

@@ -16,12 +16,10 @@ import java.util.HashMap;
  */
 public interface IDatabase<T>  {
 
-  
-    //void save (HashMap<String, Person> e);
+
 void save (HashMap<String, T> e);
 
-   // ArrayList<Person> Load(String id);
-    HashMap<String, T> load(String id);//persons = new HashMap<>();
+    HashMap<String, T> load(String id);
     
 
 }

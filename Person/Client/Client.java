@@ -1,14 +1,14 @@
 package Person.Client;
 
 import Person.Person;
-import ishop.Shoppingcart;
+import Utils.ShoppingCart;
 
 public class Client extends Person {
 
     private static final long serialVersionUID = -2873344211410398459L;
 
     private ClientHistory history;
-    private Shoppingcart shoppingCart;
+    private ShoppingCart shoppingCart;
 
     private boolean finance;
 

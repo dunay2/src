@@ -8,20 +8,21 @@ import java.util.HashMap;
  *
  * @author ashh412
  * @param <T>
+ * @param <N>
  */
 
 /*
  Propósito:Interfaz de Gestores de objetos
  */
 //Cosas que puede hacer un gestor 
+public interface Imanager<T, N> {
 
-public interface Imanager<T> {
-
-
-
+    //Para devolver el nombre de las instancias
     default String getClassName() {
         return this.getClass().getSimpleName();
     }
+
+    public void print(T e);
 
     //para realizar una búsqueda
     public Object get(int rollNo);
@@ -29,7 +30,7 @@ public interface Imanager<T> {
     public HashMap<String, T> getAll();
 
     //Para actualizar los datos de una entidad
-    public void update(T e);
+    public void update(N e);
 
     //Para borrar una entidad
     public void delete(T e);
@@ -38,7 +39,7 @@ public interface Imanager<T> {
     public boolean add(T e);
 //Para buscar un elemento
 
-    public T search(String e);
+    public T search(N e, StringBuilder  outString);
 
     public void list();
 

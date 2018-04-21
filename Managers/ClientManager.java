@@ -7,6 +7,8 @@ package Managers;
 
 import Utils.Generator.PersonGenerator;
 import Person.Client.Client;
+import Person.Person;
+import ScreenInterfaces.TextInterface;
 import Utils.Node;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,6 +21,21 @@ import java.util.logging.Logger;
  * @author ashh412 Propósito: gestor de operaciones de clientes
  *///
 public class ClientManager extends PersonManager {
+
+    private static ClientManager instance = null;    //Singleton Singleton Pattern
+
+    //Singleton Singleton Pattern
+    protected ClientManager() {
+        // Exists only to defeat instantiation.
+    }
+    //Singleton Singleton Pattern
+
+    public static ClientManager getInstance() {
+        if (instance == null) {
+            instance = new ClientManager();
+        }
+        return instance;
+    }
 
     //Propósito: crear un cliente aleatorio
     public Client generateRandomClient() {
@@ -33,24 +50,7 @@ public class ClientManager extends PersonManager {
     }
 //Propósito: modificar los datos de un cliente
 
-    private void updateClient(Node node) {
-
-        Client client = search(node);
-
-        if (client != null) {
-            ArrayList<String> nodesData = node.convertTreeChildToListIdx();
-            int i = 0;
-
-            client.setFirstName(nodesData.get(i++));
-            client.setLastName(nodesData.get(i++));
-            client.setSalary(Double.valueOf(nodesData.get(i++)));
-            //Guardar los datos 
-            save();
-        }
-
-    }
 //Propósito: gestionar las peticiones del controlador principal
-
     @Override
     public boolean handleProcess(Node node) {
 
@@ -65,36 +65,27 @@ public class ClientManager extends PersonManager {
                 return true;
             }
             case 22: //Actualizar
-                updateClient(node);
+                update(node);
                 return true;
             case 23: //Eliminar
                 return true;
             //Listar clientes 
             case 24:
-                ListClient();
+                listClients();
                 return true;
             //Crear cliente aleatorio
             case 25:
                 generateRandomPerson();
                 return true;
             case 26://buscar
-                search(node);
+                StringBuilder outString=new StringBuilder();
+                Client client = (Client) search(node, outString);
+
+                print(client);
             case 27://menu superior
                 return true;
         }
         return false;
-    }
-
-    private Client search(Node node) {
-
-        Client client = (Client) super.search(node.getChildNodes().get(0).getResponse());
-        if (client != null) {
-            String space = "                   ";
-            System.out.println("Nombre".concat(space).concat("apellido").concat(space).concat("Nómina"));
-            System.out.println(client.getFirstName().concat(space).concat(client.getLastName()).concat(space).concat(String.valueOf(client.getSalary())));
-        }
-
-        return client;
     }
 
 ////Propósito: crear un nuevo cliente con los datos de entrada de consola
@@ -133,16 +124,13 @@ public class ClientManager extends PersonManager {
 
     }
 
-    void ListClient() {
-
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("================Listado de Clientes============");
+    void listClients() {
 
         list();
-        System.out.println("Pulsa una tecla para continuar ...");
-        String a = scanner.nextLine();
+        TextInterface.pressKey();
 
     }
+
+    
 
 }

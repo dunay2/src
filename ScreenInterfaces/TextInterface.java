@@ -1,6 +1,7 @@
 package ScreenInterfaces;
 
 import Utils.Node;
+import java.io.IOException;
 import java.util.Scanner;
 
 //Implementar la lectura de los nodos is imput
@@ -15,14 +16,12 @@ public class TextInterface extends AppInterface {
      */
     @Override
     public Node printMenu(Node node) {
-        Node n = null;
+  
         //Menú principal
-        if (null == node) {
-            n = super.getNode();
-            return getMenu(n);
+        if (null == node) {       
+            return getMenu(super.getNode());
         }
-        n = getMenu(node);
-        return n;
+        return getMenu(node);
 
     }
 
@@ -120,9 +119,13 @@ public class TextInterface extends AppInterface {
             } else {
                 Runtime.getRuntime().exec("clear");
             }
-        } catch (final Exception e) {
+        } catch (final IOException e) {
             //  Handle any exceptions.
         }
     }
-
+        public static void pressKey() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Pulsa una tecla para continuar ...");
+        String a = scanner.nextLine();
+      } 
 }
