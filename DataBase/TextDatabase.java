@@ -16,6 +16,7 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Person.Client.Client;
+import Utils.Record.Sale;
 import item.Electrodomestic;
 
 /**
@@ -54,7 +55,8 @@ public class TextDatabase implements IDatabase {
                     break;
                 case "Employee.data":
                     break;
-                case "Sell.data":
+                case "Sales.data":
+                     hmfile = (HashMap<String, Sale>) hm;
                     break;
                 case "Repair.data":
                     break;
