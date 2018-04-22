@@ -55,7 +55,7 @@ public class TextDatabase implements IDatabase {
                     break;
                 case "Employee.data":
                     break;
-                case "Sales.data":
+                case "Sale.data":
                      hmfile = (HashMap<String, Sale>) hm;
                     break;
                 case "Repair.data":

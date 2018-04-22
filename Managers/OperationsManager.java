@@ -8,7 +8,6 @@ package Managers;
 import DataBase.TextDatabase;
 import Utils.Node;
 import Utils.Record.Record;
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -45,7 +44,9 @@ public class OperationsManager extends TextDatabase implements Imanager<Record, 
 //        }
 //        clearScreen();
 //    }
-
+public int size()
+{return records.size();
+}
     private void listFormat(Record record) {
 
         System.out.printf("%-20s%-20s%-20s%-20s\n",record.getOperCode(), record.getCliCode(), record.getEmpCode(), record.getDate());
@@ -153,6 +154,12 @@ public class OperationsManager extends TextDatabase implements Imanager<Record, 
         return records;//Pasamos el nombre del fichero
     }
 
+    //Extension de database
+    //Guardamos
+    public void save() {
+        save(records);
+    }
+    
 //el nombre de los managers debe ser NombreClaseManager
 //para que esta clase los guarde correctamente
 //Cargar la base de datos  
@@ -228,7 +235,7 @@ public class OperationsManager extends TextDatabase implements Imanager<Record, 
 
 
     public int getSequence() {
-        return 0;
+        return records.size();
 
     }
 

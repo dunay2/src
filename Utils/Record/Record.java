@@ -5,6 +5,7 @@
  */
 package Utils.Record;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,7 +15,7 @@ import java.util.Date;
  * @author ashh412
  */
 //Proposito: Generico que guarda operaciones de la empresa: venta,reparacacion e implementaciones futuras
-public class Record {
+public class Record implements Serializable {
 
     private final String operCode;
     private final String cliCode;

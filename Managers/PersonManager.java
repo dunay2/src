@@ -21,18 +21,6 @@ import java.util.Map;
  * Extiende la clase TextDatabase lo que le da persistencia
  *
  */
-//public class SingletonInstantiator { 
-//  public SingletonInstantiator() { 
-//   ClassicSingleton instance = ClassicSingleton.getInstance();
-//ClassicSingleton anotherInstance =
-//new ClassicSingleton();
-//       ... 
-//  } 
-//}
-
-  
- 
-
 
 public abstract class PersonManager extends TextDatabase implements Imanager<Person, Node>{
 

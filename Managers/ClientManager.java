@@ -10,10 +10,7 @@ import Person.Client.Client;
 import ScreenInterfaces.TextInterface;
 import Utils.Generator.PersonGenerator;
 import Utils.Node;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

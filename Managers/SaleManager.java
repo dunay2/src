@@ -27,20 +27,31 @@ public class SaleManager extends OperationsManager implements Imanager<Record, N
     private Client client;
     private Cashier cashier;//Lo declaramos como objeto para poder usar sus métodos
     private final ShoppingCart shoppingCart;
-    private final HashMap<String, Record> history = new HashMap<>();
+  //  private final HashMap<String, Record> history = new HashMap<>();
     private final ClientManager clientManager;
     private final StockManager stockManager;
+    private String operCode = "INVOICE".concat(String.valueOf( size()));
+    private static SaleManager instance = null;    //Singleton Singleton Pattern
 
-    public void setCashier(Cashier cashier) {
-        this.cashier = cashier;
-    }
-
-    public SaleManager(Cashier cashier, ClientManager clientManager, StockManager stockManager) {
+    //Singleton Singleton Pattern
+    protected SaleManager(Cashier cashier, ClientManager clientManager, StockManager stockManager) {
         this.cashier = cashier;
         shoppingCart = new ShoppingCart(this.cashier.getDni());
         this.clientManager = clientManager;
         this.stockManager = stockManager;
 
+    }
+    //Singleton Singleton Pattern
+
+    public static SaleManager getInstance(Cashier cashier, ClientManager clientManager, StockManager stockManager) {
+        if (instance == null) {
+            instance = new SaleManager(cashier, clientManager, stockManager);
+        }
+        return instance;
+    }
+
+    public void setCashier(Cashier cashier) {
+        this.cashier = cashier;
     }
 
     @Override
@@ -80,10 +91,11 @@ public class SaleManager extends OperationsManager implements Imanager<Record, N
         if (client == null) {
             client = clientManager.createObject(enode);
         }
-
+//continuamos por el menu
         enode[0] = callTailMenu(node);
-        //continuamos por el menu
 
+        operCode = "INVOICE".concat(String.valueOf(size()));
+        System.out.println(">>>>>>>>>>>>>" + operCode);
         return null;
     }
 
@@ -117,22 +129,23 @@ public class SaleManager extends OperationsManager implements Imanager<Record, N
                 clearShoppingCart();
                 return true;
 
-            case 141://pago en efectivo
+            case 1341://pago en efectivo
                 finishTransaction();
                 enode[0] = callMainMenu(node);
                 return true;
-            
-                case 142://Tarjeta
+
+            case 1342://Tarjeta
                 finishTransaction();
                 enode[0] = callMainMenu(node);
                 return true;
-                
-                case 143://Financiado
+
+            case 1343://Financiado
                 finishTransaction();
-                enode[0] = callMainMenu(node);
+
                 return false;
-                
-           
+            case 13431://Mensaje final financiado
+                enode[0] = callMainMenu(node);
+
         }
         return false;//Profundiza
     }
@@ -141,7 +154,7 @@ public class SaleManager extends OperationsManager implements Imanager<Record, N
         //continuar aqui, sacar el resto de nodos hijos con la forma de pago
         //Si financia pasar a financiacion
 //Guardamos la compra
-        String operCode = "INVOICE".concat(String.valueOf(getSequence()));
+
 //guardar la operacion de la tienda
         Record sale = new Sale(operCode, client.getDni(), cashier.getDni(), shoppingCart);
 
@@ -150,8 +163,8 @@ public class SaleManager extends OperationsManager implements Imanager<Record, N
         clientManager.save();
 
         //Agregamos y guardamos todos los datos de la venta
-        history.put(operCode, sale);
-        save(history);
+       add(sale);
+        save();
     }
 
     private void openCreditLine() {
