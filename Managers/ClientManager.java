@@ -5,14 +5,13 @@
  */
 package Managers;
 
-import Utils.Generator.PersonGenerator;
 import Person.Client.Client;
-import Person.Person;
+
 import ScreenInterfaces.TextInterface;
+import Utils.Generator.PersonGenerator;
 import Utils.Node;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,27 +40,30 @@ public class ClientManager extends PersonManager {
     public Client generateRandomClient() {
 
         Client client;
-
-        client = new Client(PersonGenerator.generateDni());
-
-        client.setFirstName(PersonGenerator.generateName());
-
+        // public PersonOperation(String dni, String firstName, String lastName, Double salary) {
+        //  super(dni, firstName, lastName, salary);
+        client = new Client(PersonGenerator.generateDni(), PersonGenerator.generateFirstName(), "", 1000D);
+        client.setLastName(PersonGenerator.generateLastName());
+        System.out.println("Cliente generado: " + client.getDni() + " " + client.getfirstName());
+        add(client);
+//        //Guardar los datos 
+        save();
+        TextInterface.pressKey();
         return client;
     }
 //Propósito: modificar los datos de un cliente
 
 //Propósito: gestionar las peticiones del controlador principal
     @Override
-    public boolean handleProcess(Node node) {
+     public boolean handleProcess(Node[] enode) {
+        Node node = enode[0];
 
         switch (node.getValue()) {
 
             case 21: {
-                try {
-                    createObject(node);
-                } catch (IOException ex) {
-                    Logger.getLogger(ClientManager.class.getName()).log(Level.SEVERE, null, ex);
-                }
+               
+                    createObject(enode);
+              
                 return true;
             }
             case 22: //Actualizar
@@ -75,10 +77,10 @@ public class ClientManager extends PersonManager {
                 return true;
             //Crear cliente aleatorio
             case 25:
-                generateRandomPerson();
+                generateRandomClient();
                 return true;
             case 26://buscar
-                StringBuilder outString=new StringBuilder();
+                StringBuilder outString = new StringBuilder();
                 Client client = (Client) search(node, outString);
 
                 print(client);
@@ -90,10 +92,15 @@ public class ClientManager extends PersonManager {
 
 ////Propósito: crear un nuevo cliente con los datos de entrada de consola
     @Override
-    public Client createObject(Node node) throws IOException {
+    public Client createObject(Node []enode) {
+        
+        Node node=enode[0];
+        String dni = "";
 
         ArrayList<String> nodesData = node.convertTreeChildToList();
         int i = 0;
+        Node n = node.getChildNodes().get(0);
+        n.getResponse();
 
         Client client = new Client(nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)));
 
@@ -109,28 +116,25 @@ public class ClientManager extends PersonManager {
 //    private void createRandomClient() {
 //    
 //    }
-    @Override
-    public Client generateRandomPerson() {
-        Scanner scanner = new Scanner(System.in);
-        Client client = (Client) super.generateRandomPerson();// generateRandomClient();
-        //Guardamos el cliente en la coleccion
-        add(client);
-        //Guardar los datos 
-        save();
-        System.out.println("Cliente generado: " + client.getDni() + " " + client.getfirstName());
-        System.out.println("Pulse una tecla para continuar");
-        String a = scanner.nextLine();
-        return client;
-
-    }
-
+//    @Override
+//    public PersonOperation generateRandomPerson() {
+//        Scanner scanner = new Scanner(System.in);
+//        PersonOperation client = (PersonOperation) super.generateRandomPerson();// generateRandomClient();
+//        //Guardamos el cliente en la coleccion
+//        add(client);
+//        //Guardar los datos 
+//        save();
+//        System.out.println("Cliente generado: " + client.getDni() + " " + client.getfirstName());
+//        System.out.println("Pulse una tecla para continuar");
+//        String a = scanner.nextLine();
+//        return client;
+//
+//    }
     void listClients() {
 
         list();
         TextInterface.pressKey();
 
     }
-
-    
 
 }

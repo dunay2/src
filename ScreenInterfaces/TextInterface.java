@@ -11,8 +11,8 @@ public class TextInterface extends AppInterface {
 
     /**
      *
-     * @param node
-     * @return
+     * @param node Nodo sobre el que vamos a trabajar
+     * @return Devuelve el nodo seleccionado
      */
     @Override
     public Node printMenu(Node node) {

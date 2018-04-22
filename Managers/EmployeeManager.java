@@ -36,10 +36,17 @@ public class EmployeeManager extends PersonManager {
     }
 
 ////Propósito: crear un nuevo employee con los datos de entrada de consola
+    /**
+     *
+     * @param node
+     * @return
+     * @throws IOException
+     */
     @Override
-    public Employee createObject(Node node) throws IOException {
+    public Employee createObject(Node[] node) {
 
-        ArrayList<String> nodesData = node.convertTreeChildToList();
+        Node enode = node[0];
+        ArrayList<String> nodesData = enode.convertTreeChildToList();
         int i = 0;
 
         Employee employee = new Employee(nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)));
@@ -52,15 +59,14 @@ public class EmployeeManager extends PersonManager {
     }
 
     @Override
-    public boolean handleProcess(Node node) {
+    public boolean handleProcess(Node[] enode) {
+        Node node = enode[0];
         switch (node.getValue()) {
 
             case 41: {
-                try {
-                    createObject(node);
-                } catch (IOException ex) {
-                    Logger.getLogger(ClientManager.class.getName()).log(Level.SEVERE, null, ex);
-                }
+
+                createObject(enode);
+
                 return true;
             }
             case 42: //Actualizar
@@ -77,8 +83,8 @@ public class EmployeeManager extends PersonManager {
                 generateRandomPerson();
                 return true;
             case 46://buscar
-                StringBuilder outString=null;
-                search(node,outString);
+                StringBuilder outString = null;
+                search(node, outString);
             case 47://menu superior
                 return true;
         }

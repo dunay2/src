@@ -48,14 +48,14 @@ public class CreditManager implements Imanager{
     }
 
     @Override
-    public Object createObject(Node node) throws IOException {
+    public Object createObject(Node []node)  {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 
     @Override
-    public boolean handleProcess(Node node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       public boolean handleProcess(Node[] enode) {
+        Node node = enode[0];       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
  
 

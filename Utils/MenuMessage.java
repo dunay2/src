@@ -23,7 +23,7 @@ public class MenuMessage {
 
     public MenuMessage() {
         ArrayList<String[]> menuText = new ArrayList();
-        String[] mnuName = new String[20];
+        String[] mnuName = new String[21];
 //Inicializacion de menus definiendo las funciones que va a ejecutar el sistemas
         mnuName[0] = "mnuMain";
 
@@ -50,7 +50,8 @@ public class MenuMessage {
 
         mnuName[18] = "mnuItemSection";
         mnuName[19] = "mnuGetClientId";
-        
+        mnuName[20] = "mnuCreateFinance";
+
         // <editor-fold defaultstate="collapsed" desc=" ${************mnuMain***************} ">  
         //0. mnuMain 
         String[] code = new String[5];
@@ -160,11 +161,11 @@ public class MenuMessage {
         // </editor-fold> 
         // <editor-fold defaultstate="collapsed" desc=" ${************mnuPaymentType********} ">     
         //14. mnuPaymentType
-        code = new String[4];
+        code = new String[3];
         code[0] = "Efectivo";
         code[1] = "Tarjeta";
         code[2] = "Financiado";
-        code[3] = "Cancelar venta";
+
         menuText.add(code);
         // </editor-fold> 
         // <editor-fold defaultstate="collapsed" desc=" ${************mnuTransaction********} ">     
@@ -206,6 +207,14 @@ public class MenuMessage {
         code[0] = "Introduzca DNI del cliente";
         menuText.add(code);
         // </editor-fold>      
+
+        // <editor-fold defaultstate="collapsed" desc=" ${************mnuCreateFinance****************} ">  
+        //20. mnuCreateFinance    
+        code = new String[1];
+        code[0] = "Por favor, para terminar la compra pase por el departamento financiero e indique su DNI";
+        
+        menuText.add(code);
+        // </editor-fold>     
 
         for (int i = 0; i < mnuName.length; i++) {
             hashmap.put(

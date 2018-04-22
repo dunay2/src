@@ -53,7 +53,8 @@ public class OperationsManager extends TextDatabase implements Imanager<Record, 
     }
 
     @Override
-    public boolean handleProcess(Node node) {
+    public boolean handleProcess(Node[] enode) {
+        Node node = enode[0];
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -237,7 +238,7 @@ public class OperationsManager extends TextDatabase implements Imanager<Record, 
     }
 
     @Override
-    public Record createObject(Node node) throws IOException {
+    public Record createObject(Node []node)   {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

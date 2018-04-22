@@ -21,8 +21,8 @@ public class PersonGenerator {
         "Chava", "Murphy", "Eugenia", "Hanae", "Declan", "Armando", "Zoe", "Cody", "Selma", "Dalton", "Aiko",
         "Matthew", "Keiko", "Wang", "Aurora", "Nora", "Channin", "Quail", "Zahir"};
 
-    private static final String[] firstname = {"D.", "K.", "Javier", "Roque", "del Mar ", "Pablo ", "Vera", "Muñoz",
-        "Alex", "Godoy", "Castillo", "Delgado", "Flores", "Silvestre", "cres", "Suárez", "García",
+    private static final String[] firstname = {"D.", "K.", "Albeicer", "Roque", "del Mar ", "Pablo ", "Vera", "Muñoz",
+        "Alex", "Godoy", "Castillo", "Delgado", "Flores", "Silvestre", "Cres", "Suárez", "García",
         "Miranda", "Morales", "Ana", "Salmar", "Benitez"};
     private static final String[] lastname = {"De la vega", "Mateo", "Ruiz", "Afonso", "Suárez", "Pérez", "Smith",
         "Maqueda", "Díaz", "Romero", "Sosa", "García", "Pulido", "Holder", "Barlow", "Campos", "Potter"};
@@ -59,11 +59,15 @@ public class PersonGenerator {
         return String.valueOf(numerosDni) + LETRAS_NIF.charAt(numeros % 23);
     }
 
-    public static String generateName() {
+    public static String generateLastName() {
+
+        return lastname[rand.nextInt(lastname.length)];
+    }
+
+    public static String generateFirstName() {
 
         return name[rand.nextInt(name.length)] + " "
-                + firstname[rand.nextInt(firstname.length)] + " "
-                + lastname[rand.nextInt(lastname.length)];
+                + firstname[rand.nextInt(firstname.length)];
     }
 
 }

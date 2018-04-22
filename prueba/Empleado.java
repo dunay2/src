@@ -60,7 +60,7 @@ public class Empleado implements Serializable{
  
     /**
      * Modifica el nombre de un empleado
-     * @param nombre
+     * @param nombre Establece el nombre de usuario
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -68,7 +68,7 @@ public class Empleado implements Serializable{
      
     /**
      * Devuelve la edad de un empleado
-     * @return edad del empleado
+     * @return edad  
      */
     public int getEdad() {
         return edad;
@@ -76,7 +76,7 @@ public class Empleado implements Serializable{
  
     /**
      * Modifica la edad de un empleado
-     * @param edad
+     * @param edad establece la edad
      */
     public void setEdad(int edad) {
         this.edad = edad;

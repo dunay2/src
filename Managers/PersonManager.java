@@ -8,8 +8,8 @@ package Managers;
 import Utils.Node;
 import java.util.HashMap;
 import DataBase.TextDatabase;
-import Utils.Generator.PersonGenerator;
 import Person.Client.Client;
+import Utils.Generator.PersonGenerator;
 import Person.Person;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -29,7 +29,12 @@ import java.util.Map;
 //       ... 
 //  } 
 //}
-public abstract class PersonManager extends TextDatabase implements Imanager<Person, Node> {
+
+  
+ 
+
+
+public abstract class PersonManager extends TextDatabase implements Imanager<Person, Node>{
 
     private HashMap<String, Person> persons = new HashMap<>();
 
@@ -92,7 +97,9 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
 
         person = new Client(PersonGenerator.generateDni());
 
-        person.setFirstName(PersonGenerator.generateName());
+        person.setFirstName(PersonGenerator.generateFirstName());
+        person.setLastName(PersonGenerator.generateLastName());
+        
         person.setSalary(1000D);
         return person;
     }
@@ -105,9 +112,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
         outString.append(node.getChildNodes().get(0).getResponse());
         Person person = searchPerson(outString.toString());
         if (person != null) {
-
             return person;
-
         }
         return null;
 
@@ -174,7 +179,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
         System.out.printf("%-20s%-20s%-20s%-20s\n", person.getDni(), person.getLastName(), person.getFirstName(), person.getSalary());
 
     }
-
+  
 //  /*
 //
 //        /* Display content using Iterator*/

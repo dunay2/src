@@ -28,7 +28,7 @@ public class Node {
     private String response; //Devolucion de datos de nodo de lectura
     private boolean Tail = false;//Es un nodo de lectura
     //private List list; //Contenedor
-    
+
 //Constructor
     /**
      *
@@ -46,11 +46,9 @@ public class Node {
 //    public List getList() {
 //        return list;
 //    }
-
 //    public void setList(List list) {
 //        this.list = list;
 //    }
-
     public boolean isTail() {
         return Tail;
     }
@@ -100,6 +98,9 @@ public class Node {
 
     //propósito: leer los datos introducidos por consola
     public String getResponse() {
+        if (response != null) {
+            return response;
+        }
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         if (this.isInput()) {
             System.out.println(this.getLabel());

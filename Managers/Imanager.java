@@ -43,8 +43,8 @@ public interface Imanager<T, N> {
 
     public void list();
 
-    public T createObject(Node node) throws IOException;
+    public T createObject(Node[] node);
 
-    public boolean handleProcess(Node node);
+    public boolean handleProcess(Node[] node);
 
 }

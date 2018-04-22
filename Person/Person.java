@@ -1,8 +1,10 @@
 package Person;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-public abstract class Person implements Serializable {
+public abstract class Person implements Serializable, IPersonOperation {
     //  private static final long serialversionUID = 1;
 //    public static long getSerialversionUID() {
 //        return serialversionUID;
@@ -25,19 +27,23 @@ public abstract class Person implements Serializable {
     private String Web;
     private Double salary;
     private boolean active;
+    private final List<String> operations = new ArrayList<>();
 
     //Contructor básico
     public Person(String dni) {
         this.dni = dni;
-        active=true;
+        active = true;
     }
- public Person(String dni, String firstName, String lastName, Double salary) {
-        this.dni=dni;
-        this.firstName=firstName;
-        this.lastName=lastName;
-        this.salary=salary;
-   active=true;
+
+    public Person(String dni, String firstName, String lastName, Double salary) {
+        this.dni = dni;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.salary = salary;
+
+        active = true;
     }
+
     /**
      * @param firstName the firstName to set
      */
@@ -157,8 +163,9 @@ public abstract class Person implements Serializable {
     }
 
     public double getSalary() {
-        if (salary==null)
-            salary=0D;
+        if (salary == null) {
+            salary = 0D;
+        }
         return salary;
     }
 
@@ -235,4 +242,14 @@ public abstract class Person implements Serializable {
         this.active = active;
     }
 
+    @Override
+    public List<String> getOperations() {
+        return operations;
+    }
+
+    @Override
+    public void addOperation(String e) {
+
+        operations.add(e);
+    }
 }

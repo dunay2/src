@@ -9,14 +9,10 @@ import DataBase.TextDatabase;
 import ScreenInterfaces.TextInterface;
 import Utils.Node;
 import item.Electrodomestic;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -59,20 +55,6 @@ public class StockManager extends TextDatabase implements Imanager<Electrodomest
         return electrodomestics;
     }
 
-    // public void delete(Node electrodomestic) {
-    //   Electrodomestic lelectrodomestic = (Electrodomestic) electrodomestic;
-    // electrodomestics.remove(lelectrodomestic);
-    //  System.out.println("Student: Roll No " + lperson.getfirstName() + ", deleted from database");
-    //}
-//   
-//    public Electrodomestic generateRandomItem() {
-//
-//        Electrodomestic item = null;
-//
-//        // client = new Client(PersonGenerator.generateDni());
-//        // client.setFirstName(PersonGenerator.generateName());
-//        return item;
-//    }
     //Propósito: Cargar el HM con el stock
     public void load() {
 
@@ -80,77 +62,41 @@ public class StockManager extends TextDatabase implements Imanager<Electrodomest
     }
 
     @Override
-    public boolean handleProcess(Node node) {
+    public boolean handleProcess(Node[] enode) {
+        Node node = enode[0];
 
-        try {
-
-            switch (node.getValue()) {
-                //31. Agregar Item a Stock
-                case 31:
-
-                    createObject(node);
-                    return true;
-                //32. Modificar Item Stock
-                case 32:
-                    update(node);
-                    return true;
-                //33. Eliminar Item Stock
-                case 33:
-                    break;
-                //34. Listar eletrodomésticos
-                case 34:
-                    list();
-                    return true;
-                //Crear electrodoméstico aleatorio
-                //case 25:
-                // createRandomClient();
-                //  a = scanner.nextLine();
-                //return true;
+        switch (node.getValue()) {
+            //31. Agregar Item a Stock
+            case 31: {
+                createObject(enode);
             }
-            return false;
-        } catch (IOException ex) {
-            Logger.getLogger(StockManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            return true;
+            //32. Modificar Item Stock
+            case 32:
+                update(node);
+                return true;
+            //33. Eliminar Item Stock
+            case 33:
+                break;
+            //34. Listar eletrodomésticos
+            case 34:
+                list();
+                return true;
+            //Crear electrodoméstico aleatorio
+            //case 25:
+            // createRandomClient();
+            //  a = scanner.nextLine();
+            //return true;
+            }
         return false;
+
     }
 
-//    private void updateStock() throws IOException {
-//        //introducir el código del producto a actualizar
-//        Electrodomestic electrodomestic;
-//        String code;
-//
-////Creamos un lector
-//        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//
-////Buscamos un item
-//        System.out.println("Por favor introduzca código");//Se pide un dato al usuario
-//        code = br.readLine();
-////Control de errores
-//        //  electrodomestic = (Electrodomestic) search(code);
-//
-//        System.out.println("Codigo==================descripción==========Cantidad======Precio Unidad");
-//        //    System.out.println(electrodomestic.getCode() + "    " + electrodomestic.getName() + "  " + electrodomestic.getQuantity() + "  " + electrodomestic.getSellPrice());
-//        //Modificar el stock
-//        System.out.println("1. Modificar el stock");
-//        //Modificar la descripción
-//        System.out.println("2. Modificar el Nombre");
-//        System.out.println("3. Modificar el precio de venta");
-//
-//        int i = readConsole();
-//
-////        if (electrodomestics.containsKey(code)) {
-//    }
-//
-//    private int readConsole() {
-//        Scanner scanner = new Scanner(System.in);
-//        int i = scanner.nextInt();
-//
-//        return i;
-//    }//tomar
     ///////////////////////////////////////////////////
     //Propósito: crear un nuevo electrodoméstico con los datos de entrada de consola
     @Override
-    public Electrodomestic createObject(Node node) throws IOException {
+    public Electrodomestic createObject(Node[] enode) {
+        Node node = enode[0];
         int i = 0;
         //Convertimos los nodos en parametros
         ArrayList<String> nodesData = node.convertTreeChildToList();
@@ -321,5 +267,38 @@ public class StockManager extends TextDatabase implements Imanager<Electrodomest
         System.out.printf("%-20s%-20s%-40s%-20s%-20s%-20s\n", item.getCode(), item.getName(), item.getDescription(), item.getBoughtPrice(), item.getSellPrice(), item.getQuantity());
 
     }
-
+    // public void delete(Node electrodomestic) {
+    //   Electrodomestic lelectrodomestic = (Electrodomestic) electrodomestic;
+    // electrodomestics.remove(lelectrodomestic);
+    //  System.out.println("Student: Roll No " + lperson.getfirstName() + ", deleted from database");
+    //}
+//   
+//    public Electrodomestic generateRandomItem() {
+//
+//        Electrodomestic item = null;
+//
+//        // client = new Client(PersonGenerator.generateDni());
+//        // client.setFirstName(PersonGenerator.generateName());
+//        return item;
+//    } private void updateStock() throws IOException {
+//        //introducir el código del producto a actualizar
+//        Electrodomestic electrodomestic;
+//        String code;
+////Control de errores
+//        //  electrodomestic = (Electrodomestic) search(code);
+//
+//        System.out.println("Codigo==================descripción==========Cantidad======Precio Unidad");
+//        //    System.out.println(electrodomestic.getCode() + "    " + electrodomestic.getName() + "  " + electrodomestic.getQuantity() + "  " + electrodomestic.getSellPrice());
+//        //Modificar el stock
+//        System.out.println("1. Modificar el stock");
+//        //Modificar la descripción
+//        System.out.println("2. Modificar el Nombre");
+//        System.out.println("3. Modificar el precio de venta");
+//
+//        int i = readConsole();
+//
+////        if (electrodomestics.containsKey(code)) {
+//    }
+//
+//   
 }

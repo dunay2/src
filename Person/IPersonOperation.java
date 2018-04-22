@@ -12,20 +12,10 @@ import java.util.List;
  * @author ashh412
  */
 //Propósito: Guardar una referencia a las actuaciones de las personas
-public class PersonOperation extends Person {
-
-    private List<String> operations;
+public interface IPersonOperation {
     
-    public PersonOperation(String dni) {
-        super(dni);
-    }
+    public List<String> getOperations();
     
-    public List<String> getOperations() {
-        return operations;
-    }
-    
-    public void addOperation(String e) {
-        this.operations.add(e);
-    }
+    public void addOperation(String e);
     
 }

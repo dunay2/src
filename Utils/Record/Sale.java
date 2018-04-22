@@ -11,11 +11,11 @@ import Utils.ShoppingCart;
  *
  * @author ashh412
  */
-public class SalesRecord extends Record {
+public class Sale extends Record {
 
     private ShoppingCart shoppingcart = null;//Lo guardamos para serializar el carrito
 
-    public SalesRecord(String operCode, String cliCode, String empCode, ShoppingCart shoppingcart) {
+    public Sale(String operCode, String cliCode, String empCode, ShoppingCart shoppingcart) {
         super(operCode, cliCode, empCode);
         this.shoppingcart = shoppingcart;
     }

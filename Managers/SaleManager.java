@@ -7,29 +7,24 @@ package Managers;
 
 import Person.Client.Client;
 import Person.Employee.Cashier;
-import Person.PersonOperation;
 import ScreenInterfaces.TextInterface;
 import Utils.Node;
 import Utils.ShoppingCart;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 import Utils.Record.Record;
-import Utils.Record.SalesRecord;
+import Utils.Record.Sale;
 import item.Electrodomestic;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 //Crear un numero de factura
 
 /**
  *
  * @author ashh412
  */
-public class SalesManager extends OperationsManager implements Imanager<Record, Node> {
+public class SaleManager extends OperationsManager implements Imanager<Record, Node> {
 
-    private PersonOperation client;//Lo declaramos como objeto para poder usar sus métodos
+    private Client client;
     private Cashier cashier;//Lo declaramos como objeto para poder usar sus métodos
     private final ShoppingCart shoppingCart;
     private final HashMap<String, Record> history = new HashMap<>();
@@ -40,7 +35,7 @@ public class SalesManager extends OperationsManager implements Imanager<Record, 
         this.cashier = cashier;
     }
 
-    public SalesManager(Cashier cashier, ClientManager clientManager, StockManager stockManager) {
+    public SaleManager(Cashier cashier, ClientManager clientManager, StockManager stockManager) {
         this.cashier = cashier;
         shoppingCart = new ShoppingCart(this.cashier.getDni());
         this.clientManager = clientManager;
@@ -58,36 +53,43 @@ public class SalesManager extends OperationsManager implements Imanager<Record, 
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public Record createObject(Node node) throws IOException {
-        //1. buscar cliente
-        //Si no existe crearlo
+    private Node callTailMenu(Node node) {
+        return node.getChildNodes().get(node.getChildNodes().size() - 1);
+    }
 
-        StringBuilder outString = new StringBuilder();
+    private Node callMainMenu(Node node) {
 
-        //Devolvemos el código introducido por teclado en el StringBuilder de salida
-        client = (PersonOperation) clientManager.search(node, outString);
-        if (client == null) {
-            //crear cliente
-
-            client = new PersonOperation(outString.toString());
-            //Obtener el menu para añadir clientes
-//Paramos la operacion y creamos cliente
-            clientManager.add(client);
-            clientManager.save();
+        while (node.getParent() != null) {
+            node = node.getParent();
         }
-//Guardamos la compra
-        String operCode = "INVOICE".concat(String.valueOf(getSequence()));
-//guardar la operacion de la tienda
-        Record record = new SalesRecord(operCode, client.getDni(), cashier.getDni(), shoppingCart);
-//guardar la ficha de cliente
-        history.put(operCode, record);
-        save(history);
-        return record;
+        return node;
     }
 
     @Override
-    public boolean handleProcess(Node node) {
+    public Record createObject(Node[] enode) {
+
+        Node node = enode[0];
+
+        //1. buscar cliente y si no existe crearlo
+        StringBuilder outString = new StringBuilder();
+
+        //Devolvemos el código introducido por teclado en el StringBuilder de salida
+        client = (Client) clientManager.search(node, outString);
+
+        //Si el cliente no existe lo creamos
+        if (client == null) {
+            client = clientManager.createObject(enode);
+        }
+
+        enode[0] = callTailMenu(node);
+        //continuamos por el menu
+
+        return null;
+    }
+
+    @Override
+    public boolean handleProcess(Node[] enode) {
+        Node node = enode[0];
 
         switch (node.getValue()) {
 
@@ -103,60 +105,64 @@ public class SalesManager extends OperationsManager implements Imanager<Record, 
             //13. Cobrar Compra
             case 13:
                 //identificar al cliente o solicitar alta 
-                try {
-                    createObject(node);
-                } catch (IOException ex) {
-                    Logger.getLogger(ClientManager.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                return true;
+
+                createObject(enode);
+
+//Seguimos navegando por los hijos
+                return false;
 
             //Crear carrito aleatorio
             //Cancelar venta
             case 14:
                 clearShoppingCart();
                 return true;
+
+            case 141://pago en efectivo
+                finishTransaction();
+                enode[0] = callMainMenu(node);
+                return true;
+            
+                case 142://Tarjeta
+                finishTransaction();
+                enode[0] = callMainMenu(node);
+                return true;
+                
+                case 143://Financiado
+                finishTransaction();
+                enode[0] = callMainMenu(node);
+                return false;
+                
+           
         }
         return false;//Profundiza
+    }
+
+    private void finishTransaction() {
+        //continuar aqui, sacar el resto de nodos hijos con la forma de pago
+        //Si financia pasar a financiacion
+//Guardamos la compra
+        String operCode = "INVOICE".concat(String.valueOf(getSequence()));
+//guardar la operacion de la tienda
+        Record sale = new Sale(operCode, client.getDni(), cashier.getDni(), shoppingCart);
+
+//agregamos en la ficha de cliente el código de operacion
+        client.addOperation(operCode);
+        clientManager.save();
+
+        //Agregamos y guardamos todos los datos de la venta
+        history.put(operCode, sale);
+        save(history);
+    }
+
+    private void openCreditLine() {
+
+        //crear credito para el cliente
     }
 
     private void clearShoppingCart() {
         for (byte i = 0; i < shoppingCart.getItems().size(); i++) {
             shoppingCart.removeItem(i);
         }
-
-    }
-
-    //intervinient
-    //role (clasgetname)
-//deprecated
-    private void saveTransaction() { ////         
-///ESTRUCTURA DEL NODO: 0 (REPAIR || SELL)
-// cliCode  empCode  List --> (0)ShoppingCart
-///llamada
-////              List l = null;
-////          ShoppingCart shoppingCart;
-////          l.add(shoppingCart);
-////
-////          node.setList(l);
-////            }
-        ////         
-///ESTRUCTURA DEL NODO: 0 (REPAIR || SELL)
-// cliCode  empCode  List --> (0)ShoppingCart
-
-        Node node = new Node(0, null, "SALES");
-        Node childNode = new Node(0, node, client.getDni());
-        node.addChild(node);
-        childNode = new Node(1, node, client.getDni());
-        node.addChild(node);
-        childNode = new Node(2, node, cashier.getDni());
-        node.addChild(node);
-///llamada
-        List<ShoppingCart> list = new ArrayList<>();
-
-        list.add(shoppingCart);
-
-     //   node.setList(list);
-
     }
 
     private double getTotalAmount() {
@@ -315,5 +321,37 @@ break;
         String resultado="0";
 Ventasproductos.inventarioyventa(resultado);
     }
+
+//    //intervinient
+//    //role (clasgetname)
+////deprecated
+//    private void saveTransaction() { ////         
+/////ESTRUCTURA DEL NODO: 0 (REPAIR || SELL)
+//// cliCode  empCode  List --> (0)ShoppingCart
+/////llamada
+//////              List l = null;
+//////          ShoppingCart shoppingCart;
+//////          l.add(shoppingCart);
+//////
+//////          node.setList(l);
+//////            }
+//        ////         
+/////ESTRUCTURA DEL NODO: 0 (REPAIR || SELL)
+//// cliCode  empCode  List --> (0)ShoppingCart
+//
+//        Node node = new Node(0, null, "SALES");
+//        Node childNode = new Node(0, node, client.getDni());
+//        node.addChild(node);
+//        childNode = new Node(1, node, client.getDni());
+//        node.addChild(node);
+//        childNode = new Node(2, node, cashier.getDni());
+//        node.addChild(node);
+/////llamada
+//        List<ShoppingCart> list = new ArrayList<>();
+//
+//        list.add(shoppingCart);
+//
+//        //   node.setList(list);
+//    }
 
  */

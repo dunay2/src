@@ -1,7 +1,6 @@
 package ishop;
 
 import Store.Store;
-import Person.Client.Clients;
 import Deparment.Department;
 import Person.Employee.Employee;
 import java.util.ArrayList;
@@ -17,13 +16,12 @@ public abstract class Shop implements IBusiness {
 
     ArrayList<Department> departments = new ArrayList<>();
 
-    private Clients client;
-
-    private Employee Employee;
-
-    private Store store;
-
-    private Store commonStore;
+//
+//    private Employee Employee;
+//
+//    private Store store;
+//
+//    private Store commonStore;
 
     @Override
     public void open() {

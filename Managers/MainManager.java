@@ -26,7 +26,7 @@ public class MainManager {
     private final ClientManager clientManager;
     private final EmployeeManager employeeManager;
     private final StockManager stockManager;
-    private SalesManager salesManager = null;
+    private SaleManager salesManager = null;
     private Employee activeEmployee; //Usuario que está gestionando la aplicación
 
     //Constructor
@@ -71,15 +71,21 @@ public class MainManager {
         clientManager.load();
         stockManager.load();
 
-        this.salesManager = new SalesManager(cashier, clientManager,stockManager);
+        this.salesManager = new SaleManager(cashier, clientManager,stockManager);
 
         doBusiness(myTextInterface.printMenu(null));
 
     }
 
     //Propósito: Hacer de listener y handler de las peticiones
-    private void doBusiness(Node node) {
+    private void doBusiness(Node enode) {
         boolean startNewSequence = false;
+//Utilizamos esta técnica mediante la que pasamos un array 
+//a los gestores para pasar por referencia el objeto nodo y 
+//de esta forma poder antender sus peticiones 
+
+        Node[]node={enode};
+  
 
         if (salesManager.handleProcess(node)) {
             startNewSequence = true;
@@ -98,12 +104,12 @@ public class MainManager {
         //Imprimimos el menú del nodo seleccionado y mandamos a consola,
         //la cual nos devolverá el valor del nuevo nodo seleccionado
         //cargamos nuevo menú o menú principal
-        Node newNode = null;
+        Node newNode ;
         if (!startNewSequence
                 == true) {//Imprime los hijos de nodo
-            newNode = myTextInterface.printMenu(node);
+            newNode = myTextInterface.printMenu(node[0]);
         } else {//Imprime los hijos del padre
-            newNode = myTextInterface.printMenu(node.getParent());
+            newNode = myTextInterface.printMenu(node[0].getParent());
         }
 
         doBusiness(newNode);
