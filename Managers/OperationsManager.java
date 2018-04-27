@@ -8,15 +8,34 @@ package Managers;
 import DataBase.TextDatabase;
 import Utils.Node;
 import Utils.Record.Record;
+import Utils.Record.Sale;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  *
  * @author ashh412
  */
-public class OperationsManager extends TextDatabase implements Imanager<Record, Node> {
+//Facturas y ordenes de reparacion
+public abstract class OperationsManager extends TextDatabase implements Imanager<Record, Node> {
 
-    private HashMap<String, Record> records = new HashMap<>();
+    static HashMap<String, Record> records = new HashMap<>();
+
+    static HashMap<String, Record> getRecords() {
+        return records;
+    }
+
+    protected Node callMainMenu(Node node) {
+
+        while (node.getParent() != null) {
+            node = node.getParent();
+        }
+        return node;
+    }
 
     //Extension de database
     //Guardamos
@@ -24,39 +43,13 @@ public class OperationsManager extends TextDatabase implements Imanager<Record, 
 //        save(records);
 //    }
     //Propósito: Listar 
-
     private void printHeader() {
-        System.out.printf("%-20s%-20s%-20s%-20s\n", "OPERACION", "CLIENTE", "EMPLADO", "FECHA");
+        System.out.printf("%-20s%-20s%-20s%-20s%-20s\n", "OPERACION", "CLIENTE", "EMPLEADO", "FECHA","ACTIVO");
 
     }
 
-//    @Override
-//    public void list() {
-//        Record record;
-//
-//        Iterator<Map.Entry<String, Record>> it = records.entrySet().iterator();
-//
-//        printHeader();
-//        while (it.hasNext()) {
-//            Map.Entry<String, Record> e = it.next();
-//
-//            listFormat(e.getValue());
-//        }
-//        clearScreen();
-//    }
-public int size()
-{return records.size();
-}
-    private void listFormat(Record record) {
-
-        System.out.printf("%-20s%-20s%-20s%-20s\n",record.getOperCode(), record.getCliCode(), record.getEmpCode(), record.getDate());
-
-    }
-
-    @Override
-    public boolean handleProcess(Node[] enode) {
-        Node node = enode[0];
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int size() {
+        return records.size();
     }
 
     public static void clearScreen() {
@@ -87,21 +80,32 @@ public int size()
     @Override
     public boolean add(Record record) {
 
-        if (records.containsKey(record.getOperCode())) {
-            System.out.println("No se puede introducir el registro. El código esta repetido.");
-            return false;
+        if (record instanceof Sale) {
+            Sale sale = (Sale) record;
+
+            if (records.containsKey(sale.getOperCode())) {
+                System.out.println("No se puede introducir el registro. El código esta repetido.");
+                return false;
+            }
+
+            try {
+                //Agregamos  al hasmap
+                records.put(sale.getOperCode(), sale);
+                return true;
+
+            } catch (Exception e) {
+                System.out.println("No se puede introducir el registro. Ha habido un error.");
+                return false;
+            }
         }
+        return false;
+    }
 
-        try {
-            //Agregamos  al hasmap
-            records.put(record.getOperCode(), record);
-            return true;
+    @Override
+    public void print(Record record) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
-        } catch (Exception e) {
-            System.out.println("No se puede introducir la persona. Ha habido un error.");
-            return false;
-        }
-
+        System.out.printf("%-20s%-20s%-20s%-20s%-20s\n", record.getOperCode(), record.getCliCode(), record.getEmpCode(), dateFormat.format(record.getDate()), record.getStatus());
     }
 
     public Record generateRandomOperation() {
@@ -117,8 +121,8 @@ public int size()
     }
 
     //Propósito: 
-    //Buscar la clave en el HashMapy devolver el objeto person si existe
-    private Record searchRecord(String e) {
+    //Buscar la clave en el HashMapy devolver el objeto si existe
+    protected Record searchRecord(String e) {
 
         if (records.containsKey(e)) {
             //Si encontramos el elemento en la búsqueda devolvemos el elemento
@@ -128,22 +132,7 @@ public int size()
 
     }
 
-    @Override
-    public Record search(Node node,StringBuilder outString) {
-
-        Record record = searchRecord(node.getChildNodes().get(0).getResponse());
-        if (record != null) {
-
-            printHeader();
-            listFormat(record);
-
-            return record;
-
-        }
-        return null;
-
-    }
-
+    //Carga de ficheros
     public void load() {
         records = load(getClassName().replace("Manager", ""));//Pasamos el nombre del fichero   
     }
@@ -159,23 +148,7 @@ public int size()
     public void save() {
         save(records);
     }
-    
-//el nombre de los managers debe ser NombreClaseManager
-//para que esta clase los guarde correctamente
-//Cargar la base de datos  
-//Devuelve todo el listado de personas
-//    @Override
-//    public HashMap<Key, Record> getAll() {
-//        return records;
-//    }
-//    @Override //necesitamos el codigo del elemento, 
-//
-//    public void delete(Record record) {
-//
-//        records.remove(record);
-//
-//    }
-//   
+
 //
 //    @Override
 //    public void update(Node node) {
@@ -231,9 +204,6 @@ public int size()
 //        return record;
 //
 //    }
-
-
-
     public int getSequence() {
         return records.size();
 
@@ -241,17 +211,30 @@ public int size()
 
     @Override
     public void list() {
+
+        Iterator<Map.Entry<String, Record>> it = records.entrySet().iterator();
+
+        printHeader();
+        while (it.hasNext()) {
+            print((Sale) it.next().getValue());
+        }
+        clearScreen();
+    }
+
+    @Override
+    public Record createObject(Node[] node) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Record createObject(Node []node)   {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public Record search(Node node, StringBuilder outString) {
 
-    @Override
-    public void print(Record e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        outString.append(node.getChildNodes().get(0).getResponse());
+        Record record = searchRecord(outString.toString());
+        if (record != null) {
+            return record;
+        }
+        return null;
 
+    }
 }

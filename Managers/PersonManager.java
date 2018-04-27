@@ -11,6 +11,7 @@ import DataBase.TextDatabase;
 import Person.Client.Client;
 import Utils.Generator.PersonGenerator;
 import Person.Person;
+import ScreenInterfaces.TextInterface;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -21,12 +22,11 @@ import java.util.Map;
  * Extiende la clase TextDatabase lo que le da persistencia
  *
  */
-
-public abstract class PersonManager extends TextDatabase implements Imanager<Person, Node>{
+public abstract class PersonManager extends TextDatabase implements Imanager<Person, Node> {
 
     private HashMap<String, Person> persons = new HashMap<>();
 
-    //Extension de database
+//Extension de database
     //Guardamos
     public void save() {
         save(persons);
@@ -87,13 +87,13 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
 
         person.setFirstName(PersonGenerator.generateFirstName());
         person.setLastName(PersonGenerator.generateLastName());
-        
+
         person.setSalary(1000D);
         return person;
     }
 
     //Propósito: 
-    //Buscar la clave en el HashMapy devolver el objeto person si existe
+    //Buscar la clave en el HashMap devolver el objeto person si existe
     @Override
     public Person search(Node node, StringBuilder outString) {
 
@@ -128,10 +128,15 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
 
             person.setFirstName(nodesData.get(i++));
             person.setLastName(nodesData.get(i++));
-            person.setSalary(Double.valueOf(nodesData.get(i++)));
+            person.setAddress(nodesData.get(i++));
+            person.setPhone(nodesData.get(i++));
+
             //Guardar los datos 
             save();
 
+        } else {
+            System.out.println("La persona no existe");
+            TextInterface.pressKey();
         }
     }
     //Propósito: Listar las personas por consola
@@ -143,31 +148,29 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
     }
 
     private void printHeader() {
-        System.out.printf("%-20s%-20s%-20s%-20s\n", "DNI", "APELLIDOS", "NOMBRE", "NOMINA");
+        System.out.printf("%-20s%-20s%-20s%-20s%-20s%-20s%-20s\n", "DNI", "APELLIDOS", "NOMBRE", "DIRECCION", "TELEFONO", "NOMINA", "ACTIVO");
 
     }
 
     @Override
     public void list() {
-        Person person;
 
         Iterator<Map.Entry<String, Person>> it = persons.entrySet().iterator();
 
         printHeader();
         while (it.hasNext()) {
-            Map.Entry<String, Person> e = it.next();
 
-            listFormat(e.getValue());
+            listFormat(it.next().getValue());
         }
         clearScreen();
     }
 
     private void listFormat(Person person) {
 
-        System.out.printf("%-20s%-20s%-20s%-20s\n", person.getDni(), person.getLastName(), person.getFirstName(), person.getSalary());
+        System.out.printf("%-20s%-20s%-20s%-20s%-20s%-20s%-20s\n", person.getDni(), person.getLastName(), person.getFirstName(), person.getAddress(), person.getPhone(), person.getSalary(), person.isActive());
 
     }
-  
+
 //  /*
 //
 //        /* Display content using Iterator*/

@@ -23,7 +23,7 @@ public class MenuMessage {
 
     public MenuMessage() {
         ArrayList<String[]> menuText = new ArrayList();
-        String[] mnuName = new String[21];
+        String[] mnuName = new String[22];
 //Inicializacion de menus definiendo las funciones que va a ejecutar el sistemas
         mnuName[0] = "mnuMain";
 
@@ -51,15 +51,54 @@ public class MenuMessage {
         mnuName[18] = "mnuItemSection";
         mnuName[19] = "mnuGetClientId";
         mnuName[20] = "mnuCreateFinance";
-
-        // <editor-fold defaultstate="collapsed" desc=" ${************mnuMain***************} ">  
-        //0. mnuMain 
-        String[] code = new String[5];
+        mnuName[21] = "mnuCancelTransaction";
+        
+        
+        //Menús específicos de electrodomésticos
+        
+        mnuName[21] = "mnuAddComputer";
+        mnuName[22] = "mnuAddTv";
+        mnuName[23] = "mnuAddFridge";
+        mnuName[24] = "mnuAddImage";
+        mnuName[25] = "mnuAddLabtop";
+        mnuName[26] = "mnuAddNotebook";
+        mnuName[27] = "mnuAddPda";
+        mnuName[28] = "mnuAddPhone";
+        mnuName[29] = "mnuAddImage";
+        
+        
+          // <editor-fold defaultstate="collapsed" desc=" ${************mnuAddComputer***************} ">  
+        //21. mnuMain 
+        String[] code = new String[7];
         code[0] = "Realizar una Transacción";
         code[1] = "Gestión de Clientes"; //mnuGenericABMS
         code[2] = "Gestión de Stock";
         code[3] = "Gestión de Empleados";
-        code[4] = "Salir de la aplicación";
+        code[4] = "Listar Facturas";
+        code[5] = "Realizar una devolución";
+        code[6] = "Salir de la aplicación";
+        menuText.add(code);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        // <editor-fold defaultstate="collapsed" desc=" ${************mnuMain***************} ">  
+        //0. mnuMain 
+        String[] code = new String[7];
+        code[0] = "Realizar una Transacción";
+        code[1] = "Gestión de Clientes"; //mnuGenericABMS
+        code[2] = "Gestión de Stock";
+        code[3] = "Gestión de Empleados";
+        code[4] = "Listar Facturas";
+        code[5] = "Realizar una devolución";
+        code[6] = "Salir de la aplicación";
         menuText.add(code);
         // </editor-fold>  
         // <editor-fold defaultstate="collapsed" desc=" ${************Client****************} ">      
@@ -67,18 +106,21 @@ public class MenuMessage {
          * ************Client*****************
          */
         //1. mnuAddClient
-        code = new String[4];
+        code = new String[5];
         code[0] = "Introduzca DNI del cliente";
         code[1] = "Introduzca nombre";
         code[2] = "Introduzca apellido";
-        code[3] = "Introduzca nómina";
+        code[3] = "Domicilio";
+        code[4] = "Telefono";
         menuText.add(code);
+
         //2. mnuEditClient    
-        code = new String[4];
+        code = new String[5];
         code[0] = "Introduzca DNI del cliente";
         code[1] = "Introduzca nombre";
         code[2] = "Introduzca apellido";
-        code[3] = "Introduzca nómina";
+        code[3] = "Domicilio";
+        code[4] = "Telefono";
         menuText.add(code);
         //3. mnuDeleteClient    
         code = new String[1];
@@ -212,9 +254,16 @@ public class MenuMessage {
         //20. mnuCreateFinance    
         code = new String[1];
         code[0] = "Por favor, para terminar la compra pase por el departamento financiero e indique su DNI";
-        
+
         menuText.add(code);
         // </editor-fold>     
+
+        // <editor-fold defaultstate="collapsed" desc=" ${************mnuCancelTransaction****************} ">  
+        //21. mnuCancelTransaction    
+        code = new String[1];
+        code[0] = "Introduzca el código de la factura a cancelar";
+        menuText.add(code);
+        // </editor-fold>  
 
         for (int i = 0; i < mnuName.length; i++) {
             hashmap.put(

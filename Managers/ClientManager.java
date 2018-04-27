@@ -10,7 +10,9 @@ import Person.Client.Client;
 import ScreenInterfaces.TextInterface;
 import Utils.Generator.PersonGenerator;
 import Utils.Node;
+import Utils.Record.Sale;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -19,10 +21,19 @@ import java.util.ArrayList;
 public class ClientManager extends PersonManager {
 
     private static ClientManager instance = null;    //Singleton Singleton Pattern
+    SaleManager saleManager;
+
+    public SaleManager getSaleManager() {
+        return saleManager;
+    }
+
+    public void setSaleManager(SaleManager saleManager) {
+        this.saleManager = saleManager;
+    }
 
     //Singleton Singleton Pattern
     protected ClientManager() {
-        // Exists only to defeat instantiation.
+
     }
     //Singleton Singleton Pattern
 
@@ -39,9 +50,10 @@ public class ClientManager extends PersonManager {
         Client client;
         // public PersonOperation(String dni, String firstName, String lastName, Double salary) {
         //  super(dni, firstName, lastName, salary);
-        client = new Client(PersonGenerator.generateDni(), PersonGenerator.generateFirstName(), "", 1000D);
+        client = new Client(PersonGenerator.generateDni());
+        client.setFirstName(PersonGenerator.generateFirstName());
         client.setLastName(PersonGenerator.generateLastName());
-        System.out.println("Cliente generado: " + client.getDni() + " " + client.getfirstName());
+        System.out.println("Cliente generado: " + client.getDni() + " " + client.getFirstName());
         add(client);
 //        //Guardar los datos 
         save();
@@ -52,21 +64,23 @@ public class ClientManager extends PersonManager {
 
 //Propósito: gestionar las peticiones del controlador principal
     @Override
-     public boolean handleProcess(Node[] enode) {
+    public boolean handleProcess(Node[] enode) {
         Node node = enode[0];
 
         switch (node.getValue()) {
 
             case 21: {
-               
-                    createObject(enode);
-              
+
+                createObject(enode);
+
                 return true;
             }
             case 22: //Actualizar
                 update(node);
                 return true;
             case 23: //Eliminar
+                delete(node);
+
                 return true;
             //Listar clientes 
             case 24:
@@ -77,29 +91,84 @@ public class ClientManager extends PersonManager {
                 generateRandomClient();
                 return true;
             case 26://buscar
+
                 StringBuilder outString = new StringBuilder();
                 Client client = (Client) search(node, outString);
+                printRecord(client);
 
-                print(client);
             case 27://menu superior
                 return true;
         }
         return false;
     }
 
+    private void delete(Node node) {
+
+        StringBuilder outString = new StringBuilder();
+        Client client = (Client) search(node, outString);
+        if (client == null) {
+            System.out.println("El cliente no existe");
+            TextInterface.pressKey();
+
+        } else {
+            client.setActive(false);
+            System.out.println("Cliente desactivado. Pulse una tecla para continuar");
+            TextInterface.pressKey();
+        }
+    }
+
+    private void printRecord(Client client) {
+        if (client == null) {
+            System.out.println("el cliente no existe");
+            TextInterface.pressKey();
+            return;
+        }
+
+        print(client);
+
+        Iterator<String> it = client.getOperations().iterator();
+        System.out.println("Facturas de cliente");
+
+        System.out.printf("%-20s%-20s%-20s%-20s\n", "Código", "Atentido por", "Fecha", "TOTAL");
+
+        while (it.hasNext()) {
+            Sale sale = saleManager.getSale((String) it.next());
+
+            System.out.printf("%-20s%-20s%-20s%-20s\n", sale.getOperCode(), sale.getEmpCode(), sale.getDate(), String.valueOf(sale.getTotal()));
+
+        }
+
+        TextInterface.pressKey();
+    }
+
 ////Propósito: crear un nuevo cliente con los datos de entrada de consola
     @Override
-    public Client createObject(Node []enode) {
-        
-        Node node=enode[0];
-        String dni = "";
-
-        ArrayList<String> nodesData = node.convertTreeChildToList();
-        int i = 0;
+    public Client createObject(Node[] enode) {
+        String key;
+        Node node = enode[0];
+        ArrayList<String> nodesData;
         Node n = node.getChildNodes().get(0);
-        n.getResponse();
+        int i = 0;
+//creacion estandar
+        if (n.getResponseValue() == null) {
+            StringBuilder outString = new StringBuilder();
+            Client client = (Client) search(node, outString);
+            if (client == null) {
+                key = outString.toString();
+            } else {
+                node.getChildNodes().get(0).clearResponse();
+                System.out.println("El cliente ya existe");
+                TextInterface.pressKey();
+                return null;
+            }
 
-        Client client = new Client(nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)));
+        } else {//Creación por búsqueda, ya hemos obtenido el dni
+
+            key = n.getResponseValue();
+        }
+        nodesData = node.convertTreeChildToListIdx();
+        node.getChildNodes().get(0).clearResponse();
+        Client client = new Client(key, nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), nodesData.get(i++));
 
 //Guardamos el cliente en la coleccion
         add(client);

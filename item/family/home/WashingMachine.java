@@ -3,17 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package item.family;
+package item.family.home;
+
+import item.Electrodomestic;
 
 /**
  *
  * @author ashh412
  */
-public class Labtop extends Computers{
-    
-   public Labtop(String familyCode, String code, String name, String description, double boughtPrice, double sellPrice, int quantity) {
+public class WashingMachine extends Electrodomestic {
+
+    public WashingMachine(String familyCode, String code, String name, String description, double boughtPrice, double sellPrice, int quantity) {
         super(familyCode, code, name, description, boughtPrice, sellPrice, quantity);
     }
-   
-    
+
 }

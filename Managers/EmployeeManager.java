@@ -11,8 +11,6 @@ import Utils.Node;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -29,7 +27,7 @@ public class EmployeeManager extends PersonManager {
 
         //Guardamos el empleado en la coleccion 
         save();
-        System.out.println("Empleado generado: " + employee.getDni() + " " + employee.getfirstName());
+        System.out.println("Empleado generado: " + employee.getDni() + " " + employee.getFirstName());
         return employee;
 
         //  String a = scanner.nextLine();
@@ -49,7 +47,7 @@ public class EmployeeManager extends PersonManager {
         ArrayList<String> nodesData = enode.convertTreeChildToList();
         int i = 0;
 
-        Employee employee = new Employee(nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)));
+        Employee employee = new Employee(nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), nodesData.get(i++));
 
 //Guardamos el employee en la coleccion
         add(employee);

@@ -29,6 +29,9 @@ public abstract class AppInterface implements IInterface {
         mnuAddGeneric(node.getChildNodes().get(2), "Item", mnuIndex += 10);
         //Empleados
         mnuAddGeneric(node.getChildNodes().get(3), "Employee", mnuIndex += 10);
+        
+          addInputMenu(node.getChildNodes().get(5), "mnuCancelTransaction", mnuIndex += 10);//Menu Buscar
+
     }
 
     //Agregar las ramas de menú segun el rol del usuario
@@ -85,9 +88,8 @@ public abstract class AppInterface implements IInterface {
 
         Node auxNode = getLastChildNode(node);
 
-        addMenuToTaiNode(auxNode, "mnuCreateFinance", auxNode.getValue()*10, false);
+        addMenuToTaiNode(auxNode, "mnuCreateFinance", auxNode.getValue() * 10, false);
 
-  
     }
 
     private Node getLastChildNode(Node node) {
@@ -97,7 +99,7 @@ public abstract class AppInterface implements IInterface {
     }
 
     //Agrega un menu en el ultimo nodo hijo
-//Nodo al que agregar, nombre del menu que agregar, indice de la funcion a ajecutar
+//Nodo al que agregar, nombre del menu que agregar, indice de la funcion a ejecutar
     private void addMenuToTaiNode(Node node, String mnuName, int mnuIndex, boolean isTail) {
 
         int key = node.getChildNodes().size() - 1;

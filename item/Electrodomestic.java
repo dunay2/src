@@ -21,6 +21,8 @@ public class Electrodomestic extends Item {
         super(familyCode,code, name,description, boughtPrice, sellPrice, quantity);
     }
  
+
+    
 }
 
    

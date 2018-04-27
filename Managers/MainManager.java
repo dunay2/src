@@ -30,22 +30,23 @@ public class MainManager {
     private Employee activeEmployee; //Usuario que está gestionando la aplicación
 
     Cashier cashier = new Cashier("CAJERO1_CODE");
-
+    
     public MainManager() {
         //Obtenemos una instancia a los gestores
         this.clientManager = ClientManager.getInstance();
-
+        
         this.stockManager = StockManager.getInstance();
         this.employeeManager = new EmployeeManager();
-
+        
         this.saleManager = SaleManager.getInstance(cashier, clientManager, stockManager);
+        clientManager.setSaleManager(this.saleManager);
         myTextInterface = new TextInterface();
-
+        
     }
 
     //Propósito: main method
     public void start() {
-        cashier.setfirstName("Juan el cajero 1");
+        cashier.setFirstName("Juan el cajero 1");
         //inicializar gestores
         //Instanciamos para crear un par de cajeros
         //Creamos unos cajeros
@@ -69,10 +70,9 @@ public class MainManager {
         stockManager.load();
         saleManager.load();
 
-      //  this.saleManager = new SaleManager(cashier, clientManager, stockManager);
-
+        //  this.saleManager = new SaleManager(cashier, clientManager, stockManager);
         doBusiness(myTextInterface.printMenu(null));
-
+        
     }
 
     //Propósito: Hacer de listener y handler de las peticiones
@@ -83,7 +83,7 @@ public class MainManager {
 //de esta forma poder antender sus peticiones 
 
         Node[] node = {enode};
-
+        
         if (saleManager.handleProcess(node)) {
             startNewSequence = true;
         }
@@ -96,7 +96,7 @@ public class MainManager {
         if (employeeManager.handleProcess(node) && !startNewSequence) {
             startNewSequence = true;
         }
-
+        
         myTextInterface.clearScreen();
         //Imprimimos el menú del nodo seleccionado y mandamos a consola,
         //la cual nos devolverá el valor del nuevo nodo seleccionado
@@ -108,7 +108,7 @@ public class MainManager {
         } else {//Imprime los hijos del padre
             newNode = myTextInterface.printMenu(node[0].getParent());
         }
-
+        
         doBusiness(newNode);
     }
 }

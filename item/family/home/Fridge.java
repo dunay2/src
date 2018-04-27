@@ -3,19 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package item.family;
 
+package item.family.home;
+import item.Electrodomestic;
 /**
  *
  * @author ashh412
  */
-public class Desktop extends Computers{
+public class Fridge extends Electrodomestic{
     
-    public Desktop(String familyCode, String code, String name, String description, double boughtPrice, double sellPrice, int quantity) {
+    public Fridge(String familyCode, String code, String name, String description, double boughtPrice, double sellPrice, int quantity) {
         super(familyCode, code, name, description, boughtPrice, sellPrice, quantity);
-   }
-    
-   
-    
+    }
     
 }

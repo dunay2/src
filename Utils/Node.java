@@ -74,7 +74,10 @@ public class Node {
 
     }
 
-    //No devuelve el primer elemento
+    //Propósito: Convertir los hijos en una lista
+    //de nodos input que toman como valor devuelto
+    //la entrada de teclado
+    //sin devolver el primer elemento
     public ArrayList<String> convertTreeChildToListIdx() {
         ArrayList<String> nodeDataList = new ArrayList();
         int i = 0;
@@ -97,9 +100,7 @@ public class Node {
 
     //propósito: leer los datos introducidos por consola
     public String getResponse() {
-        if (response != null) {
-            return response;
-        }
+
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         if (this.isInput()) {
             System.out.println(this.getLabel());
@@ -109,6 +110,14 @@ public class Node {
 
             }
         }
+        return response;
+    }
+
+    public void clearResponse() {
+        response = null;
+    }
+
+    public String getResponseValue() {
         return response;
     }
 

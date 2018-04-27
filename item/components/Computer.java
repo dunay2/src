@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package item.family;
+package item.components;
 
 import item.Electrodomestic;
 
@@ -11,13 +11,13 @@ import item.Electrodomestic;
  *
  * @author ashh412
  */
-public class Computers extends Electrodomestic {
+public class Computer extends Electrodomestic {
 
     private double ram;
     private double mhz;
     private double hddSize;
 
-    public Computers(String familyCode, String code, String name, String description, double boughtPrice, double sellPrice, int quantity) {
+    public Computer(String familyCode, String code, String name, String description, double boughtPrice, double sellPrice, int quantity) {
 
         super(familyCode, code, name, description, boughtPrice, sellPrice, quantity);
 

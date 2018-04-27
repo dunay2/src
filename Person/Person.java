@@ -5,43 +5,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Person implements Serializable, IPersonOperation {
-    //  private static final long serialversionUID = 1;
-//    public static long getSerialversionUID() {
-//        return serialversionUID;
-//    }
 
-    private String id;
+    private final String key;
     private final String dni;
     private String firstName;
     private String lastName;
     private String age;
     private String address;
-    private String Company;
-    private String City;
-    private String County;
-    private String State_Province;
-    private String PostalCode;
-    private String Phone;
+    private String company;
+    private String city;
+    private String county;
+    private String stateProvince;
+    private String postalCode;
+    private String phone;
     private String mobil;
-    private String Email;
-    private String Web;
+    private String email;
+    private String web;
     private Double salary;
     private boolean active;
-    private final List<String> operations = new ArrayList<>();
+    private final List<String> operations = new ArrayList<>();//Valor de código de operacion
 
     //Contructor básico
     public Person(String dni) {
         this.dni = dni;
         active = true;
+        key = "0";
     }
 
-    public Person(String dni, String firstName, String lastName, Double salary) {
+    public Person(String dni, String firstName, String lastName, String address, String phone) {
+
+        key = "0";
         this.dni = dni;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.salary = salary;
+        this.address = address;
+        this.phone = phone;
+        active=true;
 
-        active = true;
     }
 
     /**
@@ -73,45 +73,46 @@ public abstract class Person implements Serializable, IPersonOperation {
     }
 
     /**
-     * @param Company the Company to set
+     * @param company the company to set
      */
-    public void setCompany(String Company) {
-        this.Company = Company;
+    public void setCompany(String company) {
+        this.company = company;
     }
 
     /**
-     * @param City the City to set
+     * @param city the city to set
      */
-    public void setCity(String City) {
-        this.City = City;
+    public void setCity(String city) {
+        this.city = city;
     }
 
     /**
-     * @param County the County to set
+     * @param county the county to set
      */
-    public void setCounty(String County) {
-        this.County = County;
+    public void setCounty(String county) {
+        this.county = county;
     }
 
     /**
-     * @param State_Province the State_Province to set
+     * @param stateProvince the stateProvince to set
      */
-    public void setState_Province(String State_Province) {
-        this.State_Province = State_Province;
+    public void setstateProvince(String stateProvince) {
+        this.stateProvince = stateProvince;
     }
 
     /**
-     * @param PostalCode the PostalCode to set
+     * @param postalCode the PostalCode to set
+     *
      */
-    public void setPostalCode(String PostalCode) {
-        this.PostalCode = PostalCode;
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
     /**
-     * @param Phone the Phone to set
+     * @param phone the phone to set
      */
-    public void setPhone(String Phone) {
-        this.Phone = Phone;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     /**
@@ -122,17 +123,17 @@ public abstract class Person implements Serializable, IPersonOperation {
     }
 
     /**
-     * @param Email the Email to set
+     * @param email the email to set
      */
-    public void setEmail(String Email) {
-        this.Email = Email;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     /**
-     * @param Web the Web to set
+     * @param web the web to set
      */
-    public void setWeb(String Web) {
-        this.Web = Web;
+    public void setWeb(String web) {
+        this.web = web;
     }
 
     /**
@@ -142,24 +143,12 @@ public abstract class Person implements Serializable, IPersonOperation {
         this.salary = salary;
     }
 
-    public void setfirstName(String name) {
-        setFirstName(name);
-    }
-
-    public String getfirstName() {
-        return getFirstName();
-    }
-
     public void askForCredit() {
 
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public String getkey() {
+        return key;
     }
 
     public double getSalary() {
@@ -199,27 +188,27 @@ public abstract class Person implements Serializable, IPersonOperation {
     }
 
     public String getCompany() {
-        return Company;
+        return company;
     }
 
     public String getCity() {
-        return City;
+        return city;
     }
 
     public String getCounty() {
-        return County;
+        return county;
     }
 
-    public String getState_Province() {
-        return State_Province;
+    public String getStateProvince() {
+        return stateProvince;
     }
 
     public String getPostalCode() {
-        return PostalCode;
+        return postalCode;
     }
 
     public String getPhone() {
-        return Phone;
+        return phone;
     }
 
     public String getMobil() {
@@ -227,11 +216,11 @@ public abstract class Person implements Serializable, IPersonOperation {
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public String getWeb() {
-        return Web;
+        return web;
     }
 
     public boolean isActive() {

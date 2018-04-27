@@ -1,4 +1,4 @@
-package item.family;
+package item.components;
 
 public class Image extends item.Electrodomestic{
 

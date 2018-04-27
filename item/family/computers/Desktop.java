@@ -3,17 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package item.family;
+package item.family.computers;
+
+import item.components.Computer;
 
 /**
  *
  * @author ashh412
  */
-public class NoteBook extends Computers{
-
-    public NoteBook(String familyCode, String code, String name, String description, double boughtPrice, double sellPrice, int quantity) {
+public class Desktop extends Computer{
+    
+    public Desktop(String familyCode, String code, String name, String description, double boughtPrice, double sellPrice, int quantity) {
         super(familyCode, code, name, description, boughtPrice, sellPrice, quantity);
-    }
-
+   }
+    
+   
+    
     
 }

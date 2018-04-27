@@ -13,11 +13,25 @@ import Utils.ShoppingCart;
  */
 public class Sale extends Record {
 
-    private ShoppingCart shoppingcart = null;//Lo guardamos para serializar el carrito
+    private double total;
 
-    public Sale(String operCode, String cliCode, String empCode, ShoppingCart shoppingcart) {
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
+    }
+
+    private ShoppingCart shoppingCart = null;//Lo guardamos para serializar el carrito
+
+    public Sale(String operCode, String cliCode, String empCode, ShoppingCart shoppingCart) {
         super(operCode, cliCode, empCode);
-        this.shoppingcart = shoppingcart;
+        this.shoppingCart = shoppingCart;
     }
 
 }

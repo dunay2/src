@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package item.family;
+package item.family.computers.components;
 
 /**
  *
  * @author ashh412
  */
-public class Fridge {
+public class Memory {
     
 }

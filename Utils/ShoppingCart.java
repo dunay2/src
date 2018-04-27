@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class ShoppingCart implements Serializable {
 
-    public class Line {//Estructura privada que contiene el pedido
+    public class Line implements Serializable{//Estructura privada que contiene el pedido
 
         private byte lineNumber;
         private String itemCode;

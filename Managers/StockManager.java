@@ -9,6 +9,11 @@ import DataBase.TextDatabase;
 import ScreenInterfaces.TextInterface;
 import Utils.Node;
 import item.Electrodomestic;
+import item.components.Computer;
+import item.family.home.Fridge;
+import item.family.phones.Phone;
+import item.family.Screen;
+import item.components.Sound;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -22,6 +27,7 @@ import java.util.Map;
  */
 public class StockManager extends TextDatabase implements Imanager<Electrodomestic, Node> {
 
+    Electrodomestic item = null;
     private HashMap<String, Electrodomestic> electrodomestics = new HashMap<>();
 
     private static StockManager instance = null;    //Singleton Singleton Pattern
@@ -41,11 +47,6 @@ public class StockManager extends TextDatabase implements Imanager<Electrodomest
 
     public void buyItems(String itemCode, int amount) {
 
-    }
-
-    public void save() {
-
-        super.save(electrodomestics);
     }
 
 //Devuelve todo el listado de Electrodomestic
@@ -83,13 +84,14 @@ public class StockManager extends TextDatabase implements Imanager<Electrodomest
                 list();
                 return true;
             //Crear electrodoméstico aleatorio
-            //case 25:
-            // createRandomClient();
-            //  a = scanner.nextLine();
-            //return true;
-            }
-        return false;
+            case 36:
 
+                StringBuilder outString = new StringBuilder();
+                Electrodomestic electrodomestic = (Electrodomestic) search(node, outString);
+                print(electrodomestic);
+                return true;
+        }
+        return false;
     }
 
     ///////////////////////////////////////////////////
@@ -97,16 +99,34 @@ public class StockManager extends TextDatabase implements Imanager<Electrodomest
     @Override
     public Electrodomestic createObject(Node[] enode) {
         Node node = enode[0];
+
         int i = 0;
         //Convertimos los nodos en parametros
         ArrayList<String> nodesData = node.convertTreeChildToList();
 
-        Electrodomestic item = new Electrodomestic(nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)));
+        //1.  Ordenadores   2. Hogar   3. Telefonía   4. Imagen   5. Sonido
+        switch (node.getChildNodes().get(0).getResponseValue()) {
+            case "1":
+                item = (Electrodomestic) new Computer(nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)));
+                break;
+            case "2":
+                item = (Electrodomestic) new Fridge(nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)));
+                break;
+            case "3":
+                item = (Electrodomestic) new Phone(nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)));
+                break;
+            case "4":
+                item = (Electrodomestic) new Screen(nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)));
+                break;
+            case "5":
+                item = (Electrodomestic) new Sound(nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)));
+                break;
+        }
 
         add(item);
         //Guardar los datos 
 
-        save();
+        save(electrodomestics);
 
         return item;
     }
@@ -126,7 +146,15 @@ public class StockManager extends TextDatabase implements Imanager<Electrodomest
 
     }
 
+    @Override
     public void print(Electrodomestic e) {
+
+        if (e == null) {
+            System.out.println("el electrodoméstico no existe");
+            TextInterface.pressKey();
+            return;
+        }
+
         printHeader();
         listFormat(e);
     }
@@ -239,7 +267,10 @@ public class StockManager extends TextDatabase implements Imanager<Electrodomest
             electrodomestic.setQuantity(Integer.valueOf(nodesData.get(i++)));
             //Guardar los datos 
 
-            save();
+            save(electrodomestics);
+        } else {
+            System.out.println("El electrodoméstico no existe");
+            TextInterface.pressKey();
         }
     }
 
@@ -247,17 +278,12 @@ public class StockManager extends TextDatabase implements Imanager<Electrodomest
     @Override
     public void list() {
 
-        HashMap<String, Electrodomestic> items = getAll();
-        Electrodomestic item;
-
-        Iterator<Map.Entry<String, Electrodomestic>> it = items.entrySet().iterator();
+        Iterator<Map.Entry<String, Electrodomestic>> it = electrodomestics.entrySet().iterator();
         printHeader();
 
         while (it.hasNext()) {
-            Map.Entry<String, Electrodomestic> e = it.next();
 
-            item = e.getValue();
-            listFormat(item);
+            listFormat(it.next().getValue());
         }
         TextInterface.pressKey();
     }

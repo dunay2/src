@@ -15,22 +15,16 @@ import java.util.Date;
  * @author ashh412
  */
 //Proposito: Generico que guarda operaciones de la empresa: venta,reparacacion e implementaciones futuras
-public class Record implements Serializable {
+public abstract class Record implements Serializable {
 
     private final String operCode;
     private final String cliCode;
     private final String empCode;
+    private  String status="ACTIVA";
     private Date date = null;
-    private int counter;
-
-    public int getCounter() {
-        return counter;
-    }
-
-    public void setCounter(int counter) {
-        this.counter = counter;
-    }
-
+ 
+    
+    
     public Record(String operCode, String cliCode, String empCode) {
         this.operCode = operCode;
         this.cliCode = cliCode;
@@ -58,8 +52,16 @@ public class Record implements Serializable {
     private Date getDate_() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         date = new Date();
-        System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
+       // System.out.println(dateFormat.format(date));  
         return date;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

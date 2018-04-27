@@ -1,4 +1,4 @@
-package item.family;
+package item.components;
 
 import item.Electrodomestic;
 

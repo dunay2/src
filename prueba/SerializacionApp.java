@@ -36,7 +36,7 @@ public class SerializacionApp {
                 //      oos.writeObject(client);
                 hm.put(client.getDni(), client);
                 System.out.println(client.getDni());
-                System.out.println(client.getfirstName());
+                System.out.println(client.getFirstName());
             }
             oos.writeObject(hm);
 

@@ -22,16 +22,24 @@ import item.Electrodomestic;
  *
  * @author ashh412
  */
-public class SaleManager extends OperationsManager implements Imanager<Record, Node> {
-
+public class SaleManager extends OperationsManager {
+    
     private Client client;
     private Cashier cashier;//Lo declaramos como objeto para poder usar sus métodos
     private final ShoppingCart shoppingCart;
-  //  private final HashMap<String, Record> history = new HashMap<>();
+    //  private final HashMap<String, Record> history = new HashMap<>();
     private final ClientManager clientManager;
     private final StockManager stockManager;
-    private String operCode = "INVOICE".concat(String.valueOf( size()));
-    private static SaleManager instance = null;    //Singleton Singleton Pattern
+    private String operCode = "INVOICE ".concat(String.valueOf(size()));
+    private static SaleManager instance = null;    //Singleton  Pattern
+
+    public Client getClient() {
+        return client;
+    }
+    
+    public void setClient(Client client) {
+        this.client = client;
+    }
 
     //Singleton Singleton Pattern
     protected SaleManager(Cashier cashier, ClientManager clientManager, StockManager stockManager) {
@@ -39,7 +47,7 @@ public class SaleManager extends OperationsManager implements Imanager<Record, N
         shoppingCart = new ShoppingCart(this.cashier.getDni());
         this.clientManager = clientManager;
         this.stockManager = stockManager;
-
+        
     }
     //Singleton Singleton Pattern
 
@@ -49,36 +57,34 @@ public class SaleManager extends OperationsManager implements Imanager<Record, N
         }
         return instance;
     }
-
+    
     public void setCashier(Cashier cashier) {
         this.cashier = cashier;
     }
-
+    
     @Override
     public Object get(int rollNo) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public HashMap getAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     private Node callTailMenu(Node node) {
         return node.getChildNodes().get(node.getChildNodes().size() - 1);
     }
-
-    private Node callMainMenu(Node node) {
-
-        while (node.getParent() != null) {
-            node = node.getParent();
-        }
-        return node;
-    }
-
+    
     @Override
     public Record createObject(Node[] enode) {
-
+        client = null;
+        if (shoppingCart.getItems().isEmpty()) {
+            System.out.println("El carrito está vacío.");
+            TextInterface.pressKey();
+            return null;
+        }
+        
         Node node = enode[0];
 
         //1. buscar cliente y si no existe crearlo
@@ -91,23 +97,51 @@ public class SaleManager extends OperationsManager implements Imanager<Record, N
         if (client == null) {
             client = clientManager.createObject(enode);
         }
+        if (!client.isActive()) {
+            System.out.println("El cliente no está activo.");
+            TextInterface.pressKey();
+            return null;
+        }
+
 //continuamos por el menu
         enode[0] = callTailMenu(node);
 
-        operCode = "INVOICE".concat(String.valueOf(size()));
-        System.out.println(">>>>>>>>>>>>>" + operCode);
+//        operCode = "INVOICE ".concat(String.valueOf(size()));
+//        System.out.println(">>>>>>>>>>>>>" + operCode);
+        setInvoiceNumber();
         return null;
     }
-
+    
+    private void setInvoiceNumber() {
+        operCode = "INV0000".concat(String.valueOf(size()));
+    }
+    
     @Override
     public boolean handleProcess(Node[] enode) {
         Node node = enode[0];
-
+        
         switch (node.getValue()) {
-
+            
+            case 5:
+                list();
+                TextInterface.pressKey();
+                return true;
+            //Devolución
+            case 6:
+                
+                StringBuilder outString = new StringBuilder();
+                Sale sale = (Sale) search(node, outString);
+                if (sale == null) {
+                    System.out.println("La factura no existe");
+                    TextInterface.pressKey();
+                    return true;
+                }
+                sale.setStatus("ANULADA");
+                save();
+                return true;
             //Consultar el importe actual
             case 11:
-                list();
+                itemList();
                 return true;
             //"12. Añadir electrodomestico al carrito"
             case 12:
@@ -117,8 +151,11 @@ public class SaleManager extends OperationsManager implements Imanager<Record, N
             //13. Cobrar Compra
             case 13:
                 //identificar al cliente o solicitar alta 
-
-                createObject(enode);
+                //Si el carrito está vacío cancelar el cobro
+                if (createObject(enode) == null && node == enode[0]) {
+                    return true;
+                    
+                }
 
 //Seguimos navegando por los hijos
                 return false;
@@ -128,115 +165,124 @@ public class SaleManager extends OperationsManager implements Imanager<Record, N
             case 14:
                 clearShoppingCart();
                 return true;
-
-            case 1341://pago en efectivo
+            
+            case 1351://pago en efectivo
                 finishTransaction();
                 enode[0] = callMainMenu(node);
                 return true;
-
-            case 1342://Tarjeta
+            
+            case 1352://Tarjeta
                 finishTransaction();
                 enode[0] = callMainMenu(node);
                 return true;
-
-            case 1343://Financiado
+            
+            case 1353://Financiado
                 finishTransaction();
-
+                
                 return false;
             case 13431://Mensaje final financiado
                 enode[0] = callMainMenu(node);
-
+            
         }
         return false;//Profundiza
     }
-
+    
     private void finishTransaction() {
         //continuar aqui, sacar el resto de nodos hijos con la forma de pago
         //Si financia pasar a financiacion
 //Guardamos la compra
-
-//guardar la operacion de la tienda
-        Record sale = new Sale(operCode, client.getDni(), cashier.getDni(), shoppingCart);
 
 //agregamos en la ficha de cliente el código de operacion
         client.addOperation(operCode);
         clientManager.save();
 
         //Agregamos y guardamos todos los datos de la venta
-       add(sale);
+        add(new Sale(operCode, client.getDni(), cashier.getDni(), shoppingCart));
         save();
+        
+        System.out.println(">>>>Su factura es >>".concat(operCode));
+        System.out.println("Gracias por usar nuestros productos");
+        TextInterface.pressKey();
     }
-
+    
+    public Sale getSale(String operCod) {
+        
+        Sale sale = (Sale) searchRecord(operCod);
+        
+        return sale;
+        
+    }
+    
     private void openCreditLine() {
 
         //crear credito para el cliente
     }
-
+    
     private void clearShoppingCart() {
         for (byte i = 0; i < shoppingCart.getItems().size(); i++) {
             shoppingCart.removeItem(i);
         }
     }
-
+    
     private double getTotalAmount() {
-
+        
         return shoppingCart.getTotalAmount();
     }
-
+    
     private void addItem(Node node) {
-
+        
         int i = 0;
-
+        
         StringBuilder outString = new StringBuilder();
         Electrodomestic item = stockManager.search(node, outString);
+        
         if (item == null) {
+            System.out.println("El electrodoméstico no existe");
+            TextInterface.pressKey();
             return;
         }
-
+        
         ArrayList<String> nodesData = node.convertTreeChildToListIdx();
-
+        
         String itemCode = item.getCode();
         Byte amount = Byte.parseByte(nodesData.get(i++));
         Double cost = amount * item.getSellPrice();
-
+        
         shoppingCart.addItem(itemCode, cost, amount);
     }
 //Proposito: Listar elementos del carrito. Dar formato
 
-    @Override
-    public void list() {
+    private void itemList() {
         Scanner scanner = new Scanner(System.in);
-
+        
         System.out.println("Fecha:" + shoppingCart.getSalesDate());
         printHeader();
-
+        
         if (!shoppingCart.getItems().isEmpty()) {
             if (shoppingCart.getItems().size() > 0) {
                 shoppingCart.getItems().forEach((ShoppingCart.Line line) -> {
-
-                    String s = line.getLineNumber() + " ";
-                    s = s.concat(line.getItemCode().concat(" "));
-                    s = s.concat(String.valueOf(line.getPrice()).concat(" "));
-                    s = s.concat(String.valueOf(line.getAmount()).concat(" "));
-                    s = s.concat(String.valueOf(line.getPrice() * line.getAmount()));
-
-                    System.out.println(s);
-
+                    System.out.printf("%-10s%-10s%-30s%-20s\n", line.getLineNumber(), line.getItemCode(), line.getPrice(), line.getAmount());
+                    
                 });
             }
         }
-
+        
         System.out.println("TOTAL AMOUNT:" + getTotalAmount());
         TextInterface.pressKey();
-
     }
-
+    
+    private void listFormat(Electrodomestic item) {
+        
+        System.out.printf("%-20s%-20s%-40s%-20s%-20s%-20s\n", item.getCode(), item.getName(), item.getDescription(), item.getBoughtPrice(), item.getSellPrice(), item.getQuantity());
+        
+    }
+    
     private void printHeader() {
-
-        System.out.printf("%-2s%-10s%-40s%-20s\n", "LINE", "CODE", "DESCRIPTION", "PRICE");
-
+        
+        System.out.printf("%-10s%-10s%-30s%-20s\n", "LINE", "CODE", "PRICE", "AMOUNT");
+        
     }
-
+    
     @Override
     public void update(Node e) {
         Byte i = 1;
@@ -245,13 +291,21 @@ public class SaleManager extends OperationsManager implements Imanager<Record, N
         //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+//    @Override
+//    public Record search(Node node, StringBuilder outString) {
+//        outString.append(node.getChildNodes().get(0).getResponse());
+//        Sale sale = (Sale) searchRecord(outString.toString());
+//        if (sale != null) {
+//            return sale;
+//        }
+//        return null;
+//
+//    }
 }
-
 
 /*
 
-}
-
+ 
 //ventas de productos e inventarios
 public class Ventasproductos {
     static void inventarioyventa(String x){
@@ -271,55 +325,16 @@ public class Ventasproductos {
                
                 codigo=VentanaProductos.seleccionProducto();
              
-                if (codigo==100){JOptionPane.showMessageDialog(null, "el Valor del tomate es:500");
-                a=a+500;}
-                if (codigo==200){JOptionPane.showMessageDialog(null, "el Valor de la cebolla es:700");
-                a=a+700;}
-                if (codigo==300){JOptionPane.showMessageDialog(null, "el Valor de la zanahoria es:800");
-                a=a+800;}     
-                if (codigo==400){JOptionPane.showMessageDialog(null, "el Valor del perenjil es:900");
-                a=a+900;}
-                if (codigo==500){JOptionPane.showMessageDialog(null, "el Valor de la remolacha es:1000");
-                a=a+1000;}
-                if (codigo==600){JOptionPane.showMessageDialog(null, "el Valor del frijol es :80");
-                a=a+80;}
-                
-                a=a;
-                 }
+           
                
                
               JOptionPane.showMessageDialog(null, "El Valor Total a pagar es:"+ a);
                 break;
                
-            case 2:
-               
-                int tomate=1;
-                int cebolla=1;
-                int zanahoria=1;
-                int remolacha=1;
-                int perenjil=1;
-                int frijol=1;
-              
-                int cod=1; 
             
-                while(cod != 0){
-               
-                cod=Integer.parseInt(JOptionPane.showInputDialog("Digite el codigo del producto"));
-               
-                if (cod==100){tomate++;}
-                if (cod==200){cebolla++;}
-                if (cod==300){zanahoria++;}     
-                if (cod==400){remolacha++;}
-                if (cod==500){perenjil++;}
-                if (cod==600){frijol++;}
-                }
               
-                JOptionPane.showMessageDialog(null,"hay "+tomate+" libras de tomate");
-                JOptionPane.showMessageDialog(null,"hay "+cebolla+" libras de cebolla");
-                JOptionPane.showMessageDialog(null,"hay "+zanahoria+" libras de zanahoria");
-                JOptionPane.showMessageDialog(null,"hay "+perenjil+" libras de perejil");
-                JOptionPane.showMessageDialog(null,"hay "+remolacha+" libras de remolacha");
-                JOptionPane.showMessageDialog(null,"hay "+frijol+" libras de frijol");
+                JOptionPane.showMessageDialog(null,"hay tomate!"  );
+        
 break;
     }
        }
