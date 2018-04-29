@@ -1,4 +1,4 @@
-package Deparment;
+package Shop.Deparment;
 import Person.Person;
 import Person.Employee.Employee;
 import java.util.ArrayList;

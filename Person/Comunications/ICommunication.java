@@ -1,4 +1,4 @@
-package Comunications;
+package Person.Comunications;
 
 public interface ICommunication {
 }

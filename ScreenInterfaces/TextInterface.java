@@ -1,7 +1,9 @@
 package ScreenInterfaces;
 
-import Utils.Node;
+import Utils.Menu.MenuMain;
+import Utils.Menu.MenuNode;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Scanner;
 
 //Implementar la lectura de los nodos is imput
@@ -15,11 +17,26 @@ public class TextInterface extends AppInterface {
      * @return Devuelve el nodo seleccionado
      */
     @Override
-    public Node printMenu(Node node) {
-  
+    public MenuNode printMenu(MenuNode node) {
+
         //Menú principal
-        if (null == node) {       
-            return getMenu(super.getNode());
+        if (node == null) {
+            Iterator<MenuNode> it = MenuMain.getRootNode().getChildNodes().iterator();
+            while (it.hasNext()) {
+                MenuNode auxNode = (MenuNode) it.next();
+//introducir validacion para que el numero introducido no sea mayor que el tamaño de la lista
+                if (!auxNode.isInput()) {
+                    System.out.println(String.valueOf(auxNode.getValue()).concat(". ").concat(auxNode.getLabel()));
+                } else {
+                    System.out.println(auxNode.getLabel());
+                    auxNode.getResponse();
+                    int keypress = Integer.parseInt(auxNode.getResponseValue());
+
+                    return MenuMain.getRootNode().getChildNodes().get(keypress - 1);
+
+                }
+            }
+            // return getMenu(super.getNode());
         }
         return getMenu(node);
 
@@ -35,10 +52,10 @@ public class TextInterface extends AppInterface {
     }
     ////proposito: imprimir todos los hijos de un nodo
 
-    private void printChildNodes(Node n) {
+    private void printChildNodes(MenuNode n) {
 
         for (int i = 0; i < n.getChildNodes().size(); i++) {
-            Node node = n.getChildNodes().get(i);
+            MenuNode node = n.getChildNodes().get(i);
 
             String mnEntry = String.valueOf(node.getValue());
             mnEntry = mnEntry.substring(mnEntry.length() - 1, mnEntry.length());
@@ -75,18 +92,20 @@ public class TextInterface extends AppInterface {
 //mediante la impresión del menú de hijos
 //Gestiona la entrada de menú que ha sido seleccionada
 //Devuelve el nodo de menú seleccionado
-    private Node getMenu(Node node) {
+    private MenuNode getMenu(MenuNode node) {
         //Imprimimos el menú
         printChildNodes(node);
         int i;
         i = readConsole();
         if (i > 0) {
             //Tomamos el hijo seleccionado
-            Node childNode = node.getChildNodes().get(i - 1);
+            MenuNode childNode = node.getChildNodes().get(i - 1);
 
             //Ejecutamos una función en el sistema dependiendo
             //de la entra de teclado
-            if (childNode.isTail()) {
+            // if (childNode.isTail()) {
+            if (childNode.isInput()) {
+
                 return node.getParent();
             } else {
                 int k = childNode.getValue();
@@ -102,9 +121,7 @@ public class TextInterface extends AppInterface {
                 }
             }
 
-        }
-        else if(i==-1)
-        {
+        } else if (i == -1) {
             return node;
         }
         return null;
@@ -123,9 +140,10 @@ public class TextInterface extends AppInterface {
             //  Handle any exceptions.
         }
     }
-        public static void pressKey() {
+
+    public static void pressKey() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Pulsa una tecla para continuar ...");
         String a = scanner.nextLine();
-      } 
+    }
 }

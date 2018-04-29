@@ -1,4 +1,4 @@
-package Deparment;
+package Shop.Deparment;
 
 public interface IRepair {
 }

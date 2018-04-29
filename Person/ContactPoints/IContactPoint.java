@@ -1,4 +1,4 @@
-package ContactPoints;
+package Person.ContactPoints;
 
 public interface IContactPoint {
 

@@ -1,4 +1,4 @@
-package ishop;
+package Shop.ishop;
 
 public interface IBusiness {
 //Abre el comercio

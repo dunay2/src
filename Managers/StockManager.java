@@ -7,7 +7,7 @@ package Managers;
 
 import DataBase.TextDatabase;
 import ScreenInterfaces.TextInterface;
-import Utils.Node;
+import Utils.Menu.MenuNode;
 import item.Electrodomestic;
 import item.components.Computer;
 import item.family.home.Fridge;
@@ -25,7 +25,7 @@ import java.util.Map;
  * TextDatabase lo que le da persistencia
  *
  */
-public class StockManager extends TextDatabase implements Imanager<Electrodomestic, Node> {
+public class StockManager extends TextDatabase implements Imanager<Electrodomestic, MenuNode> {
 
     Electrodomestic item = null;
     private HashMap<String, Electrodomestic> electrodomestics = new HashMap<>();
@@ -63,8 +63,8 @@ public class StockManager extends TextDatabase implements Imanager<Electrodomest
     }
 
     @Override
-    public boolean handleProcess(Node[] enode) {
-        Node node = enode[0];
+    public boolean handleProcess(MenuNode[] enode) {
+        MenuNode node = enode[0];
 
         switch (node.getValue()) {
             //31. Agregar Item a Stock
@@ -97,8 +97,8 @@ public class StockManager extends TextDatabase implements Imanager<Electrodomest
     ///////////////////////////////////////////////////
     //Propósito: crear un nuevo electrodoméstico con los datos de entrada de consola
     @Override
-    public Electrodomestic createObject(Node[] enode) {
-        Node node = enode[0];
+    public Electrodomestic createObject(MenuNode[] enode) {
+        MenuNode node = enode[0];
 
         int i = 0;
         //Convertimos los nodos en parametros
@@ -134,8 +134,9 @@ public class StockManager extends TextDatabase implements Imanager<Electrodomest
     //Propósito: 
     //Buscar la clave en el HashMapy devolver el objeto si existe
     @Override
-    public Electrodomestic search(Node node, StringBuilder outString) {
+    public Electrodomestic search(MenuNode node, StringBuilder outString) {
 
+        System.out.println(node.getChildNodes().get(0).getLabel());
         Electrodomestic electrodomestic = searchElectrodomestic(node.getChildNodes().get(0).getResponse());
         if (electrodomestic != null) {
 
@@ -252,7 +253,7 @@ public class StockManager extends TextDatabase implements Imanager<Electrodomest
     // }
     //propósito: leer los datos introducidos por consola
     @Override
-    public void update(Node node) {
+    public void update(MenuNode node) {
         StringBuilder outString = null;
         Electrodomestic electrodomestic = search(node, outString);
 
@@ -327,4 +328,5 @@ public class StockManager extends TextDatabase implements Imanager<Electrodomest
 //    }
 //
 //   
+
 }

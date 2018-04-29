@@ -5,13 +5,13 @@
  */
 package Managers;
 
-import Utils.Node;
 import java.util.HashMap;
 import DataBase.TextDatabase;
 import Person.Client.Client;
 import Utils.Generator.PersonGenerator;
 import Person.Person;
 import ScreenInterfaces.TextInterface;
+import Utils.Menu.MenuNode;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -22,7 +22,7 @@ import java.util.Map;
  * Extiende la clase TextDatabase lo que le da persistencia
  *
  */
-public abstract class PersonManager extends TextDatabase implements Imanager<Person, Node> {
+ public abstract class PersonManager extends TextDatabase implements Imanager<Person, MenuNode> {
 
     private HashMap<String, Person> persons = new HashMap<>();
 
@@ -95,7 +95,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
     //Propósito: 
     //Buscar la clave en el HashMap devolver el objeto person si existe
     @Override
-    public Person search(Node node, StringBuilder outString) {
+    public Person search(MenuNode node, StringBuilder outString) {
 
         outString.append(node.getChildNodes().get(0).getResponse());
         Person person = searchPerson(outString.toString());
@@ -117,7 +117,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
     }
 
     @Override
-    public void update(Node node) {
+    public void update(MenuNode node) {
 
         StringBuilder outString = new StringBuilder();
         Person person = search(node, outString);

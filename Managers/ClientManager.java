@@ -9,7 +9,7 @@ import Person.Client.Client;
 
 import ScreenInterfaces.TextInterface;
 import Utils.Generator.PersonGenerator;
-import Utils.Node;
+import Utils.Menu.MenuNode;
 import Utils.Record.Sale;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -64,8 +64,8 @@ public class ClientManager extends PersonManager {
 
 //Propósito: gestionar las peticiones del controlador principal
     @Override
-    public boolean handleProcess(Node[] enode) {
-        Node node = enode[0];
+    public boolean handleProcess(MenuNode[] enode) {
+        MenuNode node = enode[0];
 
         switch (node.getValue()) {
 
@@ -102,7 +102,7 @@ public class ClientManager extends PersonManager {
         return false;
     }
 
-    private void delete(Node node) {
+    private void delete(MenuNode node) {
 
         StringBuilder outString = new StringBuilder();
         Client client = (Client) search(node, outString);
@@ -143,11 +143,11 @@ public class ClientManager extends PersonManager {
 
 ////Propósito: crear un nuevo cliente con los datos de entrada de consola
     @Override
-    public Client createObject(Node[] enode) {
+    public Client createObject(MenuNode[] enode) {
         String key;
-        Node node = enode[0];
+        MenuNode node = enode[0];
         ArrayList<String> nodesData;
-        Node n = node.getChildNodes().get(0);
+        MenuNode n = node.getChildNodes().get(0);
         int i = 0;
 //creacion estandar
         if (n.getResponseValue() == null) {

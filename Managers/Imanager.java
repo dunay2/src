@@ -42,8 +42,8 @@ public interface Imanager<T, N> {
 
     public void list();
 
-    public T createObject(Node[] node);
+    public T createObject(N[] node);
 
-    public boolean handleProcess(Node[] node);
+    public boolean handleProcess(N[] node);
 
 }

@@ -1,4 +1,4 @@
-package ishop;
+package Shop.ishop;
 
 import Managers.MainManager;
 import Person.Client.Client;

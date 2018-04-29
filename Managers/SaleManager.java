@@ -8,7 +8,7 @@ package Managers;
 import Person.Client.Client;
 import Person.Employee.Cashier;
 import ScreenInterfaces.TextInterface;
-import Utils.Node;
+import Utils.Menu.MenuNode;
 import Utils.ShoppingCart;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,12 +72,12 @@ public class SaleManager extends OperationsManager {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    private Node callTailMenu(Node node) {
+    private MenuNode callTailMenu(MenuNode node) {
         return node.getChildNodes().get(node.getChildNodes().size() - 1);
     }
     
     @Override
-    public Record createObject(Node[] enode) {
+    public Record createObject(MenuNode[] enode) {
         client = null;
         if (shoppingCart.getItems().isEmpty()) {
             System.out.println("El carrito está vacío.");
@@ -85,7 +85,7 @@ public class SaleManager extends OperationsManager {
             return null;
         }
         
-        Node node = enode[0];
+        MenuNode node = enode[0];
 
         //1. buscar cliente y si no existe crearlo
         StringBuilder outString = new StringBuilder();
@@ -117,8 +117,8 @@ public class SaleManager extends OperationsManager {
     }
     
     @Override
-    public boolean handleProcess(Node[] enode) {
-        Node node = enode[0];
+    public boolean handleProcess(MenuNode[] enode) {
+        MenuNode node = enode[0];
         
         switch (node.getValue()) {
             
@@ -164,7 +164,7 @@ public class SaleManager extends OperationsManager {
             //Cancelar venta
             case 14:
                 clearShoppingCart();
-                return true;
+                return false;
             
             case 1351://pago en efectivo
                 finishTransaction();
@@ -229,7 +229,7 @@ public class SaleManager extends OperationsManager {
         return shoppingCart.getTotalAmount();
     }
     
-    private void addItem(Node node) {
+    private void addItem(MenuNode node) {
         
         int i = 0;
         
@@ -284,7 +284,7 @@ public class SaleManager extends OperationsManager {
     }
     
     @Override
-    public void update(Node e) {
+    public void update(MenuNode e) {
         Byte i = 1;
 
         //  e.addItem("", 0, i);

@@ -1,8 +1,6 @@
-package ishop;
+package Shop.ishop;
 
-import Store.Store;
-import Deparment.Department;
-import Person.Employee.Employee;
+import Shop.Deparment.Department;
 import java.util.ArrayList;
 
 

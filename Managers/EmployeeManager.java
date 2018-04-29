@@ -7,7 +7,7 @@ package Managers;
 
 import Person.Employee.Employee;
 import Person.Person;
-import Utils.Node;
+import Utils.Menu.MenuNode;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -41,9 +41,9 @@ public class EmployeeManager extends PersonManager {
      * @throws IOException
      */
     @Override
-    public Employee createObject(Node[] node) {
+    public Employee createObject(MenuNode[] node) {
 
-        Node enode = node[0];
+        MenuNode enode = node[0];
         ArrayList<String> nodesData = enode.convertTreeChildToList();
         int i = 0;
 
@@ -57,8 +57,8 @@ public class EmployeeManager extends PersonManager {
     }
 
     @Override
-    public boolean handleProcess(Node[] enode) {
-        Node node = enode[0];
+    public boolean handleProcess(MenuNode[] enode) {
+        MenuNode node = enode[0];
         switch (node.getValue()) {
 
             case 41: {
@@ -108,4 +108,6 @@ public class EmployeeManager extends PersonManager {
     public void print(Person e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+   
 }

@@ -1,14 +1,14 @@
 package ScreenInterfaces;
 
-//Autor: DRS
-import Utils.MenuMessage;
+//Autor: ashh412
+import Utils.Menu.MenuMessage;
 import Utils.Node;
 
 public abstract class AppInterface implements IInterface {
 //Nodo raíz;
 
     private final Node node = new Node(0, null, "Menú principal");
-    private final MenuMessage m = new MenuMessage();
+
 
 //Agregar el menu principal
     private void mnuMain(Node node) {
@@ -29,8 +29,8 @@ public abstract class AppInterface implements IInterface {
         mnuAddGeneric(node.getChildNodes().get(2), "Item", mnuIndex += 10);
         //Empleados
         mnuAddGeneric(node.getChildNodes().get(3), "Employee", mnuIndex += 10);
-        
-          addInputMenu(node.getChildNodes().get(5), "mnuCancelTransaction", mnuIndex += 10);//Menu Buscar
+
+        addInputMenu(node.getChildNodes().get(5), "mnuCancelTransaction", mnuIndex += 10);//Menu Buscar
 
     }
 
@@ -136,7 +136,8 @@ public abstract class AppInterface implements IInterface {
     }
 
     public AppInterface() {
-        loadMenu();
+        //loadMenu();
+       
     }
 
     public Node getNode() {
@@ -145,6 +146,7 @@ public abstract class AppInterface implements IInterface {
 
     private void loadMenu() {
         mnuMain(node);
+
     }
 
     private void mnuItemSection(Node node, int mnuIndex) {

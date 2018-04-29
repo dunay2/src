@@ -6,12 +6,12 @@
 package Managers;
 
 import DataBase.TextDatabase;
+import Utils.Menu.MenuNode;
 import Utils.Node;
 import Utils.Record.Record;
 import Utils.Record.Sale;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -21,7 +21,7 @@ import java.util.Map;
  * @author ashh412
  */
 //Facturas y ordenes de reparacion
-public abstract class OperationsManager extends TextDatabase implements Imanager<Record, Node> {
+public abstract class OperationsManager extends TextDatabase implements Imanager<Record, MenuNode> {
 
     static HashMap<String, Record> records = new HashMap<>();
 
@@ -29,7 +29,7 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
         return records;
     }
 
-    protected Node callMainMenu(Node node) {
+    protected MenuNode callMainMenu(MenuNode node) {
 
         while (node.getParent() != null) {
             node = node.getParent();
@@ -68,7 +68,7 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
     }
 
     @Override
-    public void update(Node e) {
+    public void update(MenuNode e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -221,13 +221,10 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
         clearScreen();
     }
 
-    @Override
-    public Record createObject(Node[] node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
     @Override
-    public Record search(Node node, StringBuilder outString) {
+    public Record search(MenuNode node, StringBuilder outString) {
 
         outString.append(node.getChildNodes().get(0).getResponse());
         Record record = searchRecord(outString.toString());

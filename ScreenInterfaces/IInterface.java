@@ -1,5 +1,6 @@
 package ScreenInterfaces;
 
+import Utils.Menu.MenuNode;
 import Utils.Node;
 
 public interface IInterface {
@@ -9,6 +10,6 @@ public interface IInterface {
  //Nodo sobre el que crear, array de mnu asociado, indice de funcion y verdadero si el ultimo elemento no tiene hijos
     public void addMenu(Node node,String[] mnuText, int index, boolean isTail);
 
-    public Node printMenu(Node node);
+    public MenuNode printMenu(MenuNode node);
 
 }

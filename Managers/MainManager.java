@@ -3,16 +3,16 @@
  */
 package Managers;
 
-import Deparment.Department;
-import Deparment.Finance;
-import Deparment.FrontDesk;
-import Deparment.Support;
+import Shop.Deparment.Department;
+import Shop.Deparment.Finance;
+import Shop.Deparment.FrontDesk;
+import Shop.Deparment.Support;
 import Person.Employee.Cashier;
 import Person.Employee.Employee;
-import Utils.Node;
 import ScreenInterfaces.TextInterface;
-import ishop.ElectronicShop;
-import ishop.Shop;
+import Utils.Menu.MenuNode;
+import Shop.ishop.ElectronicShop;
+import Shop.ishop.Shop;
 
 /**
  *
@@ -76,13 +76,13 @@ public class MainManager {
     }
 
     //Propósito: Hacer de listener y handler de las peticiones
-    private void doBusiness(Node enode) {
+    private void doBusiness(MenuNode enode) {
         boolean startNewSequence = false;
 //Utilizamos esta técnica mediante la que pasamos un array 
 //a los gestores para pasar por referencia el objeto nodo y 
 //de esta forma poder antender sus peticiones 
 
-        Node[] node = {enode};
+        MenuNode[] node = {enode};
         
         if (saleManager.handleProcess(node)) {
             startNewSequence = true;
@@ -101,7 +101,7 @@ public class MainManager {
         //Imprimimos el menú del nodo seleccionado y mandamos a consola,
         //la cual nos devolverá el valor del nuevo nodo seleccionado
         //cargamos nuevo menú o menú principal
-        Node newNode;
+        MenuNode newNode;
         if (!startNewSequence
                 == true) {//Imprime los hijos de nodo
             newNode = myTextInterface.printMenu(node[0]);

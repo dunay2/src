@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package Managers;
-
-import Utils.Node;
 import java.util.HashMap;
 
 /**
@@ -46,18 +44,6 @@ public class CreditManager implements Imanager{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public Object createObject(Node []node)  {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-
-    @Override
-       public boolean handleProcess(Node[] enode) {
-        Node node = enode[0];       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
- 
-
  
 
     @Override
@@ -67,6 +53,16 @@ public class CreditManager implements Imanager{
 
     @Override
     public Object search(Object e, StringBuilder outString) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object createObject(Object[] node) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean handleProcess(Object[] node) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
