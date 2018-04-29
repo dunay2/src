@@ -5,7 +5,6 @@
  */
 package Managers;
 
-import DataBase.TextDatabase;
 import ScreenInterfaces.TextInterface;
 import Utils.Menu.MenuNode;
 import item.Electrodomestic;
@@ -25,7 +24,7 @@ import java.util.Map;
  * TextDatabase lo que le da persistencia
  *
  */
-public class StockManager extends TextDatabase implements Imanager<Electrodomestic, MenuNode> {
+public class StockManager extends templateManager {
 
     Electrodomestic item = null;
     private HashMap<String, Electrodomestic> electrodomestics = new HashMap<>();
@@ -60,6 +59,7 @@ public class StockManager extends TextDatabase implements Imanager<Electrodomest
     public void load() {
 
         electrodomestics = super.load("Electrodomestic");
+
     }
 
     @Override
@@ -68,10 +68,9 @@ public class StockManager extends TextDatabase implements Imanager<Electrodomest
 
         switch (node.getValue()) {
             //31. Agregar Item a Stock
-            case 31: {
+            case 31:
                 createObject(enode);
-            }
-            return true;
+                return true;
             //32. Modificar Item Stock
             case 32:
                 update(node);
@@ -83,13 +82,18 @@ public class StockManager extends TextDatabase implements Imanager<Electrodomest
             case 34:
                 list();
                 return true;
-            //Crear electrodoméstico aleatorio
+            //Ir atrás en el menú
+                 case 35:
+                     return true;
             case 36:
 
                 StringBuilder outString = new StringBuilder();
                 Electrodomestic electrodomestic = (Electrodomestic) search(node, outString);
                 print(electrodomestic);
                 return true;
+                
+
+                
         }
         return false;
     }
@@ -98,28 +102,53 @@ public class StockManager extends TextDatabase implements Imanager<Electrodomest
     //Propósito: crear un nuevo electrodoméstico con los datos de entrada de consola
     @Override
     public Electrodomestic createObject(MenuNode[] enode) {
-        MenuNode node = enode[0];
 
         int i = 0;
+        String key;
+        MenuNode node = enode[0];
+        ArrayList<String> nodesData;
+        MenuNode nodeAux = node.getChildNodes().get(0);//comprobacion de respuesta
         //Convertimos los nodos en parametros
-        ArrayList<String> nodesData = node.convertTreeChildToList();
 
+        //ArrayList<String> nodesData = node.convertTreeChildToList();
+//creacion estandar
+//No hay datos en los nodos hijos
+        if (nodeAux.getResponseValue() == null) {
+            StringBuilder outString = new StringBuilder();
+            Electrodomestic e = (Electrodomestic) search(node, outString);
+            if (e == null) {
+                key = outString.toString();
+            } else {
+                node.getChildNodes().get(0).clearResponse();
+                System.out.println("El registro ya existe");
+                TextInterface.pressKey();
+                return null;
+            }
+
+        } else {//Creación por búsqueda, ya hemos obtenido el dni
+
+            key = nodeAux.getResponseValue();
+        }
+        nodesData = node.convertTreeChildToListIdx();
+        node.getChildNodes().get(0).clearResponse();
+
+        //Obtenemos la familia
         //1.  Ordenadores   2. Hogar   3. Telefonía   4. Imagen   5. Sonido
-        switch (node.getChildNodes().get(0).getResponseValue()) {
+        switch (node.getChildNodes().get(1).getResponseValue()) {
             case "1":
-                item = (Electrodomestic) new Computer(nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)));
+                item = (Electrodomestic) new Computer(key, nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)),2D);
                 break;
             case "2":
-                item = (Electrodomestic) new Fridge(nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)));
+                item = (Electrodomestic) new Fridge(key, nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)));
                 break;
             case "3":
-                item = (Electrodomestic) new Phone(nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)));
+                item = (Electrodomestic) new Phone(key, nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)),2D);
                 break;
             case "4":
-                item = (Electrodomestic) new Screen(nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)));
+                item = (Electrodomestic) new Screen(key, nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)));
                 break;
             case "5":
-                item = (Electrodomestic) new Sound(nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)));
+                item = (Electrodomestic) new Sound(key, nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)));
                 break;
         }
 
@@ -136,8 +165,9 @@ public class StockManager extends TextDatabase implements Imanager<Electrodomest
     @Override
     public Electrodomestic search(MenuNode node, StringBuilder outString) {
 
-        System.out.println(node.getChildNodes().get(0).getLabel());
-        Electrodomestic electrodomestic = searchElectrodomestic(node.getChildNodes().get(0).getResponse());
+        outString.append(node.getChildNodes().get(0).getResponse());
+
+        Electrodomestic electrodomestic = searchElectrodomestic(outString.toString());
         if (electrodomestic != null) {
 
             return electrodomestic;
