@@ -45,7 +45,7 @@ public abstract class Item implements Serializable {
     private String color;
     private String weith;
 
-    public Item(String familyCode, String code, String name, String description, double boughtPrice, double sellPrice, int quantity) {
+    public Item(String code, String familyCode, String name, String description, double boughtPrice, double sellPrice, int quantity) {
         this.familyCode = familyCode;
         this.code = code;
         this.name = name;

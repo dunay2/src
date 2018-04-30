@@ -13,9 +13,11 @@ import item.components.Computer;
  */
 public class Labtop extends Computer{
     
-   public Labtop(String familyCode, String code, String name, String description, double boughtPrice, double sellPrice, int quantity) {
-        super(familyCode, code, name, description, boughtPrice, sellPrice, quantity);
+    public Labtop(String code, String familyCode, String name, String description, double boughtPrice, double sellPrice, int quantity, Double ram) {
+        super(code, familyCode, name, description, boughtPrice, sellPrice, quantity, ram);
     }
+    
+
    
     
 }

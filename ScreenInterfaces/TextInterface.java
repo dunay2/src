@@ -3,41 +3,26 @@ package ScreenInterfaces;
 import Utils.Menu.MenuMain;
 import Utils.Menu.MenuNode;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Scanner;
 
 //Implementar la lectura de los nodos is imput
 // Clase TextInterface:
 //Propósito: gestionar las entradas y navegación de menú según la opción seleccionada
-public class TextInterface extends AppInterface {
+public class TextInterface {
 
     /**
      *
      * @param node Nodo sobre el que vamos a trabajar
      * @return Devuelve el nodo seleccionado
      */
-    @Override
     public MenuNode printMenu(MenuNode node) {
 
         //Menú principal
         if (node == null) {
-            Iterator<MenuNode> it = MenuMain.getRootNode().getChildNodes().iterator();
-            while (it.hasNext()) {
-                MenuNode auxNode = (MenuNode) it.next();
-//introducir validacion para que el numero introducido no sea mayor que el tamaño de la lista
-                if (!auxNode.isInput()) {
-                    System.out.println(String.valueOf(auxNode.getValue()).concat(". ").concat(auxNode.getLabel()));
-                } else {
-                    System.out.println(auxNode.getLabel());
-                    auxNode.getResponse();
-                    int keypress = Integer.parseInt(auxNode.getResponseValue());
 
-                    return MenuMain.getRootNode().getChildNodes().get(keypress - 1);
-
-                }
-            }
-            // return getMenu(super.getNode());
+            return getMenu(MenuMain.getRootNode());
         }
+
         return getMenu(node);
 
     }

@@ -17,8 +17,8 @@ public class Electrodomestic extends Item {
     private String autonomy;
     private String recharTime;
 
-    public Electrodomestic(String familyCode,String code, String name,String description, double boughtPrice, double sellPrice, int quantity) {
-        super(familyCode,code, name,description, boughtPrice, sellPrice, quantity);
+    public Electrodomestic(String code,String familyCode, String name,String description, double boughtPrice, double sellPrice, int quantity) {
+        super(code,familyCode, name,description, boughtPrice, sellPrice, quantity);
     }
  
 

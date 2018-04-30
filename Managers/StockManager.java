@@ -83,17 +83,15 @@ public class StockManager extends templateManager {
                 list();
                 return true;
             //Ir atrás en el menú
-                 case 35:
-                     return true;
+            case 35:
+                return true;
             case 36:
 
                 StringBuilder outString = new StringBuilder();
                 Electrodomestic electrodomestic = (Electrodomestic) search(node, outString);
                 print(electrodomestic);
                 return true;
-                
 
-                
         }
         return false;
     }
@@ -110,7 +108,7 @@ public class StockManager extends templateManager {
         MenuNode nodeAux = node.getChildNodes().get(0);//comprobacion de respuesta
         //Convertimos los nodos en parametros
 
-        //ArrayList<String> nodesData = node.convertTreeChildToList();
+        //nodesData = node.convertTreeChildToList();
 //creacion estandar
 //No hay datos en los nodos hijos
         if (nodeAux.getResponseValue() == null) {
@@ -136,13 +134,13 @@ public class StockManager extends templateManager {
         //1.  Ordenadores   2. Hogar   3. Telefonía   4. Imagen   5. Sonido
         switch (node.getChildNodes().get(1).getResponseValue()) {
             case "1":
-                item = (Electrodomestic) new Computer(key, nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)),2D);
+                item = (Electrodomestic) new Computer(key, nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)), 2D);
                 break;
             case "2":
                 item = (Electrodomestic) new Fridge(key, nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)));
                 break;
             case "3":
-                item = (Electrodomestic) new Phone(key, nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)),2D);
+                item = (Electrodomestic) new Phone(key, nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)), 2D);
                 break;
             case "4":
                 item = (Electrodomestic) new Screen(key, nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)));
@@ -174,7 +172,6 @@ public class StockManager extends templateManager {
 
         }
         return null;
-
     }
 
     @Override
@@ -194,7 +191,7 @@ public class StockManager extends templateManager {
         System.out.printf("%-20s%-20s%-40s%-20s%-20s%-20s\n", "CODIGO", "NOMBRE", "DESCRIPCION", "PRECIO COMPRA", "PRECIO VENTA", "UNIDADES");
     }
 
-    private Electrodomestic searchElectrodomestic(String e) {
+    public Electrodomestic searchElectrodomestic(String e) {
         if (electrodomestics.containsKey(e)) {
             //Si encontramos el elemento en la búsqueda devolvemos el elemento
             return electrodomestics.get(e);
@@ -304,7 +301,10 @@ public class StockManager extends templateManager {
             TextInterface.pressKey();
         }
     }
-
+public void refresh()
+{
+   save(electrodomestics);
+}
     //Propósito: Listar los Electrodomestic por consola
     @Override
     public void list() {

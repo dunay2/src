@@ -17,9 +17,10 @@ public class Computer extends Electrodomestic {
     private double mhz;
     private double hddSize;
 
-    public Computer(String familyCode, String code, String name, String description, double boughtPrice, double sellPrice, int quantity) {
+    public Computer( String code,String familyCode, String name, String description, double boughtPrice, double sellPrice, int quantity,Double ram) {
 
-        super(familyCode, code, name, description, boughtPrice, sellPrice, quantity);
+        super( code,familyCode, name, description, boughtPrice, sellPrice, quantity);
+        this.ram=ram;
 
     }
 

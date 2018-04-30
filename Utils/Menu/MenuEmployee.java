@@ -22,9 +22,9 @@ public class MenuEmployee extends MenuBase {
         //1. mnuEmployee
         ArrayList<MenuStruct> entries = new ArrayList();
 
-        entries.add(new MenuStruct("mnusearchEmployee", "Buscar Empleado"));
         entries.add(new MenuStruct("mnuaddEmployee", "Agregar Empleado"));
         entries.add(new MenuStruct("mnueditEmployee", "Actualizar Empleado "));
+        entries.add(new MenuStruct("mnusearchEmployee", "Buscar Empleado"));
         entries.add(new MenuStruct("", "Listar Empleados"));
         entries.add(new MenuStruct("mnudeleteEmployee", "Eliminar Empleado"));
         entries.add(new MenuStruct("tail", "Volver al Menú Principal"));

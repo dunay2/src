@@ -22,7 +22,7 @@ public class MenuBase {
      *
      */
     static protected void convertToChildNode(String parentMnuName, ArrayList<MenuStruct> mnu) {
-
+        boolean inputVal = false;
         Iterator<MenuStruct> it = mnu.iterator();
         MenuNode parent = searchMenu(MenuMain.getRootNode(), parentMnuName);
         int i = 1;
@@ -31,44 +31,63 @@ public class MenuBase {
 
             MenuStruct mnuStruct = it.next();
             MenuNode node = new MenuNode(parent, i++ + parent.getValue() * 10, mnuStruct.getMnuNanme(), mnuStruct.getMnuText(), null);
+
+            String mnuName = mnuStruct.getMnuNanme();
+            String output = mnuName;
             
-            if(mnuStruct.getMnuNanme().equals("output"))
-            {
+            String[] parts = mnuName.split(",");
+            if (parts.length > 1) {
+                output = parts[0]; // 
+                mnuName = parts[1]; // 
+
+            }
+
+            if (output.equals("output")) {
                 node.isInput(true);
+                inputVal = true;
+                node.setMnuName(mnuName);
+                
             }
-               if(mnuStruct.getMnuNanme().equals("tail"))
-            {
+            //Si es un nodo de devolución volvemos al abuelo
+            if (mnuStruct.getMnuNanme().equals("tail")) {
                 node.setChildnodes(parent.getParent().getChildNodes());
+
             }
-            
-            
-            
+
             parent.addNode(node);
         }
+//
+//        if (!inputVal) {
+//            MenuNode node = new MenuNode(parent, ++i + parent.getValue(), "mnuSelect", "\"nodo tail ", null);
+//            node.isInput(true);
+//
+//            parent.addNode(node);
+//        }
 
-        MenuNode node = new MenuNode(parent, ++i + parent.getValue(), "mnuSelect", "Seleccione una opción de menú", null);
-        node.isInput(true);
-        parent.addNode(node);
-
-        // return nodes;
     }
 
 //Busca en profundidad un menú en un árbol
     static private MenuNode searchMenu(MenuNode node, String mnuName) {
         MenuNode findNode = null;
+//Comprobamos el padre
         if (node.getMnuName().equals(mnuName)) {
             return node;
         }
-
+//Recorremos los hijos
         for (MenuNode eNode : node.getChildNodes()) {
-            if (eNode.getMnuName().equals(mnuName)) {
-                return eNode;
-            } else {
-                findNode = searchMenu(eNode, mnuName);
+            if (!eNode.getMnuName().equals("tail")) {
+                //Si lo encontramos salimos
+                if (eNode.getMnuName().equals(mnuName)) {
+                    return eNode;
+                } else {
+//Profundizamos la búsqueda
+                    findNode = searchMenu(eNode, mnuName);
+                }
+                if (findNode != null) {
+                    break;
+                }
             }
-            if (findNode != null) {
-                break;
-            }
+            //Siguiente hermano
         }
 
         return findNode;

@@ -15,22 +15,22 @@ import java.util.ArrayList;
 public class MenuClient extends MenuBase {
 
     //Propósito: Agregar entradas al clientes
-    //Padre: mnuTransaction
-    //Menú mnuClient
+    //Padre: mnuMain
+    //Menú  mnuClient
     static protected ArrayList<MenuStruct> clientEntries(String parentMnuName) {
 
         //1. mnuClient
         ArrayList<MenuStruct> entries = new ArrayList();
 
-        entries.add(new MenuStruct("mnuSearchClient", "Buscar Cliente"));
         entries.add(new MenuStruct("mnuAddClient", "Agregar Cliente"));
-        entries.add(new MenuStruct("mnuUpdateClient", "Actualizar Cliente "));
-        entries.add(new MenuStruct("mnuListClient", "Listar Cliente"));
+        entries.add(new MenuStruct("mnuEditClient", "Actualizar Cliente "));
         entries.add(new MenuStruct("mnuDeleteClient", "Eliminar Cliente"));
-        entries.add(new MenuStruct("mnuAddClient", "Agregar Cliente aleatorio"));
-        entries.add(new MenuStruct("", "Volver al Menú Principal"));
+        entries.add(new MenuStruct("mnuListClient", "Listar Clientes"));
 
-        convertToChildNode(parentMnuName, entries);
+        entries.add(new MenuStruct("mnuAddClient", "Agregar Cliente aleatorio"));
+        entries.add(new MenuStruct("mnuSearchClient", "Buscar Cliente"));
+        entries.add(new MenuStruct("tail", "Volver al Menú Principal"));
+
         return entries;
     }
 
@@ -39,23 +39,41 @@ public class MenuClient extends MenuBase {
     //Menú mnuAddClient
     static protected ArrayList<MenuStruct> addClientEntries(String parentMnuName) {
 //Input menu
-        //1. mnuAddClient
+        // mnuAddClient
         ArrayList<MenuStruct> entries = new ArrayList();
+        entries.add(new MenuStruct("output", "Introduzca DNI del cliente"));
+        entries.add(new MenuStruct("output", "Introduzca nombre"));
+        entries.add(new MenuStruct("output", "Introduzca Apellido"));
+        entries.add(new MenuStruct("output", "Introduzca Domicilio"));
+        entries.add(new MenuStruct("output", "Introduzca Teléfono"));
 
-        entries.add(new MenuStruct("", "Introduzca nombre"));
-        entries.add(new MenuStruct("", "Introduzca Apellido"));
-        entries.add(new MenuStruct("", "Introduzca Domicilio"));
-        entries.add(new MenuStruct("", "Introduzca Teléfono"));
-
-        convertToChildNode(parentMnuName, entries);
+      
         return entries;
     }
+    
+       //Propósito: Menú de entrada de registro sin dni
+    //Padre: MULTIUSO
+    //Menú addClientEntriesNoID
+    static protected ArrayList<MenuStruct> addClientEntriesNoID(String parentMnuName) {
+//Input menu
+        // mnuAddClient
+        ArrayList<MenuStruct> entries = new ArrayList();
+        entries.add(new MenuStruct("output", "Introduzca DNI del cliente"));
+        entries.add(new MenuStruct("output", "Introduzca nombre"));
+        entries.add(new MenuStruct("output", "Introduzca Apellido"));
+        entries.add(new MenuStruct("output", "Introduzca Domicilio"));
+        entries.add(new MenuStruct("output", "Introduzca Teléfono"));
+
+      
+        return entries;
+    }
+    
     //Propósito: Editar clientes
     //Padre: mnuClient
     //Menú mnuEditClient
 
     static protected ArrayList<MenuStruct> editClientEntries(String parentMnuName) {
-        //1. mnuEditClient
+        // mnuEditClient
 //InputMenu
         ArrayList<MenuStruct> entries = new ArrayList();
         entries.add(new MenuStruct("", "Introduzca DNI del cliente"));
@@ -63,7 +81,7 @@ public class MenuClient extends MenuBase {
         entries.add(new MenuStruct("", "Introduzca Apellido"));
         entries.add(new MenuStruct("", "Introduzca Domicilio"));
         entries.add(new MenuStruct("", "Introduzca Teléfono"));
-        convertToChildNode(parentMnuName, entries);
+     
         return entries;
     }
 
@@ -72,33 +90,33 @@ public class MenuClient extends MenuBase {
     //Menú mnuDeleteClient
     static protected ArrayList<MenuStruct> deleteClientEntries(String parentMnuName) {
 //InputMenu
-        //3. mnuDeleteClient  
+        // mnuDeleteClient  
         ArrayList<MenuStruct> entries = new ArrayList();
         entries.add(new MenuStruct("", "Introduzca DNI del cliente"));
-        convertToChildNode(parentMnuName, entries);
+     
         return entries;
     }
 
-    //Propósito: Deshabilitar clientes
+    //Propósito: Buscar clientes
     //Padre: mnuClient
     //Menú mnuSearchClient
     static protected ArrayList<MenuStruct> searchClientEntries(String parentMnuName) {
 
-        //4. mnuSearchClient    
+        // mnuSearchClient    
         ArrayList<MenuStruct> entries = new ArrayList();
-        entries.add(new MenuStruct("", "Introduzca DNI del cliente"));
-        convertToChildNode(parentMnuName, entries);
+        entries.add(new MenuStruct("output", "Introduzca DNI del cliente"));
+     
         return entries;
     }
 
     //Propósito: Agregar entradas al menú para solicitar entrada de codigo cliente
     static protected ArrayList<MenuStruct> getClientIdEntries(String parentMnuName) {
-        //19. mnuGetClientId 
+        // mnuGetClientId 
 
         ArrayList<MenuStruct> entries = new ArrayList();
-        entries.add(new MenuStruct("", "Introduzca DNI del cliente"));
+        entries.add(new MenuStruct("output,mnuGetClientId", "Introduzca DNI del cliente"));
 
-        convertToChildNode("", entries);
+    
         return entries;
     }
 

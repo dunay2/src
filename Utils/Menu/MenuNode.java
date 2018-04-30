@@ -21,13 +21,17 @@ public class MenuNode {
     private int parentValue = 0;
     private final int value;
     private ArrayList<MenuNode> childNodes = new ArrayList();
-    private final String mnuName;//Nombre del menú
+    private  String mnuName;//Nombre del menú
     private final String label;//Texto de menu
     private boolean isInput = false;//Es un nodo de lectura
     private String response; //Devolucion de datos de nodo de lectura
 
     public void addNode(MenuNode node) {
         childNodes.add(node);
+    }
+
+    public void setMnuName(String mnuName) {
+        this.mnuName = mnuName;
     }
 
     public MenuNode getParent() {
@@ -69,6 +73,8 @@ public class MenuNode {
         return label;
     }
 
+   
+
     public boolean isInput() {
         return isInput;
     }
@@ -84,6 +90,7 @@ public class MenuNode {
         if (this.isInput()) {
 
             try {
+                System.out.println(this.label);
                 this.setResponse(br.readLine());
             } catch (IOException e) {
                 System.out.println(e.getCause());

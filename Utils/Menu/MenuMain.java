@@ -78,19 +78,19 @@ public class MenuMain extends MenuBase {
         convertToChildNode("mnuBuying", entries);
         entries.clear();
         
-        //obtener datos de cliente
-        MenuSale.addClientEntriesNoID("mnuGetClientId").forEach((menuStruct) -> {
-            entries.add(menuStruct);
-        });
-        convertToChildNode("mnuBuying", entries);
-        entries.clear();
-
-
-//        MenuSale.paymentTypeEntries("mnuBuying").forEach((menuStruct) -> {
+//        //obtener datos de cliente
+//        MenuSale.addClientEntriesNoID("mnuBuyGetClientId").forEach((menuStruct) -> {
 //            entries.add(menuStruct);
 //        });
-//        convertToChildNode("mnuBuying", entries);
+//        convertToChildNode("mnuBuyGetClientId", entries);
 //        entries.clear();
+
+
+        MenuSale.paymentTypeEntries("mnuBuyGetClientId").forEach((menuStruct) -> {
+            entries.add(menuStruct);
+        });
+        convertToChildNode("mnuBuyGetClientId", entries);
+        entries.clear();
         
         
         

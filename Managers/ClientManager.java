@@ -11,7 +11,6 @@ import ScreenInterfaces.TextInterface;
 import Utils.Generator.PersonGenerator;
 import Utils.Menu.MenuNode;
 import Utils.Record.Sale;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -69,12 +68,10 @@ public class ClientManager extends PersonManager {
 
         switch (node.getValue()) {
 
-            case 21: {
-
+            case 21:
                 createObject(enode);
-
                 return true;
-            }
+
             case 22: //Actualizar
                 update(node);
                 return true;
@@ -95,9 +92,9 @@ public class ClientManager extends PersonManager {
                 StringBuilder outString = new StringBuilder();
                 Client client = (Client) search(node, outString);
                 printRecord(client);
-
-            case 27://menu superior
                 return true;
+            case 27://menu superior
+                return false;
         }
         return false;
     }
@@ -142,42 +139,43 @@ public class ClientManager extends PersonManager {
     }
 
 ////Propósito: crear un nuevo cliente con los datos de entrada de consola
-    @Override
-    public Client createObject(MenuNode[] enode) {
-        String key;
-        MenuNode node = enode[0];
-        ArrayList<String> nodesData;
-        MenuNode n = node.getChildNodes().get(0);
-        int i = 0;
-//creacion estandar
-        if (n.getResponseValue() == null) {
-            StringBuilder outString = new StringBuilder();
-            Client client = (Client) search(node, outString);
-            if (client == null) {
-                key = outString.toString();
-            } else {
-                node.getChildNodes().get(0).clearResponse();
-                System.out.println("El cliente ya existe");
-                TextInterface.pressKey();
-                return null;
-            }
-
-        } else {//Creación por búsqueda, ya hemos obtenido el dni
-
-            key = n.getResponseValue();
-        }
-        nodesData = node.convertTreeChildToListIdx();
-        node.getChildNodes().get(0).clearResponse();
-        Client client = new Client(key, nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), nodesData.get(i++));
-
-//Guardamos el cliente en la coleccion
-        add(client);
-        //Guardar los datos 
-        save();
-
-        return client;
-    }
-
+//    @Override
+//    public Client createObject(MenuNode[] enode) {
+//        String key;
+//        MenuNode node = enode[0];
+//        ArrayList<String> nodesData;
+//        MenuNode nodeAux = node.getChildNodes().get(0);//comprobacion de respuesta
+//        int i = 0;
+////creacion estandar
+////No hay datos en los nodos hijos
+//        if (nodeAux.getResponseValue() == null) {
+//            StringBuilder outString = new StringBuilder();
+//            Client client = (Client) search(node, outString);
+//            if (client == null) {
+//                key = outString.toString();
+//            } else {
+//                node.getChildNodes().get(0).clearResponse();
+//                System.out.println("El registro ya existe");
+//                TextInterface.pressKey();
+//                return null;
+//            }
+//
+//        } else {//Creación por búsqueda, ya hemos obtenido el dni
+//
+//            key = nodeAux.getResponseValue();
+//        }
+//        nodesData = node.convertTreeChildToListIdx();
+//        node.getChildNodes().get(0).clearResponse();
+//        
+//        Client client = new Client(key, nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), nodesData.get(i++));
+//
+////Guardamos el cliente en la coleccion
+//        add(client);
+//        //Guardar los datos 
+//        save();
+//
+//        return client;
+//    }
 //Propósito: Crear un cliente aleatorio
 //    private void createRandomClient() {
 //    

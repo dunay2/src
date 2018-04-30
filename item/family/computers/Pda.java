@@ -13,8 +13,10 @@ import item.components.Computer;
  */
 public class Pda extends Computer{
     
-  public Pda(String familyCode, String code, String name, String description, double boughtPrice, double sellPrice, int quantity) {
-        super(familyCode, code, name, description, boughtPrice, sellPrice, quantity);
-    } 
+    public Pda(String code, String familyCode, String name, String description, double boughtPrice, double sellPrice, int quantity, Double ram) {
+        super(code, familyCode, name, description, boughtPrice, sellPrice, quantity, ram);
+    }
+    
+
 
 }

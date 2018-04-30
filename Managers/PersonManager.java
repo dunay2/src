@@ -22,7 +22,7 @@ import java.util.Map;
  * Extiende la clase TextDatabase lo que le da persistencia
  *
  */
- public abstract class PersonManager extends TextDatabase implements Imanager<Person, MenuNode> {
+public abstract class PersonManager extends TextDatabase implements Imanager<Person, MenuNode> {
 
     private HashMap<String, Person> persons = new HashMap<>();
 
@@ -96,8 +96,9 @@ import java.util.Map;
     //Buscar la clave en el HashMap devolver el objeto person si existe
     @Override
     public Person search(MenuNode node, StringBuilder outString) {
-
+        
         outString.append(node.getChildNodes().get(0).getResponse());
+
         Person person = searchPerson(outString.toString());
         if (person != null) {
             return person;
@@ -207,4 +208,42 @@ import java.util.Map;
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+     @Override
+    public Person createObject(MenuNode[] enode) {
+        String key;
+        MenuNode node = enode[0];
+        ArrayList<String> nodesData;
+        MenuNode nodeAux = node.getChildNodes().get(0);//comprobacion de respuesta
+        int i = 0;
+//creacion estandar
+//No hay datos en los nodos hijos
+        if (nodeAux.getResponseValue() == null) {
+            StringBuilder outString = new StringBuilder();
+            Person client = (Client) search(node, outString);
+            if (client == null) {
+                key = outString.toString();
+            } else {
+                node.getChildNodes().get(0).clearResponse();
+                System.out.println("El registro ya existe");
+                TextInterface.pressKey();
+                return null;
+            }
+
+        } else {//Creación por búsqueda, ya hemos obtenido el dni
+
+            key = nodeAux.getResponseValue();
+        }
+        nodesData = node.convertTreeChildToListIdx();
+        node.getChildNodes().get(0).clearResponse();
+        
+        Person client = new Client(key, nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), nodesData.get(i++));
+
+//Guardamos el cliente en la coleccion
+        add(client);
+        //Guardar los datos 
+        save();
+
+        return client;
+    }
+    
 }

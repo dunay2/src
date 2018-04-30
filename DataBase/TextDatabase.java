@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import Person.Client.Client;
 import Utils.Record.Sale;
 import item.Electrodomestic;
+import item.family.home.Fridge;
 
 /**
  *
@@ -51,12 +52,19 @@ public class TextDatabase implements IDatabase {
 
                     break;
                 case "Electrodomestic.data":
+                case "Computer.data":
+                case "Fridge.data":
+                case "Phone.data":
+                case "Screen.data":
+                case "Sound.data":
+
+                    filename = "Electrodomestic.data";
                     hmfile = (HashMap<String, Electrodomestic>) hm;
                     break;
                 case "Employee.data":
                     break;
                 case "Sale.data":
-                     hmfile = (HashMap<String, Sale>) hm;
+                    hmfile = (HashMap<String, Sale>) hm;
                     break;
                 case "Repair.data":
                     break;

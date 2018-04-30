@@ -13,10 +13,11 @@ import item.components.Computer;
  */
 public class Desktop extends Computer{
     
-    public Desktop(String familyCode, String code, String name, String description, double boughtPrice, double sellPrice, int quantity) {
-        super(familyCode, code, name, description, boughtPrice, sellPrice, quantity);
-   }
+    public Desktop(String code, String familyCode, String name, String description, double boughtPrice, double sellPrice, int quantity, Double ram) {
+        super(code, familyCode, name, description, boughtPrice, sellPrice, quantity, ram);
+    }
     
+
    
     
     

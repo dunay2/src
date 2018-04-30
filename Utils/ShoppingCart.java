@@ -19,7 +19,7 @@ public class ShoppingCart implements Serializable {
 
         private byte lineNumber;
         private String itemCode;
-        private byte amount;
+        private int amount;
         private double price;
 
         public byte getLineNumber() {
@@ -38,11 +38,11 @@ public class ShoppingCart implements Serializable {
             this.itemCode = itemCode;
         }
 
-        public byte getAmount() {
+        public int getAmount() {
             return amount;
         }
 
-        public void setAmount(byte amount) {
+        public void setAmount(int amount) {
             this.amount = amount;
         }
 
@@ -115,7 +115,7 @@ public class ShoppingCart implements Serializable {
         return totalAmount;
     }
 
-    public void addItem(String itemCode, double itemPrice, byte amount) {
+    public void addItem(String itemCode, double itemPrice, int amount) {
         Line line = new Line();
 
         line.setLineNumber(this.lineNumber++);
@@ -128,7 +128,7 @@ public class ShoppingCart implements Serializable {
         totalAmount = totalAmount + line.price * line.amount;
     }
 
-    public void removeItem(byte lineNumber) {
+    public void removeItem(int lineNumber) {
 
         Line line = items.get(lineNumber);
 
