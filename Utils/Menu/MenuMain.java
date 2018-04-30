@@ -36,6 +36,12 @@ public class MenuMain extends MenuBase {
 
 //Creamos el nodo raíz mnuMain
         //Menu principal
+        entries.add(new MenuStruct("mnuSaleDept", "Gestión de ventas"));
+        entries.add(new MenuStruct("mnuRepairDept", "Departamento de reparaciones"));
+        convertToChildNode(parentMnuName, entries);
+        entries.clear();
+        parentMnuName="mnuSaleDept";
+
         entries.add(new MenuStruct("mnuTransaction", "Realizar una Transacción"));
         entries.add(new MenuStruct("mnuClient", "Gestión de Clientes"));
         entries.add(new MenuStruct("mnuStock", "Gestión de Stock"));
@@ -59,7 +65,7 @@ public class MenuMain extends MenuBase {
         });
         convertToChildNode("mnuTransaction", entries);
         entries.clear();
-        
+
         //Agregar items al carrito
         MenuSale.addItemToCartEntries("mnuAddItemToCart").forEach((menuStruct) -> {
             entries.add(menuStruct);
@@ -71,29 +77,24 @@ public class MenuMain extends MenuBase {
 //        });
 //    convertToChildNode("mnuBuying", entries);
 
-    //Obtener id cliente
+        //Obtener id cliente
         MenuSale.getClientIdEntries("mnuBuying").forEach((menuStruct) -> {
             entries.add(menuStruct);
         });
         convertToChildNode("mnuBuying", entries);
         entries.clear();
-        
+
 //        //obtener datos de cliente
 //        MenuSale.addClientEntriesNoID("mnuBuyGetClientId").forEach((menuStruct) -> {
 //            entries.add(menuStruct);
 //        });
 //        convertToChildNode("mnuBuyGetClientId", entries);
 //        entries.clear();
-
-
         MenuSale.paymentTypeEntries("mnuBuyGetClientId").forEach((menuStruct) -> {
             entries.add(menuStruct);
         });
         convertToChildNode("mnuBuyGetClientId", entries);
         entries.clear();
-        
-        
-        
 
 //         MenuSale.getItemCode("mnuAddItemToCart").forEach((menuStruct) -> {
 //            entries.add(menuStruct);
