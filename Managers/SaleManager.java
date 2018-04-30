@@ -49,11 +49,6 @@ public class SaleManager extends OperationsManager {
         this.clientManager = clientManager;
         this.stockManager = stockManager;
 
-        // TODO Control de stock
-        // TODO Control de stock
-        //  TODO Comprobar menus
-        //  TODO FALLA Cobrar compra /
-        //el resto de menus ok
     }
     //Singleton Singleton Pattern
 
@@ -184,7 +179,7 @@ public class SaleManager extends OperationsManager {
                 finishTransaction();
                 enode[0] = callMainMenu(node);
                 return true;
-ss
+
             case 1313://Financiado
                 finishTransaction();
                 enode[0] = callMainMenu(node);
@@ -222,14 +217,14 @@ ss
         add(new Sale(operCode, client.getDni(), cashier.getDni(), shoppingCart));
         save();
 
-        System.out.println("Total: ".concat(String.valueOf( shoppingCart.getTotalAmount())));
+        System.out.println("Total: ".concat(String.valueOf(shoppingCart.getTotalAmount())));
         System.out.println(">>>> Su código de factura es: ".concat(operCode));
         System.out.println("Gracias por usar nuestros productos");
-        
+
         TextInterface.pressKey();
-        
+
         clearShoppingCart();
-        
+
         stockManager.refresh();
     }
 
