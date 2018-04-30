@@ -184,7 +184,7 @@ public class SaleManager extends OperationsManager {
                 finishTransaction();
                 enode[0] = callMainMenu(node);
                 return true;
-
+ss
             case 1313://Financiado
                 finishTransaction();
                 enode[0] = callMainMenu(node);
