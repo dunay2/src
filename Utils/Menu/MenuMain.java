@@ -6,7 +6,6 @@
 package Utils.Menu;
 
 import Utils.Menu.Stock.MenuStock;
-import Utils.MenuStruct;
 import java.util.ArrayList;
 import Utils.Menu.Stock.Computers.*;
 import Utils.Menu.Stock.Computers.Components.*;
@@ -209,7 +208,6 @@ public class MenuMain extends MenuBase {
         convertToChildNode("mnuComponents", entries);
         entries.clear();
 
-        // MenuStock.addCommonItemEntries("mnuKeyboard").forEach(menu -> entries.add(menu));
         MenuKeyboard.addResponseEntries("mnuKeyboard").forEach(menu -> entries.add(menu));
         convertToChildNode("mnuKeyboard", entries);
         entries.clear();
@@ -220,6 +218,23 @@ public class MenuMain extends MenuBase {
 
         MenuProcesor.addResponseEntries("mnuProcesor").forEach(menu -> entries.add(menu));
         convertToChildNode("mnuProcesor", entries);
+        entries.clear();
+        
+        MenuMemory.addResponseEntries("mnuMemory").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuMemory", entries);
+        entries.clear();
+        
+        MenuPrinter.addResponseEntries("mnuPrinter").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuPrinter", entries);
+        entries.clear();
+        
+//Fin componentes
+
+        //Propósito: Menú Equipos 
+        //Padre: mnuGenComputers
+        //Menú mnuComputers
+        MenuStock.addComputerTypeEntries("mnuComputers").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuComputers", entries);
         entries.clear();
 
         MenuPda.addResponseEntries("mnuPda").forEach(menu -> entries.add(menu));
@@ -234,13 +249,9 @@ public class MenuMain extends MenuBase {
         convertToChildNode("mnuDesktop", entries);
         entries.clear();
 
-
         MenuNoteBook.addResponseEntries("mnuNoteBook").forEach(menu -> entries.add(menu));
         convertToChildNode("mnuNoteBook", entries);
         entries.clear();
-        
-        
-        
 
 //       
 //

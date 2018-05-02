@@ -5,7 +5,6 @@
  */
 package item.Factory.Computer.Components;
 
-import item.Electrodomestic;
 import item.family.computers.Computer;
 import java.util.ArrayList;
 
@@ -28,7 +27,7 @@ public class IniProcesor extends Computer {
         super.setName(response.get(i++));
         super.setBrand(response.get(i++));
         super.setDescription(response.get(i++));
-        super.setMhz(Double.valueOf(response.get(i++)));
+        super.setMhz(response.get(i++));
         super.setGuaranty(response.get(i++));
         super.setBoughtPrice(Double.valueOf(response.get(i++)));
         super.setSellPrice(Double.valueOf(response.get(i++)));

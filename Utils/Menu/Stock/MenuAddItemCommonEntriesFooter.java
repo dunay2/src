@@ -5,7 +5,7 @@
  */
 package Utils.Menu.Stock;
 
-import Utils.MenuStruct;
+import Utils.Menu.MenuStruct;
 import java.util.ArrayList;
 
 /**

@@ -5,14 +5,14 @@
  */
 package item.Factory.Home;
 
-import item.family.computers.Computer;
+import item.family.home.WashingMachine;
 import java.util.ArrayList;
 
 /**
  *
  * @author ashh412
  */
-public class IniWashingMachine extends Computer {
+public class IniWashingMachine extends WashingMachine {
 
     /**
      *
@@ -34,6 +34,8 @@ public class IniWashingMachine extends Computer {
         super.setDepth(Integer.valueOf(response.get(i++)));
         super.setPower(response.get(i++));
         super.setEnergyCertification(response.get(i++));
+        super.setRevolutions(response.get(i++));
+        
         
         super.setGuaranty(response.get(i++));
         super.setBoughtPrice(Double.valueOf(response.get(i++)));

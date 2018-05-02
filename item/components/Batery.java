@@ -3,18 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Item.Family.Computers.Components;
+package item.components;
 
 import item.Electrodomestic;
+
+
 
 /**
  *
  * @author ashh412
  */
-public class  Mouse extends Electrodomestic {
- 
-    public  Mouse(String code) {
-        super(code);
-    }
- 
-}

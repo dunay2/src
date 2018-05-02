@@ -5,24 +5,39 @@
  */
 package item.family.computers;
 
+
+import item.IRechargable;
+
 /**
  *
  * @author ashh412
  */
-public class BateryComputer extends Computer {
-    
-     private String autonomy; //autonomia
+public class BateryComputer extends Computer  implements IRechargable{
+
+
+    private String autonomy; //autonomia
+
+//    }
 
     public BateryComputer(String code) {
         super(code);
     }
-    //Alimentación powersuply electrical network/bateri
-    public String getAutonomy() {
+
+   
+
+
+    @Override
+   public String getAutonomy() {
         return autonomy;
     }
+    
+  
 
+    @Override
     public void setAutonomy(String autonomy) {
         this.autonomy = autonomy;
     }
     
+    
+
 }

@@ -7,7 +7,7 @@ package Utils.Menu.Stock.Computers.Components;
 
 import Utils.Menu.Stock.MenuAddItemCommonEntriesFooter;
 import Utils.Menu.Stock.MenuAddItemCommonEntriesHeader;
-import Utils.MenuStruct;
+import Utils.Menu.MenuStruct;
 import java.util.ArrayList;
 
 /**

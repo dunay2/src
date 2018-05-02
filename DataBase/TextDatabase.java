@@ -57,7 +57,12 @@ public class TextDatabase implements IDatabase {
                 case "Phone":
                 case "Screen":
                 case "Sound":
-
+                case "Procesor":
+                case "IniProcesor":
+                case "IniKeyboard":
+                case "IniMouse":
+                case "Mouse":
+                case "Keyboard":
                     filename = "Electrodomestic";
                     hmfile = (HashMap<String, Electrodomestic>) hm;
                     break;

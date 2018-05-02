@@ -5,6 +5,7 @@
  */
 package item.Factory.Computer.Components;
 
+import Item.Family.Computers.Components.Memory;
 import item.family.computers.Computer;
 import java.util.ArrayList;
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author ashh412
  */
-public class IniMemory extends Computer {
+public class IniMemory extends Memory {
 
     /**
      *
@@ -27,7 +28,7 @@ public class IniMemory extends Computer {
         super.setName(response.get(i++));
         super.setBrand(response.get(i++));
         super.setDescription(response.get(i++));
-        super.setMhz(Double.valueOf(response.get(i++)));
+        super.setCapacity(response.get(i++));
         super.setGuaranty(response.get(i++));
         super.setBoughtPrice(Double.valueOf(response.get(i++)));
         super.setSellPrice(Double.valueOf(response.get(i++)));

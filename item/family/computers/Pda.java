@@ -15,15 +15,17 @@ public class Pda extends BateryComputer {
         super(code);
     }
 
-    private String autonomy; //autonomia
+    private String inches; //autonomia
     //Alimentación powersuply electrical network/bateri
 
-    public String getAutonomy() {
-        return autonomy;
+    public String getInches() {
+        return inches;
     }
 
-    public void setAutonomy(String autonomy) {
-        this.autonomy = autonomy;
+    public void setInches(String inches) {
+        this.inches = inches;
     }
+
+ 
 
 }

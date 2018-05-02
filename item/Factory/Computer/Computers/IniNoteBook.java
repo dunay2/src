@@ -5,14 +5,14 @@
  */
 package item.Factory.Computer.Computers;
 
-import item.family.computers.BateryComputer;
+import item.family.computers.NoteBook;
 import java.util.ArrayList;
 
 /**
  *
  * @author ashh412
  */
-public class IniNoteBook extends BateryComputer {
+public class IniNoteBook extends NoteBook {
 
     public IniNoteBook(String code) {
         super(code);
@@ -31,9 +31,9 @@ public class IniNoteBook extends BateryComputer {
         super.setName(response.get(i++));
         super.setBrand(response.get(i++));
         super.setDescription(response.get(i++));
-        super.setMhz(Double.valueOf(response.get(i++)));
-        super.setRam(Double.valueOf(response.get(i++)));
-        super.setHddSize(Double.valueOf(response.get(i++)));
+        super.setMhz(response.get(i++));
+        super.setRam(response.get(i++));
+        super.setHddSize(response.get(i++));
         super.setAutonomy(response.get(i++));
         super.setGuaranty(response.get(i++));
         super.setBoughtPrice(Double.valueOf(response.get(i++)));

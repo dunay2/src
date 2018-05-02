@@ -13,15 +13,21 @@ import java.util.ArrayList;
  *
  * @author ashh412
  */
-public class MenuDishWasher {
+public class MenuWashingMachine {
 
-    // addCommonItemEntries   //Input menu
-    public static ArrayList<MenuStruct> addResponseEntries(String parentMnuName) {
+
+    //Input menu
+  public static ArrayList<MenuStruct> addResponseEntries(String parentMnuName) {
         ArrayList<MenuStruct> entries = MenuHomeCommon.addResponseEntries("");
-        entries.add(new MenuStruct("output", "Introduzca Consumo de Agua"));
+   
+          entries.add(new MenuStruct("output", "Introduzca Revoluciones"));
+          
         entries.addAll(MenuAddItemCommonEntriesFooter.addResponseEntries(""));
 
         return entries;
     }
 
+
 }
+
+

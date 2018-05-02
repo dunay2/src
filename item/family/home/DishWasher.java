@@ -17,6 +17,15 @@ public class DishWasher extends  Electrodomestic{
         super(code);
     }
     
+private String waterConsume;
+
+    public String getWaterConsume() {
+        return waterConsume;
+    }
+
+    public void setWaterConsume(String waterConsume) {
+        this.waterConsume = waterConsume;
+    }
 
     
 }

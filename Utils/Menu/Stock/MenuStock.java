@@ -6,7 +6,7 @@
 package Utils.Menu.Stock;
 
 import Utils.Menu.MenuBase;
-import Utils.MenuStruct;
+import Utils.Menu.MenuStruct;
 import java.util.ArrayList;
 
 /**
@@ -155,35 +155,35 @@ public class MenuStock extends MenuBase {
         return entries;
     }
 
-    static protected ArrayList<MenuStruct> addFridgeEntries(String parentMnuName) {
-        ArrayList<MenuStruct> entries = new ArrayList();
-
-        //5. mnuAddItem
-        //Input menu
-        entries.add(new MenuStruct("output", "Introduzca código de artículo"));
-        entries.add(new MenuStruct("output", "Introduzca nombre de artículo"));
-        entries.add(new MenuStruct("output", "Introduzca descripción de artículo"));
-        entries.add(new MenuStruct("output", "Introduzca alto"));
-        entries.add(new MenuStruct("output", "Introduzca ancho"));
-        entries.add(new MenuStruct("output", "Introduzca fondo"));
-        entries.add(new MenuStruct("output", "Introduzca la capacidad de la nevera"));//capacidad bruta del refrigerador litros
-        entries.add(new MenuStruct("output", "Introduzca la capacidad del congelador"));
-        entries.add(new MenuStruct("output", "Introduzca cantidad de cajones"));
-        entries.add(new MenuStruct("output", "Introduzca tipo de carga"));
-        entries.add(new MenuStruct("output", "Introduzca tipo de carga (Bateria/Red)"));
-        entries.add(new MenuStruct("output", "Introduzca autonomia"));
-        entries.add(new MenuStruct("output", "Introduzca tiempo de recarga"));
-        entries.add(new MenuStruct("output", "Introduzca certificado enérgetico"));
-
-        entries.add(
-                new MenuStruct("output", "Introduzca precio de compra"));
-        entries.add(
-                new MenuStruct("output", "Introduzca precio de venta"));
-        entries.add(
-                new MenuStruct("output", "Introduzca cantidad en stock"));
-
-        return entries;
-    }
+//    static protected ArrayList<MenuStruct> addFridgeEntries(String parentMnuName) {
+//        ArrayList<MenuStruct> entries = new ArrayList();
+//
+//        //5. mnuAddItem
+//        //Input menu
+//        entries.add(new MenuStruct("output", "Introduzca código de artículo"));
+//        entries.add(new MenuStruct("output", "Introduzca nombre de artículo"));
+//        entries.add(new MenuStruct("output", "Introduzca descripción de artículo"));
+//        entries.add(new MenuStruct("output", "Introduzca alto"));
+//        entries.add(new MenuStruct("output", "Introduzca ancho"));
+//        entries.add(new MenuStruct("output", "Introduzca fondo"));
+//        entries.add(new MenuStruct("output", "Introduzca la capacidad de la nevera"));//capacidad bruta del refrigerador litros
+//        entries.add(new MenuStruct("output", "Introduzca la capacidad del congelador"));
+//        entries.add(new MenuStruct("output", "Introduzca cantidad de cajones"));
+//        entries.add(new MenuStruct("output", "Introduzca tipo de carga"));
+//        entries.add(new MenuStruct("output", "Introduzca tipo de carga (Bateria/Red)"));
+//        entries.add(new MenuStruct("output", "Introduzca autonomia"));
+//        entries.add(new MenuStruct("output", "Introduzca tiempo de recarga"));
+//        entries.add(new MenuStruct("output", "Introduzca certificado enérgetico"));
+//
+//        entries.add(
+//                new MenuStruct("output", "Introduzca precio de compra"));
+//        entries.add(
+//                new MenuStruct("output", "Introduzca precio de venta"));
+//        entries.add(
+//                new MenuStruct("output", "Introduzca cantidad en stock"));
+//
+//        return entries;
+//    }
 
     public static ArrayList<MenuStruct> editItemEntries(String parentMnuName) {
 

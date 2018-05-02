@@ -27,9 +27,9 @@ public class IniComputer extends Computer {
         super.setName(response.get(i++));
         super.setBrand(response.get(i++));
         super.setDescription(response.get(i++));
-        super.setMhz(Double.valueOf(response.get(i++)));
-        super.setRam(Double.valueOf(response.get(i++)));
-        super.setHddSize(Double.valueOf(response.get(i++)));
+        super.setMhz(response.get(i++));
+        super.setRam(response.get(i++));
+        super.setHddSize(response.get(i++));
         super.setGuaranty(response.get(i++));
         super.setBoughtPrice(Double.valueOf(response.get(i++)));
         super.setSellPrice(Double.valueOf(response.get(i++)));

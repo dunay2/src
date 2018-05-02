@@ -2,6 +2,7 @@ package Shop.ishop;
 
 import Managers.MainManager;
 import Person.Client.Client;
+import Samples.addTestItems;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,6 +15,8 @@ public class ElectronicShop extends Shop {
             MainManager scene = new MainManager();
 
             userAuth();
+
+            addTestItems.addComponents();
 
             scene.start();
 
@@ -32,9 +35,7 @@ public class ElectronicShop extends Shop {
 
         System.out.println("Por favor introduzca codigo de usuario para autenticarse");//Se pide un dato al usuario
 
-      //  client = new Client(br.readLine());
-        
-        
+        //  client = new Client(br.readLine());
         System.out.println();
 
     }

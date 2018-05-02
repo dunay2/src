@@ -5,7 +5,9 @@
  */
 package Utils.Menu.Stock.Home;
 
+
 import Utils.Menu.Stock.MenuAddItemCommonEntriesFooter;
+import Utils.Menu.Stock.MenuAddItemCommonEntriesHeader;
 import Utils.Menu.MenuStruct;
 import java.util.ArrayList;
 
@@ -13,15 +15,19 @@ import java.util.ArrayList;
  *
  * @author ashh412
  */
-public class MenuDishWasher {
+public class MenuHoover {
 
-    // addCommonItemEntries   //Input menu
-    public static ArrayList<MenuStruct> addResponseEntries(String parentMnuName) {
+   
+    //Input menu
+  public static ArrayList<MenuStruct> addResponseEntries(String parentMnuName) {
         ArrayList<MenuStruct> entries = MenuHomeCommon.addResponseEntries("");
-        entries.add(new MenuStruct("output", "Introduzca Consumo de Agua"));
+   
         entries.addAll(MenuAddItemCommonEntriesFooter.addResponseEntries(""));
 
         return entries;
     }
 
+
 }
+
+

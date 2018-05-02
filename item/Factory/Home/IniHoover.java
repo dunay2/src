@@ -6,14 +6,14 @@
 package item.Factory.Home;
 
 
-import item.family.computers.Computer;
+import item.family.home.Hoover;
 import java.util.ArrayList;
 
 /**
  *
  * @author ashh412
  */
-public class IniHoover extends Computer {
+public class IniHoover extends Hoover {
 
     /**
      *

@@ -3,18 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Item.Family.Computers.Components;
-
-import item.Electrodomestic;
+package item;
 
 /**
  *
  * @author ashh412
  */
-public class Procesor extends Electrodomestic {
-
-    public Procesor(String code) {
-        super(code);
-    }
-
+public interface IRechargable {
+    
+    /**
+     *
+     * @param e
+     */
+    void setAutonomy (String e);
+    String getAutonomy ();
+    
+    
+    
 }

@@ -19,7 +19,7 @@ public class ItemFactory {
 //1. Vendedor 2. Tecnico 3. Financiero"));
 
     public static Electrodomestic getElectrodomestic(int ElectroType, String key, ArrayList<String> responseValues) {
-        {
+  
             switch (ElectroType) {
 //                case 1:
 //                    return new IniComputer(key,responseValues );
@@ -185,6 +185,6 @@ public class ItemFactory {
             return null;
         }
 
-    }
+ 
 
 }

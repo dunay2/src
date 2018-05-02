@@ -13,12 +13,16 @@ import java.util.ArrayList;
  *
  * @author ashh412
  */
-public class MenuDishWasher {
+public class MenuFridge {
 
-    // addCommonItemEntries   //Input menu
+    //Input menu
     public static ArrayList<MenuStruct> addResponseEntries(String parentMnuName) {
         ArrayList<MenuStruct> entries = MenuHomeCommon.addResponseEntries("");
-        entries.add(new MenuStruct("output", "Introduzca Consumo de Agua"));
+
+        entries.add(new MenuStruct("output", "Introduzca Capacidad de la Nevera"));
+        entries.add(new MenuStruct("output", "Introduzca Capacidad del Congelador"));
+        entries.add(new MenuStruct("output", "Introduzca Cantidad de Cajones"));
+        
         entries.addAll(MenuAddItemCommonEntriesFooter.addResponseEntries(""));
 
         return entries;

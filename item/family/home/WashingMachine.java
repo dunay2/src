@@ -13,9 +13,18 @@ import item.Electrodomestic;
  */
 public class WashingMachine extends Electrodomestic {
 
+    private String Revolutions;
+
     public WashingMachine(String code) {
         super(code);
     }
 
+    public String getRevolutions() {
+        return Revolutions;
+    }
+
+    public void setRevolutions(String Revolutions) {
+        this.Revolutions = Revolutions;
+    }
 
 }

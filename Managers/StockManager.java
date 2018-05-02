@@ -64,11 +64,17 @@ public class StockManager extends templateManager {
 
         switch (node.getValue()) {
 
+            case 31121://  1. PDA'S
+            case 31122:// 2. Portatiles
+            case 31123:// 3. Sobremesa
+            case 31124:// 4. NoteBooks
+
             case 31111:// 1. Teclados
             case 31112://2. Memorias
             case 31113://3. Ratones
             case 31114: //4. Impresoras
             case 31115: //5. Procesadores
+
                 createObject(enode);
                 return true;
 
