@@ -22,10 +22,35 @@ public class MenuSale extends MenuBase {
         //15. mnuTransaction
         ArrayList<MenuStruct> entries = new ArrayList();
 
+        entries.add(new MenuStruct("mnuSell", "Realizar una Venta"));
+        entries.add(new MenuStruct("mnuReturnItem", "Realizar una Devolución1"));
+        entries.add(new MenuStruct("", "Listar Facturas"));
+        entries.add(new MenuStruct("tail", "Volver al Menú Principal"));
+
+        return entries;
+    }
+    //Propósito: Menú principal de ventas
+    //Menu añadir producto al carrito
+    //Padre: mnuMain
+    //Menú mnuTransaction
+
+    static protected ArrayList<MenuStruct> transactionSaleEntries(String parentMnuName) {
+        //15. mnuTransaction
+        ArrayList<MenuStruct> entries = new ArrayList();
+
         entries.add(new MenuStruct("mnuQuery", "Consultar el importe actual"));
-        entries.add(new MenuStruct("mnuAddItemToCart", "Añadir producto al carrito"));
+        entries.add(new MenuStruct("mnuAddItemToCart", "Añadir Producto al Carrito"));
         entries.add(new MenuStruct("mnuBuying", "Cobrar Compra"));
         entries.add(new MenuStruct("tail", "Cancelar venta"));
+
+        return entries;
+    }
+
+    static protected ArrayList<MenuStruct> transactionCancelEntries(String parentMnuName) {
+        //15. mnuTransaction
+        ArrayList<MenuStruct> entries = new ArrayList();
+
+        entries.add(new MenuStruct("output", "Introduzca la Referencia de Factura:"));
 
         return entries;
     }
@@ -118,25 +143,21 @@ public class MenuSale extends MenuBase {
 
         // convertToChildNode(parentMnuName, entries);
     }
-    
-       static protected ArrayList<MenuStruct> getClientIdEntries(String parentMnuName) {
+
+    static protected ArrayList<MenuStruct> getClientIdEntries(String parentMnuName) {
 //Input menu
-        
+
         ArrayList<MenuStruct> entries = new ArrayList();
         entries.add(new MenuStruct("output,mnuBuyGetClientId", "Introduzca DNI del cliente"));
-                entries.add(new MenuStruct("", "Introduzca DNI del cliente"));
+        entries.add(new MenuStruct("", "Introduzca DNI del cliente"));
         entries.add(new MenuStruct("output", "Introduzca nombre"));
         entries.add(new MenuStruct("output", "Introduzca Apellido"));
         entries.add(new MenuStruct("output", "Introduzca Domicilio"));
         entries.add(new MenuStruct("output", "Introduzca Teléfono"));
-        
-        
 
-    
         return entries;
-        
+
         // convertToChildNode(parentMnuName, entries);
     }
-    
 
 }

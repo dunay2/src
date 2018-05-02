@@ -1,11 +1,13 @@
 package item.family;
 
-import item.components.Image;
+import item.family.Image.Plasm;
 
-public class Screen extends Image {
+public class Screen extends Plasm {
 
-  public Screen(String familyCode, String code, String name, String description, double boughtPrice, double sellPrice, int quantity) {
-        super(familyCode, code, name, description, boughtPrice, sellPrice, quantity);
+    public Screen(String code) {
+        super(code);
     }
-  
+
+ 
+
 }

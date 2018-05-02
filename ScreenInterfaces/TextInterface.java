@@ -29,10 +29,7 @@ public class TextInterface {
 
 //Propósito: limpiar la consola
     public static void clearScreen() {
-//        for (int i = 0; i < 10; i++) {
-//            System.out.println();
-//        }
-//        System.out.flush();
+
         clearConsole();
     }
     ////proposito: imprimir todos los hijos de un nodo
@@ -44,7 +41,9 @@ public class TextInterface {
 
             String mnEntry = String.valueOf(node.getValue());
             mnEntry = mnEntry.substring(mnEntry.length() - 1, mnEntry.length());
-            mnEntry = mnEntry + ". " + node.getLabel();
+
+            mnEntry = (node.isInput()) ? node.getLabel() : mnEntry.concat(". ").concat(node.getLabel());
+
             System.out.println(mnEntry);
         }
     }

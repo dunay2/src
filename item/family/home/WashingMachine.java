@@ -13,8 +13,9 @@ import item.Electrodomestic;
  */
 public class WashingMachine extends Electrodomestic {
 
-    public WashingMachine(String familyCode, String code, String name, String description, double boughtPrice, double sellPrice, int quantity) {
-        super(familyCode, code, name, description, boughtPrice, sellPrice, quantity);
+    public WashingMachine(String code) {
+        super(code);
     }
+
 
 }

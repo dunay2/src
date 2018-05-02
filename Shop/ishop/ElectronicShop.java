@@ -32,7 +32,10 @@ public class ElectronicShop extends Shop {
 
         System.out.println("Por favor introduzca codigo de usuario para autenticarse");//Se pide un dato al usuario
 
-       // client = new Client(br.readLine());
+      //  client = new Client(br.readLine());
+        
+        
+        System.out.println();
 
     }
 }

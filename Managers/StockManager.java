@@ -8,11 +8,7 @@ package Managers;
 import ScreenInterfaces.TextInterface;
 import Utils.Menu.MenuNode;
 import item.Electrodomestic;
-import item.components.Computer;
-import item.family.home.Fridge;
-import item.family.phones.Phone;
-import item.family.Screen;
-import item.components.Sound;
+import item.Factory.ItemFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,8 +16,8 @@ import java.util.Map;
 
 /**
  *
- * @author ashh412 Propósito: hacer de gestor clase Items Extiende la clase
- * TextDatabase lo que le da persistencia
+ * @author ashh412 Propósito: hacer de gestor clase Items. Extiende la clase
+ * TextDatabase mediante emplatemanager lo que le da persistencia
  *
  */
 public class StockManager extends templateManager {
@@ -67,10 +63,31 @@ public class StockManager extends templateManager {
         MenuNode node = enode[0];
 
         switch (node.getValue()) {
-            //31. Agregar Item a Stock
-            case 31:
+
+            case 31111:// 1. Teclados
+            case 31112://2. Memorias
+            case 31113://3. Ratones
+            case 31114: //4. Impresoras
+            case 31115: //5. Procesadores
                 createObject(enode);
                 return true;
+
+            //31. Agregar Item a Stock
+//            case 311://Ordenadores
+//                createObject(enode);
+//                return true;
+//               case 312: //Hogar
+//                createObject(enode);
+//                return true;
+//                case 313://Telefonia
+//                createObject(enode);
+//                return true;
+//                case 314://Imagen
+//                createObject(enode);
+//                return true;
+//                case 315://Sonido
+//                createObject(enode);
+//                return true;
             //32. Modificar Item Stock
             case 32:
                 update(node);
@@ -93,7 +110,7 @@ public class StockManager extends templateManager {
                 return true;
 
         }
-        return false;
+        return false;//Seguimos profundizando
     }
 
     ///////////////////////////////////////////////////
@@ -101,54 +118,45 @@ public class StockManager extends templateManager {
     @Override
     public Electrodomestic createObject(MenuNode[] enode) {
 
-        int i = 0;
-        String key;
+        String key;//Referencia de item
         MenuNode node = enode[0];
-        ArrayList<String> nodesData;
-        MenuNode nodeAux = node.getChildNodes().get(0);//comprobacion de respuesta
+        ArrayList<String> listResponseData; //Array con el valor de los atributos de los objetos
+
+        //Obtenemos referencia al primer nodo hijo para comprobar si existen datos
+        //comprobacion de respuesta
+        MenuNode childNode = node.getChildNodes().get(0);
         //Convertimos los nodos en parametros
 
-        //nodesData = node.convertTreeChildToList();
 //creacion estandar
 //No hay datos en los nodos hijos
-        if (nodeAux.getResponseValue() == null) {
+        if (childNode.getResponseValue() == null) {
             StringBuilder outString = new StringBuilder();
+            //Comprobamos que el identificador de item no exista
             Electrodomestic e = (Electrodomestic) search(node, outString);
+            //No existe, guardamos la clave para realizar la creacion del nuevo objeto
             if (e == null) {
                 key = outString.toString();
-            } else {
-                node.getChildNodes().get(0).clearResponse();
+            } else {//Hemos encontrado coincidencias
+                childNode.clearResponse();
                 System.out.println("El registro ya existe");
                 TextInterface.pressKey();
                 return null;
             }
-
-        } else {//Creación por búsqueda, ya hemos obtenido el dni
-
-            key = nodeAux.getResponseValue();
+        } //Creación por búsqueda, ya hemos obtenido el identificador
+        else {
+            key = childNode.getResponseValue();
         }
-        nodesData = node.convertTreeChildToListIdx();
-        node.getChildNodes().get(0).clearResponse();
+
+        //Convertimos los nodos en una lista
+        listResponseData = node.convertTreeChildToListIdx();
+
+        childNode.clearResponse();
 
         //Obtenemos la familia
         //1.  Ordenadores   2. Hogar   3. Telefonía   4. Imagen   5. Sonido
-        switch (node.getChildNodes().get(1).getResponseValue()) {
-            case "1":
-                item = (Electrodomestic) new Computer(key, nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)), 2D);
-                break;
-            case "2":
-                item = (Electrodomestic) new Fridge(key, nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)));
-                break;
-            case "3":
-                item = (Electrodomestic) new Phone(key, nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)), 2D);
-                break;
-            case "4":
-                item = (Electrodomestic) new Screen(key, nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)));
-                break;
-            case "5":
-                item = (Electrodomestic) new Sound(key, nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), Double.parseDouble(nodesData.get(i++)), Double.parseDouble(nodesData.get(i++)), Integer.parseInt(nodesData.get(i++)));
-                break;
-        }
+        int ElectroType = node.getValue();
+
+        item = getItem(ElectroType, key, listResponseData);
 
         add(item);
         //Guardar los datos 
@@ -156,6 +164,12 @@ public class StockManager extends templateManager {
         save(electrodomestics);
 
         return item;
+    }
+
+    private Electrodomestic getItem(int ElectroType, String key, ArrayList<String> responseValues) {
+
+        return ItemFactory.getElectrodomestic(ElectroType, key, responseValues);
+
     }
 
     //Propósito: 
@@ -301,10 +315,11 @@ public class StockManager extends templateManager {
             TextInterface.pressKey();
         }
     }
-public void refresh()
-{
-   save(electrodomestics);
-}
+
+    public void refresh() {
+        save(electrodomestics);
+    }
+
     //Propósito: Listar los Electrodomestic por consola
     @Override
     public void list() {

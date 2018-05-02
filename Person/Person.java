@@ -114,7 +114,7 @@ public abstract class Person implements Serializable, IPersonOperation {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
+ 
     /**
      * @param mobil the mobil to set
      */

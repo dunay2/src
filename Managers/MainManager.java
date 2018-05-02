@@ -30,18 +30,18 @@ public class MainManager {
     private Employee activeEmployee; //Usuario que está gestionando la aplicación
 
     Cashier cashier = new Cashier("CAJERO1_CODE");
-    
+
     public MainManager() {
         //Obtenemos una instancia a los gestores
         this.clientManager = ClientManager.getInstance();
-        
+
         this.stockManager = StockManager.getInstance();
-        this.employeeManager = new EmployeeManager();
-        
+        this.employeeManager = EmployeeManager.getInstance();
+
         this.saleManager = SaleManager.getInstance(cashier, clientManager, stockManager);
         clientManager.setSaleManager(this.saleManager);
         myTextInterface = new TextInterface();
-        
+
     }
 
     //Propósito: main method
@@ -66,13 +66,15 @@ public class MainManager {
 
 //        //Agregamos al cajero 
 //        cajeros.addStaff(cashier);
+        //Cargamos los datos en memoria
         clientManager.load();
         stockManager.load();
         saleManager.load();
+        employeeManager.load();
 
         //  this.saleManager = new SaleManager(cashier, clientManager, stockManager);
         doBusiness(myTextInterface.printMenu(null));
-        
+
     }
 
     //Propósito: Hacer de listener y handler de las peticiones
@@ -83,7 +85,13 @@ public class MainManager {
 //de esta forma poder antender sus peticiones 
 
         MenuNode[] node = {enode};
-        
+        System.out.println("entrada menu" + enode.getValue());
+        if (enode.getValue() == 6) {
+            System.out.println("Gracias por usar la aplicación");
+            System.exit(0);
+
+        }
+
         if (saleManager.handleProcess(node)) {
             startNewSequence = true;
         }
@@ -96,8 +104,8 @@ public class MainManager {
         if (employeeManager.handleProcess(node) && !startNewSequence) {
             startNewSequence = true;
         }
-        
-        myTextInterface.clearScreen();
+
+        TextInterface.clearScreen();
         //Imprimimos el menú del nodo seleccionado y mandamos a consola,
         //la cual nos devolverá el valor del nuevo nodo seleccionado
         //cargamos nuevo menú o menú principal
@@ -108,7 +116,7 @@ public class MainManager {
         } else {//Imprime los hijos del padre
             newNode = myTextInterface.printMenu(node[0].getParent());
         }
-        
+
         doBusiness(newNode);
     }
 }

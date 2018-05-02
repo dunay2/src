@@ -1,8 +1,8 @@
 package Person.Employee;
 
-public class Comertial extends Employee {
+public class FAssintance extends Employee {
 
-    public Comertial(String dni) {
+    public FAssintance(String dni) {
         super(dni);
     }
 

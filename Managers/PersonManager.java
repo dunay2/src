@@ -8,8 +8,10 @@ package Managers;
 import java.util.HashMap;
 import DataBase.TextDatabase;
 import Person.Client.Client;
+import Person.Employee.Employee;
 import Utils.Generator.PersonGenerator;
 import Person.Person;
+import Person.PersonFactory;
 import ScreenInterfaces.TextInterface;
 import Utils.Menu.MenuNode;
 import java.util.ArrayList;
@@ -96,7 +98,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
     //Buscar la clave en el HashMap devolver el objeto person si existe
     @Override
     public Person search(MenuNode node, StringBuilder outString) {
-        
+
         outString.append(node.getChildNodes().get(0).getResponse());
 
         Person person = searchPerson(outString.toString());
@@ -149,7 +151,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
     }
 
     private void printHeader() {
-        System.out.printf("%-20s%-20s%-20s%-20s%-20s%-20s%-20s\n", "DNI", "APELLIDOS", "NOMBRE", "DIRECCION", "TELEFONO", "NOMINA", "ACTIVO");
+        System.out.printf("%-13s%-20s%-20s%-20s%-20s%-20s%-10s%-10s\n","ROL", "DNI", "APELLIDOS", "NOMBRE", "DIRECCION", "TELEFONO", "NOMINA", "ACTIVO");
 
     }
 
@@ -168,36 +170,14 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
 
     private void listFormat(Person person) {
 
-        System.out.printf("%-20s%-20s%-20s%-20s%-20s%-20s%-20s\n", person.getDni(), person.getLastName(), person.getFirstName(), person.getAddress(), person.getPhone(), person.getSalary(), person.isActive());
+        Object objectType = person;
+//Guardamos el nombre de la clase hija
+        String Rol = objectType.getClass().getSimpleName();
+        
+        System.out.printf("%-13s%-20s%-20s%-20s%-20s%-20s%-10s%-10s\n",Rol, person.getDni(), person.getLastName(), person.getFirstName(), person.getAddress(), person.getPhone(), person.getSalary(), person.isActive());
 
     }
 
-//  /*
-//
-//        /* Display content using Iterator*/
-//        Set set = hmap.entrySet();
-//        Iterator iterator = set.iterator();
-//        while (iterator.hasNext()) {
-//            Map.Entry mentry = (Map.Entry) iterator.next();
-//            System.out.print("key is: " + mentry.getKey() + " & Value is: ");
-//            System.out.println(mentry.getValue());
-//        }
-//
-//        /* Get values based on key*/
-//        String var = hmap.get(2);
-//        System.out.println("Value at index 2 is: " + var);
-//
-//        /* Remove values based on key*/
-//        hmap.remove(3);
-//        System.out.println("Map key and values after removal:");
-//        Set set2 = hmap.entrySet();
-//        Iterator iterator2 = set2.iterator();
-//        while (iterator2.hasNext()) {
-//            Map.Entry mentry2 = (Map.Entry) iterator2.next();
-//            System.out.print("Key is: " + mentry2.getKey() + " & Value is: ");
-//            System.out.println(mentry2.getValue());
-//        }
-    // }
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -208,19 +188,29 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-     @Override
+    @Override
     public Person createObject(MenuNode[] enode) {
         String key;
         MenuNode node = enode[0];
         ArrayList<String> nodesData;
         MenuNode nodeAux = node.getChildNodes().get(0);//comprobacion de respuesta
         int i = 0;
+        String typeOfPerson = node.getMnuName();
+        Person person = null;
 //creacion estandar
 //No hay datos en los nodos hijos
         if (nodeAux.getResponseValue() == null) {
             StringBuilder outString = new StringBuilder();
-            Person client = (Client) search(node, outString);
-            if (client == null) {
+
+            if (typeOfPerson.equals("mnuAddClient")) {
+                person = (Client) search(node, outString);
+            }
+
+            if (typeOfPerson.equals("mnuAddEmployee")) {
+                person = (Employee) search(node, outString);
+            }
+
+            if (person == null) {
                 key = outString.toString();
             } else {
                 node.getChildNodes().get(0).clearResponse();
@@ -234,16 +224,48 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
             key = nodeAux.getResponseValue();
         }
         nodesData = node.convertTreeChildToListIdx();
-        node.getChildNodes().get(0).clearResponse();
-        
-        Person client = new Client(key, nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), nodesData.get(i++));
 
-//Guardamos el cliente en la coleccion
-        add(client);
+        node.getChildNodes()
+                .get(0).clearResponse();
+
+        if (typeOfPerson.equals("mnuAddClient")) {
+
+            person = new Client(key, nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), nodesData.get(i++));
+        }
+        if (typeOfPerson.equals("mnuAddEmployee")) {
+
+            int TypeofEmployee = Integer.parseInt(nodesData.get(nodesData.size() - 1));
+
+            person = PersonFactory.getPerson(TypeofEmployee, key);
+            person.setFirstName(nodesData.get(i++));
+            person.setLastName(nodesData.get(i++));
+            person.setAddress(nodesData.get(i++));
+            person.setPhone(nodesData.get(i++));
+
+        }
+
+//Guardamos la persona en la coleccion
+        add(person);
         //Guardar los datos 
+
         save();
 
-        return client;
+        return person;
     }
-    
+
+    protected void delete(MenuNode node) {
+
+        StringBuilder outString = new StringBuilder();
+        Person person = search(node, outString);
+        if (person == null) {
+            System.out.println("La persona no existe");
+            TextInterface.pressKey();
+
+        } else {
+            person.setActive(false);
+            System.out.println("Persona desactivado. Pulse una tecla para continuar");
+            TextInterface.pressKey();
+        }
+    }
+
 }

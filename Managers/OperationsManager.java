@@ -104,7 +104,7 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
     public void print(Record record) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
-        System.out.printf("%-20s%-20s%-20s%-20s%-20s\n", record.getOperCode(), record.getCliCode(), record.getEmpCode(), dateFormat.format(record.getDate()), record.getStatus());
+        System.out.printf("%-20s%-20s%-20s%-20s%-20s\n", record.getOperCode(), record.getCliCode(), record.getEmpCode(), dateFormat.format(record.getDate()), record.getActive());
     }
 
     public Record generateRandomOperation() {

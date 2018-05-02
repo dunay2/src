@@ -20,12 +20,13 @@ public abstract class Record implements Serializable {
     private final String operCode;
     private final String cliCode;
     private final String empCode;
-    private  String status="ACTIVA";
+    private  String active;
     private Date date = null;
  
     
     
     public Record(String operCode, String cliCode, String empCode) {
+        this.active = "Y";
         this.operCode = operCode;
         this.cliCode = cliCode;
         this.empCode = empCode;
@@ -56,12 +57,14 @@ public abstract class Record implements Serializable {
         return date;
     }
 
-    public String getStatus() {
-        return status;
+    public String getActive() {
+        return active;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setActive(String active) {
+        this.active = active;
     }
+
+
 
 }

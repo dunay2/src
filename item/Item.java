@@ -7,27 +7,6 @@ package item;
 
 import java.io.Serializable;
 
-//  //Methods
-//  @Override
-//        public String toString() {
-//    return  "Nombre: "      +this.getNombre()+    "\n"+
-//        "Precio unidad: " +this.getPrecioUnit()+  " €\n"+
-//        "En Stock: "    +this.getCantStock()+ "\n";
-//  }
-//Get and Set
-//  public int getCantStock() {
-//    return this.cantStock;
-//  }
-//  public void setCantStock(int cantStock) {
-//    this.cantStock = cantStock;
-//  }
-//  public boolean isDisponible() {
-//    if(getCantStock()>0) this.disponible = true;
-//    return this.disponible;
-//  }
-//  public void setDisponible(boolean disponible) {
-//    this.disponible = disponible;
-//}//
 /**
  *
  * @author ashh412
@@ -44,6 +23,8 @@ public abstract class Item implements Serializable {
     private int quantity;
     private String color;
     private String weith;
+    private String guaranty;
+    private  String brand; 
 
     public Item(String code, String familyCode, String name, String description, double boughtPrice, double sellPrice, int quantity) {
         this.familyCode = familyCode;
@@ -56,6 +37,37 @@ public abstract class Item implements Serializable {
 
     }
 
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    
+    public String getFamilyCode() {
+        return familyCode;
+    }
+
+    public void setFamilyCode(String familyCode) {
+        this.familyCode = familyCode;
+    }
+
+    public String getGuaranty() {
+        return guaranty;
+    }
+
+    public void setGuaranty(String guaranty) {
+        this.guaranty = guaranty;
+    }
+
+    public Item(String code) {
+        this.code = code;
+    }
+
+    
+    
     public int getQuantity() {
         return quantity;
     }

@@ -19,7 +19,7 @@ import java.util.Iterator;
  *///
 public class ClientManager extends PersonManager {
 
-    private static ClientManager instance = null;    //Singleton Singleton Pattern
+    private static ClientManager instance = null;    //Singleton Pattern
     SaleManager saleManager;
 
     public SaleManager getSaleManager() {
@@ -64,20 +64,24 @@ public class ClientManager extends PersonManager {
 //Propósito: gestionar las peticiones del controlador principal
     @Override
     public boolean handleProcess(MenuNode[] enode) {
+        
         MenuNode node = enode[0];
 
         switch (node.getValue()) {
 
             case 21:
+                
                 createObject(enode);
                 return true;
 
             case 22: //Actualizar
+                
                 update(node);
                 return true;
+                
             case 23: //Eliminar
+                
                 delete(node);
-
                 return true;
             //Listar clientes 
             case 24:
@@ -99,20 +103,20 @@ public class ClientManager extends PersonManager {
         return false;
     }
 
-    private void delete(MenuNode node) {
-
-        StringBuilder outString = new StringBuilder();
-        Client client = (Client) search(node, outString);
-        if (client == null) {
-            System.out.println("El cliente no existe");
-            TextInterface.pressKey();
-
-        } else {
-            client.setActive(false);
-            System.out.println("Cliente desactivado. Pulse una tecla para continuar");
-            TextInterface.pressKey();
-        }
-    }
+//    private void delete(MenuNode node) {
+//
+//        StringBuilder outString = new StringBuilder();
+//        Client client = (Client) search(node, outString);
+//        if (client == null) {
+//            System.out.println("El cliente no existe");
+//            TextInterface.pressKey();
+//
+//        } else {
+//            client.setActive(false);
+//            System.out.println("Cliente desactivado. Pulse una tecla para continuar");
+//            TextInterface.pressKey();
+//        }
+//    }
 
     private void printRecord(Client client) {
         if (client == null) {

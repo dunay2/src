@@ -1,16 +1,15 @@
-package item.components;
+package item.family.Image;
 
-public class Image extends item.Electrodomestic{
+public class Plasm extends item.Electrodomestic{
 
     private double inches;
     private String resolution;
     private String frequency;
 
-    public Image(String familyCode, String code, String name, String description, double boughtPrice, double sellPrice, int quantity) {
-        super(familyCode, code, name, description, boughtPrice, sellPrice, quantity);
+    public Plasm(String code) {
+        super(code);
     }
 
-  
 
     public double getInches() {
         return inches;

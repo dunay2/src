@@ -5,19 +5,15 @@
  */
 package item.family.computers;
 
-import item.components.Computer;
-
 /**
  *
  * @author ashh412
  */
-public class Labtop extends Computer{
+public class Labtop extends BateryComputer{
     
-    public Labtop(String code, String familyCode, String name, String description, double boughtPrice, double sellPrice, int quantity, Double ram) {
-        super(code, familyCode, name, description, boughtPrice, sellPrice, quantity, ram);
+    public Labtop(String code) {
+        super(code);
     }
     
 
-   
-    
 }

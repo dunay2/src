@@ -11,14 +11,11 @@ import ScreenInterfaces.TextInterface;
 import Utils.Menu.MenuNode;
 import Utils.ShoppingCart;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 import Utils.Record.Record;
 import Utils.Record.Sale;
 import Utils.ShoppingCart.Line;
 import item.Electrodomestic;
-import item.Item;
-//Crear un numero de factura
 
 /**
  *
@@ -63,16 +60,6 @@ public class SaleManager extends OperationsManager {
         this.cashier = cashier;
     }
 
-    @Override
-    public Object get(int rollNo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public HashMap getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     private MenuNode callTailMenu(MenuNode node) {
         return node.getChildNodes().get(node.getChildNodes().size() - 1);
     }
@@ -112,8 +99,6 @@ public class SaleManager extends OperationsManager {
         }
 
 //Pasamos al menu siguiente
-//        operCode = "INVOICE ".concat(String.valueOf(size()));
-//        System.out.println(">>>>>>>>>>>>>" + operCode);
         setInvoiceNumber();
         return new Sale("", "", "", null);
     }
@@ -128,12 +113,12 @@ public class SaleManager extends OperationsManager {
 
         switch (node.getValue()) {
 
-            case 5:
-                list();
-                TextInterface.pressKey();
-                return true;
+//            case 5:
+//                list();
+//                TextInterface.pressKey();
+//                return true;
             //Devolución
-            case 6:
+            case 12:
 
                 StringBuilder outString = new StringBuilder();
                 Sale sale = (Sale) search(node, outString);
@@ -142,20 +127,25 @@ public class SaleManager extends OperationsManager {
                     TextInterface.pressKey();
                     return true;
                 }
-                sale.setStatus("ANULADA");
+                sale.setActive("I");
                 save();
                 return true;
+
+            case 13:
+                list();
+                TextInterface.pressKey();
+                return true;
             //Consultar el importe actual
-            case 11:
+            case 111:
                 itemList();
                 return true;
             //"12. Añadir electrodomestico al carrito"
-            case 12:
+            case 112:
                 addItem(node);
                 return true;
 
             //13. Cobrar Compra
-            case 13:
+            case 113:
                 //identificar al cliente o solicitar alta 
                 //Si el carrito está vacío cancelar el cobro
                 //Si no, seguimos navegando por los hijos
@@ -166,31 +156,31 @@ public class SaleManager extends OperationsManager {
                 break;
             //Crear carrito aleatorio
             //Cancelar venta
-            case 14:
+            case 114:
                 clearShoppingCart();
                 return false;
 
-            case 1311://pago en efectivo
+            case 11311://pago en efectivo
                 finishTransaction();
                 enode[0] = callMainMenu(node);
                 return true;
 
-            case 1312://Tarjeta
+            case 11312://Tarjeta
                 finishTransaction();
                 enode[0] = callMainMenu(node);
                 return true;
 
-            case 1313://Financiado
+            case 11313://Financiado
                 finishTransaction();
                 enode[0] = callMainMenu(node);
                 return true;
 
-            case 1314://cancel
+            case 11314://cancel
                 clearShoppingCart();
                 enode[0] = callMainMenu(node);
                 return true;
 
-            case 13131://Mensaje final financiado
+            case 113131://Mensaje final financiado
                 enode[0] = callMainMenu(node);
 
         }

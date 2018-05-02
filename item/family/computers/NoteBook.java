@@ -5,18 +5,15 @@
  */
 package item.family.computers;
 
-import item.components.Computer;
-
 /**
  *
  * @author ashh412
  */
-public class NoteBook extends Computer{
+public class NoteBook extends BateryComputer{
 
-    public NoteBook(String code, String familyCode, String name, String description, double boughtPrice, double sellPrice, int quantity, Double ram) {
-        super(code, familyCode, name, description, boughtPrice, sellPrice, quantity, ram);
+    public NoteBook(String code) {
+        super(code);
     }
 
- 
     
 }

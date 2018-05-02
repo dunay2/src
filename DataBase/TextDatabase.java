@@ -16,9 +16,9 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Person.Client.Client;
+import Person.Employee.Employee;
 import Utils.Record.Sale;
 import item.Electrodomestic;
-import item.family.home.Fridge;
 
 /**
  *
@@ -42,33 +42,43 @@ public class TextDatabase implements IDatabase {
             Object objectType = ite.getValue();
 
 //Guardamos el nombre de la clase hija
-            String filename = objectType.getClass().getSimpleName() + ".data";
+            String filename = objectType.getClass().getSimpleName();
 
             //Convertimos el HashMap en el tipo que vamos a guardar
             HashMap<?, ?> hmfile = null;
             switch (filename) {
-                case "Client.data":
+                case "Client":
                     hmfile = (HashMap<String, Client>) hm;
 
                     break;
-                case "Electrodomestic.data":
-                case "Computer.data":
-                case "Fridge.data":
-                case "Phone.data":
-                case "Screen.data":
-                case "Sound.data":
+                case "Electrodomestic":
+                case "Computer":
+                case "Fridge":
+                case "Phone":
+                case "Screen":
+                case "Sound":
 
-                    filename = "Electrodomestic.data";
+                    filename = "Electrodomestic";
                     hmfile = (HashMap<String, Electrodomestic>) hm;
                     break;
-                case "Employee.data":
+
+                case "Cashier":
+                case "Engineer":
+                case "FAssintance":
+
+                    filename = "Employee";
+
+                    hmfile = (HashMap<String, Employee>) hm;
                     break;
-                case "Sale.data":
+
+                case "Sale":
                     hmfile = (HashMap<String, Sale>) hm;
                     break;
-                case "Repair.data":
+                case "Repair":
                     break;
             }
+
+            filename = filename.concat(".data");
 
             try {
                 fout = new FileOutputStream(filename, false);
@@ -91,16 +101,16 @@ public class TextDatabase implements IDatabase {
 
     @Override
     public HashMap load(String fileName) {
-        HashMap<String, ?> e = new HashMap();;
-        FileInputStream file = null;
-        ObjectInputStream in = null;
-
+        HashMap<String, ?> e = new HashMap();
+        FileInputStream file;
+        ObjectInputStream in;
+        fileName = fileName.concat(".data");
         // Deserialization
-        File f = new File(fileName + ".data");
+        File f = new File(fileName);
         if (f.exists()) {
 
             try {
-                file = new FileInputStream(fileName + ".data");
+                file = new FileInputStream(fileName);
 
                 in = new ObjectInputStream(file);
 

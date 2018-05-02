@@ -5,18 +5,17 @@
  */
 package item.family.computers;
 
-import item.components.Computer;
-
 /**
  *
  * @author ashh412
  */
 public class Desktop extends Computer{
     
-    public Desktop(String code, String familyCode, String name, String description, double boughtPrice, double sellPrice, int quantity, Double ram) {
-        super(code, familyCode, name, description, boughtPrice, sellPrice, quantity, ram);
+    public Desktop(String code) {
+        super(code);
     }
     
+   
 
    
     

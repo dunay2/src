@@ -1,8 +1,8 @@
 package Person.Employee;
 
-public class Ingennier extends Employee {
+public class Engineer extends Employee {
 
-    public Ingennier(String dni) {
+    public Engineer(String dni) {
         super(dni);
     }
 
