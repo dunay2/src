@@ -3,12 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package item.family.computers.components;
+package Item.Family.Computers.Components;
+
+import item.family.computers.Computer;
 
 /**
  *
  * @author ashh412
  */
-public class Memory {
+public class   Memory extends Computer {
+    
+    public  Memory(String code) {
+        super(code);
+      }
     
 }

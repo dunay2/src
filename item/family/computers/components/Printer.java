@@ -3,12 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package item.family.computers.components;
+package Item.Family.Computers.Components;
+
+import item.Electrodomestic;
 
 /**
  *
  * @author ashh412
  */
-public class Printer {
+public class  Printer extends Electrodomestic {
+    
+    public Printer(String code) {
+        super(code);
+    }
     
 }

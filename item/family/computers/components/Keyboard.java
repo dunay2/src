@@ -3,12 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package item.family.computers.components;
+package Item.Family.Computers.Components;
+
+import item.Electrodomestic;
 
 /**
  *
  * @author ashh412
  */
-public class Keyboard {
+public class Keyboard extends Electrodomestic {
+
+    public Keyboard(String code) {
+        super(code);
+    }
+    
+
     
 }
