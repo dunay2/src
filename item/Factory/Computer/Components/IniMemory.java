@@ -6,7 +6,7 @@
 package item.Factory.Computer.Components;
 
 import Item.Family.Computers.Components.Memory;
-import item.family.computers.Computer;
+
 import java.util.ArrayList;
 
 /**
