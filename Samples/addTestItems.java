@@ -5,11 +5,11 @@
  */
 package Samples;
 
-import Item.Family.Computers.Components.Keyboard;
-import Item.Family.Computers.Components.Memory;
-import Item.Family.Computers.Components.Mouse;
-import Item.Family.Computers.Components.Printer;
-import Item.Family.Computers.Components.Procesor;
+import item.family.computers.Components.Keyboard;
+import item.family.computers.Components.Memory;
+import item.family.computers.Components.Mouse;
+import item.family.computers.Components.Printer;
+import item.family.computers.Components.Procesor;
 import Managers.StockManager;
 import item.Electrodomestic;
 
