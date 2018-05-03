@@ -64,6 +64,21 @@ public class StockManager extends templateManager {
 
         switch (node.getValue()) {
 
+            case 3121://Lavaplatos
+            case 3122://Neveras
+            case 3123://Aspiraadoras
+            case 3124://Lavadoras
+
+            case 3131://Móviles
+            case 3132://Fijos
+
+            case 3141://Plasma
+            case 3142://Led
+
+            case 3151://Altavoces
+            case 3152://Auriculares
+            case 3153://Minicadenas
+
             case 31121://  1. PDA'S
             case 31122:// 2. Portatiles
             case 31123:// 3. Sobremesa
@@ -158,10 +173,9 @@ public class StockManager extends templateManager {
 
         childNode.clearResponse();
 
-        //Obtenemos la familia
-        //1.  Ordenadores   2. Hogar   3. Telefonía   4. Imagen   5. Sonido
+    
         int ElectroType = node.getValue();
-
+//Llamamos a la factoría para que nos devuelva el tipo correcto de objeto
         item = getItem(ElectroType, key, listResponseData);
 
         add(item);
