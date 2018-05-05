@@ -6,6 +6,7 @@
 package item.Factory;
 
 import item.family.computers.Computer;
+import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  */
 public class IniComputer extends Computer {
 
-    /**
+   /** Define la inicialización de un objeto de tipo
      *
      * @param key
      * @param response
@@ -33,7 +34,7 @@ public class IniComputer extends Computer {
         super.setGuaranty(response.get(i++));
         super.setBoughtPrice(Double.valueOf(response.get(i++)));
         super.setSellPrice(Double.valueOf(response.get(i++)));
-        super.setQuantity(Integer.valueOf(response.get(i++)));
+        super.setQuantity(parseInt(response.get(i++)));
         
         
     }

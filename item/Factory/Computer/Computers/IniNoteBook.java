@@ -6,6 +6,7 @@
 package item.Factory.Computer.Computers;
 
 import item.family.computers.NoteBook;
+import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 
 /**
@@ -18,7 +19,7 @@ public class IniNoteBook extends NoteBook {
         super(code);
     }
 
-    /**
+    /** Define la inicialización de un objeto de tipo
      *
      * @param key
      * @param response
@@ -38,7 +39,7 @@ public class IniNoteBook extends NoteBook {
         super.setGuaranty(response.get(i++));
         super.setBoughtPrice(Double.valueOf(response.get(i++)));
         super.setSellPrice(Double.valueOf(response.get(i++)));
-        super.setQuantity(Integer.valueOf(response.get(i++)));
+        super.setQuantity(parseInt(response.get(i++)));
 
     }
 

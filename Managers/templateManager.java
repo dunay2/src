@@ -6,7 +6,6 @@
 package Managers;
 
 import DataBase.TextDatabase;
-import Person.Client.Client;
 import ScreenInterfaces.TextInterface;
 import Utils.Menu.MenuNode;
 import item.Electrodomestic;

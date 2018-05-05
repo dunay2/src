@@ -16,6 +16,12 @@ public class MenuEmployee extends MenuBase {
     //Propósito: Agregar entradas al menú empleados
     //Padre: mnuMain
     //Menú mnuEmployee
+
+    /**
+     *
+     * @param parentMnuName
+     * @return
+     */
     static protected ArrayList<MenuStruct> employeeEntries(String parentMnuName) {
 
         //1. mnuEmployee
@@ -36,6 +42,12 @@ public class MenuEmployee extends MenuBase {
     //Padre: mnuEmployee
     //Menú mnuAddEmployee
 
+    /**
+     *
+     * @param parentMnuName
+     * @return
+     */
+
     static protected ArrayList<MenuStruct> addEmployeeEntries(String parentMnuName) {
 
         //9. mnuAddEmployee
@@ -54,6 +66,11 @@ public class MenuEmployee extends MenuBase {
     //Padre: mnuEmployee
     //Menú mnuEditEmployee
 
+    /**
+     *
+     * @param parentMnuName
+     * @return
+     */
     static protected ArrayList<MenuStruct> editEmployeeEntries(String parentMnuName) {
 //Input Menu
         //10. mnuEditEmployee    
@@ -73,6 +90,11 @@ public class MenuEmployee extends MenuBase {
     //Padre: mnuEmployee
     //Menú mnuDeleteEmployee
 
+    /**
+     *
+     * @param parentMnuName
+     * @return
+     */
     static protected ArrayList<MenuStruct> deleteEmployeeEntries(String parentMnuName) {
 
         //3. mnuDeleteEmployee  
@@ -84,6 +106,12 @@ public class MenuEmployee extends MenuBase {
     }
 
     //Propósito: Agregar menú búsqueda de empleado
+
+    /**
+     *
+     * @param parentMnuName
+     * @return
+     */
     static protected ArrayList<MenuStruct> searchEmployeeEntries(String parentMnuName) {
         ArrayList<MenuStruct> entries = new ArrayList();
         //4. mnuSearchEmployee    

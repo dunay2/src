@@ -31,38 +31,58 @@ public class SaleManager extends OperationsManager {
     private String operCode = "INVOICE ".concat(String.valueOf(size()));
     private static SaleManager instance = null;    //Singleton  Pattern
 
+    /**
+     *
+     * @return
+     */
     public Client getClient() {
         return client;
     }
 
+    /**
+     *
+     * @param client
+     */
     public void setClient(Client client) {
         this.client = client;
     }
 
     //Singleton Singleton Pattern
-    protected SaleManager(Cashier cashier, ClientManager clientManager, StockManager stockManager) {
-        this.cashier = cashier;
-        shoppingCart = new ShoppingCart(this.cashier.getDni());
+
+    /**
+     *
+     * @param clientManager
+     * @param stockManager
+     */
+    protected SaleManager( ClientManager clientManager, StockManager stockManager) {
+        shoppingCart = new ShoppingCart();
         this.clientManager = clientManager;
         this.stockManager = stockManager;
 
     }
     //Singleton Singleton Pattern
 
-    public static SaleManager getInstance(Cashier cashier, ClientManager clientManager, StockManager stockManager) {
+    /**
+     *
+     * @param clientManager
+     * @param stockManager
+     * @return
+     */
+    public static SaleManager getInstance( ClientManager clientManager, StockManager stockManager) {
         if (instance == null) {
-            instance = new SaleManager(cashier, clientManager, stockManager);
+            instance = new SaleManager( clientManager, stockManager);
         }
         return instance;
     }
 
+    /**
+     *
+     * @param cashier
+     */
     public void setCashier(Cashier cashier) {
         this.cashier = cashier;
     }
 
-    private MenuNode callTailMenu(MenuNode node) {
-        return node.getChildNodes().get(node.getChildNodes().size() - 1);
-    }
 
     private MenuNode callNextMenu(MenuNode node) {
         return node.getChildNodes().get(0);
@@ -125,7 +145,7 @@ public class SaleManager extends OperationsManager {
                 }
                 if (sale.getActive().equals("A")) {
 
-                    CancelTransaction(sale);
+                    cancelTransaction(sale);
 
                     System.out.println("La factura ".concat(sale.getOperCode().concat(" ha sido cancelada")));
                     TextInterface.pressKey();
@@ -174,7 +194,7 @@ public class SaleManager extends OperationsManager {
                 finishTransaction();
                 enode[0] = callMainMenu(node);
                 return true;
-
+//Tocar aquí para financiar
             case 11313://Financiado
                 finishTransaction();
                 enode[0] = callMainMenu(node);
@@ -192,7 +212,7 @@ public class SaleManager extends OperationsManager {
         return false;//Profundiza
     }
 
-    private void CancelTransaction(Sale sale) {
+    private void cancelTransaction(Sale sale) {
         //continuar aqui, sacar el resto de nodos hijos con la forma de pago
         //Si financia pasar a financiacion
 //Guardamos la compra
@@ -248,6 +268,11 @@ public class SaleManager extends OperationsManager {
         stockManager.refresh();
     }
 
+    /**
+     *
+     * @param operCod
+     * @return
+     */
     public Sale getSale(String operCod) {
 
         Sale sale = (Sale) searchRecord(operCod);
@@ -341,16 +366,16 @@ public class SaleManager extends OperationsManager {
         System.out.println("TOTAL AMOUNT:" + getTotalAmount());
         TextInterface.pressKey();
     }
-
-    private void listFormat(Electrodomestic item) {
-
-        System.out.printf("%-20s%-20s%-40s%-20s%-20s%-20s\n", item.getCode(), item.getName(), item.getDescription(), item.getBoughtPrice(), item.getSellPrice(), item.getQuantity());
-
-    }
+//
+//    private void listFormat(Electrodomestic item) {
+//
+//        System.out.printf("%-20s%-20s%-40s%-20s%-20s%-20s%n", item.getCode(), item.getName(), item.getDescription(), item.getBoughtPrice(), item.getSellPrice(), item.getQuantity());
+//
+//    }
 
     private void printHeader() {
 
-        System.out.printf("%-10s%-10s%-30s%-20s\n", "LINE", "CODE", "PRICE", "AMOUNT");
+        System.out.printf("%-10s%-10s%-30s%-20s%n", "LINE", "CODE", "PRICE", "AMOUNT");
 
     }
 

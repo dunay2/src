@@ -8,7 +8,6 @@ package Managers;
 import Person.Employee.Employee;
 import Person.Person;
 import Utils.Menu.MenuNode;
-import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -20,11 +19,19 @@ public class EmployeeManager extends PersonManager {
     private static EmployeeManager instance = null;    //Singleton Singleton Pattern
 
     //Singleton Singleton Pattern
+
+    /**
+     *
+     */
     protected EmployeeManager() {
 
     }
     //Singleton Singleton Pattern
 
+    /**
+     *
+     * @return
+     */
     public static EmployeeManager getInstance() {
         if (instance == null) {
             instance = new EmployeeManager();
@@ -32,6 +39,10 @@ public class EmployeeManager extends PersonManager {
         return instance;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Employee generateRandomPerson() {
 
@@ -108,6 +119,10 @@ public class EmployeeManager extends PersonManager {
         String a = scanner.nextLine();
     }
 
+    /**
+     *
+     * @param e
+     */
     @Override
     public void print(Person e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

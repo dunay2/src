@@ -25,7 +25,7 @@ public class Node {
     private final String label; //Etiqueta del nodo
     private boolean isInput = false;//Es un nodo de lectura
     private String response; //Devolucion de datos de nodo de lectura
-    private boolean Tail = false;//Es un nodo de lectura
+    private  boolean tail = false;//Es un nodo de lectura
     //private List list; //Contenedor
 
 //Constructor
@@ -48,17 +48,31 @@ public class Node {
 //    public void setList(List list) {
 //        this.list = list;
 //    }
+
+    /**
+     *
+     * @return
+     */
     public boolean isTail() {
-        return Tail;
+        return tail;
     }
 
-    public void isTail(boolean Tail) {
-        this.Tail = Tail;
+    /**
+     *
+     * @param tail
+     */
+    public void isTail(boolean tail) {
+        this.tail = tail;
     }
 
     //Propósito: Convertir los hijos en una lista
     //de nodos input que toman como valor devuelto
     //la entrada de teclado
+
+    /**
+     *
+     * @return
+     */
     public ArrayList<String> convertTreeChildToList() {
         ArrayList<String> nodeDataList = new ArrayList();
 
@@ -78,6 +92,11 @@ public class Node {
     //de nodos input que toman como valor devuelto
     //la entrada de teclado
     //sin devolver el primer elemento
+
+    /**
+     *
+     * @return
+     */
     public ArrayList<String> convertTreeChildToListIdx() {
         ArrayList<String> nodeDataList = new ArrayList();
         int i = 0;
@@ -99,6 +118,11 @@ public class Node {
     }
 
     //propósito: leer los datos introducidos por consola
+
+    /**
+     *
+     * @return
+     */
     public String getResponse() {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -113,46 +137,89 @@ public class Node {
         return response;
     }
 
+    /**
+     *
+     */
     public void clearResponse() {
         response = null;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getResponseValue() {
         return response;
     }
 
+    /**
+     *
+     * @param response
+     */
     public void setResponse(String response) {
         this.response = response;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isInput() {
         return isInput;
     }
 
+    /**
+     *
+     * @param isInput
+     */
     public void isInput(boolean isInput) {
         this.isInput = isInput;
     }
 
+    /**
+     *
+     * @return
+     */
     public Node getParent() {
         return parent;
     }
 
+    /**
+     *
+     * @param node
+     */
     public void addChild(Node node) {
         nodes.add(node);
     }
 
+    /**
+     *
+     * @return
+     */
     public String getLabel() {
         return label;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Node> getChildNodes() {
         return nodes;
     }
 
+    /**
+     *
+     * @param nodes
+     */
     public void setChildNodes(ArrayList<Node> nodes) {
         this.nodes = nodes;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getValue() {
         return value;
     }

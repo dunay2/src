@@ -5,6 +5,7 @@
  */
 package Person;
 
+import Person.Employee.BackOfTheHouse;
 import Person.Employee.Cashier;
 import Person.Employee.Clerk;
 import Person.Employee.Engineer;
@@ -28,7 +29,7 @@ public class PersonFactory {
             case 4:
                 return new Clerk(dni);
             case 5:
-                return new Clerk(dni);
+                return new BackOfTheHouse(dni);
 
         }
         return null;

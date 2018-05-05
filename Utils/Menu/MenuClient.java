@@ -16,6 +16,12 @@ public class MenuClient extends MenuBase {
     //Propósito: Agregar entradas al clientes
     //Padre: mnuMain
     //Menú  mnuClient
+
+    /**
+     *
+     * @param parentMnuName
+     * @return
+     */
     static protected ArrayList<MenuStruct> clientEntries(String parentMnuName) {
 
         //1. mnuClient
@@ -36,6 +42,12 @@ public class MenuClient extends MenuBase {
     //Propósito: Agregar clientes
     //Padre: mnuClient
     //Menú mnuAddClient
+
+    /**
+     *
+     * @param parentMnuName
+     * @return
+     */
     static protected ArrayList<MenuStruct> addClientEntries(String parentMnuName) {
 //Input menu
         // mnuAddClient
@@ -53,6 +65,12 @@ public class MenuClient extends MenuBase {
        //Propósito: Menú de entrada de registro sin dni
     //Padre: MULTIUSO
     //Menú addClientEntriesNoID
+
+    /**
+     *
+     * @param parentMnuName
+     * @return
+     */
     static protected ArrayList<MenuStruct> addClientEntriesNoID(String parentMnuName) {
 //Input menu
         // mnuAddClient
@@ -71,6 +89,12 @@ public class MenuClient extends MenuBase {
     //Padre: mnuClient
     //Menú mnuEditClient
 
+    /**
+     *
+     * @param parentMnuName
+     * @return
+     */
+
     static protected ArrayList<MenuStruct> editClientEntries(String parentMnuName) {
         // mnuEditClient
 //InputMenu
@@ -87,6 +111,12 @@ public class MenuClient extends MenuBase {
     //Propósito: Deshabilitar clientes
     //Padre: mnuClient
     //Menú mnuDeleteClient
+
+    /**
+     *
+     * @param parentMnuName
+     * @return
+     */
     static protected ArrayList<MenuStruct> deleteClientEntries(String parentMnuName) {
 //InputMenu
         // mnuDeleteClient  
@@ -99,6 +129,12 @@ public class MenuClient extends MenuBase {
     //Propósito: Buscar clientes
     //Padre: mnuClient
     //Menú mnuSearchClient
+
+    /**
+     *
+     * @param parentMnuName
+     * @return
+     */
     static protected ArrayList<MenuStruct> searchClientEntries(String parentMnuName) {
 
         // mnuSearchClient    
@@ -109,6 +145,12 @@ public class MenuClient extends MenuBase {
     }
 
     //Propósito: Agregar entradas al menú para solicitar entrada de codigo cliente
+
+    /**
+     *
+     * @param parentMnuName
+     * @return
+     */
     static protected ArrayList<MenuStruct> getClientIdEntries(String parentMnuName) {
         // mnuGetClientId 
 

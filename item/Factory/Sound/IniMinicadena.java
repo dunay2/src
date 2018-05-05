@@ -14,8 +14,8 @@ import java.util.ArrayList;
  * @author ashh412
  */
 public class IniMinicadena extends Sound {
-
-    /**
+    private static final long serialVersionUID = -2873344211410398459L;
+    /** Define la inicialización de un objeto de tipo
      *
      * @param key
      * @param response

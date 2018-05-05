@@ -15,8 +15,17 @@ import java.util.HashMap;
  */
 public interface IDatabase<T> {
 
+    /**
+     *
+     * @param e
+     */
     void save(HashMap<String, T> e);
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     HashMap<String, T> load(String id);
 
 }

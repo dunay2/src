@@ -7,14 +7,14 @@ package item.Factory.Home;
 
 import item.family.home.Fridge;
 import java.util.ArrayList;
-
+import static java.lang.Integer.parseInt;
 /**
  *
  * @author ashh412
  */
 public class IniFridge extends Fridge {
 
-    /**
+      /** Define la inicialización de un objeto de tipo
      *
      * @param key
      * @param response
@@ -27,9 +27,9 @@ public class IniFridge extends Fridge {
         super.setName(response.get(i++));
         super.setBrand(response.get(i++));
         super.setDescription(response.get(i++));
-        super.setWidth(Integer.valueOf(response.get(i++)));
-        super.setHeigth(Integer.valueOf(response.get(i++)));
-        super.setDepth(Integer.valueOf(response.get(i++)));
+        super.setWidth(parseInt(response.get(i++)));
+        super.setHeigth(parseInt(response.get(i++)));
+        super.setDepth(parseInt(response.get(i++)));
         super.setPower(response.get(i++));
         super.setEnergyCertification(response.get(i++));
         
@@ -40,6 +40,6 @@ public class IniFridge extends Fridge {
         super.setGuaranty(response.get(i++));
         super.setBoughtPrice(Double.valueOf(response.get(i++)));
         super.setSellPrice(Double.valueOf(response.get(i++)));
-        super.setQuantity(Integer.valueOf(response.get(i++)));
+        super.setQuantity(parseInt(response.get(i++)));
     }
 }

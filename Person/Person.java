@@ -4,8 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author ashh412
+ */
 public abstract class Person implements Serializable, IPersonOperation {
-
+    private static final long serialVersionUID = -2873344211410398459L;
     private final String key;
     private final String dni;
     private String firstName;
@@ -26,12 +30,25 @@ public abstract class Person implements Serializable, IPersonOperation {
     private final List<String> operations = new ArrayList<>();//Valor de código de operacion
 
     //Contructor básico
+
+    /**
+     *
+     * @param dni
+     */
     public Person(String dni) {
         this.dni = dni;
         active = true;
         key = "0";
     }
 
+    /**
+     *
+     * @param dni
+     * @param firstName
+     * @param lastName
+     * @param address
+     * @param phone
+     */
     public Person(String dni, String firstName, String lastName, String address, String phone) {
 
         key = "0";
@@ -143,14 +160,25 @@ public abstract class Person implements Serializable, IPersonOperation {
         this.salary = salary;
     }
 
+    /**
+     *
+     */
     public void askForCredit() {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public String getkey() {
         return key;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getSalary() {
         if (salary == null) {
             salary = 0D;
@@ -158,79 +186,154 @@ public abstract class Person implements Serializable, IPersonOperation {
         return salary;
     }
 
+    /**
+     *
+     */
     public void getContactPoints() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 
     }
 
+    /**
+     *
+     * @param person
+     */
     public void update(Person person) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDni() {
         return dni;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFirstName() {
         return firstName;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getLastName() {
         return lastName;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAge() {
         return age;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAddress() {
         return address;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCompany() {
         return company;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCity() {
         return city;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCounty() {
         return county;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getStateProvince() {
         return stateProvince;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getPostalCode() {
         return postalCode;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getPhone() {
         return phone;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getMobil() {
         return mobil;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getWeb() {
         return web;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isActive() {
         return active;
     }
 
+    /**
+     *
+     * @param active
+     */
     public void setActive(boolean active) {
         this.active = active;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<String> getOperations() {
         return operations;

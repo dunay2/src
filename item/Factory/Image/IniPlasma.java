@@ -7,14 +7,14 @@ package item.Factory.Image;
 
 import item.family.home.DishWasher;
 import java.util.ArrayList;
-
+import static java.lang.Integer.parseInt;
 /**
  *
  * @author ashh412
  */
 public class IniPlasma extends DishWasher {
-
-    /**
+  private static final long serialVersionUID = -2873344211410398459L;
+      /** Define la inicialización de un objeto de tipo
      *
      * @param key
      * @param response
@@ -29,6 +29,6 @@ public class IniPlasma extends DishWasher {
         super.setGuaranty(response.get(i++));
         super.setBoughtPrice(Double.valueOf(response.get(i++)));
         super.setSellPrice(Double.valueOf(response.get(i++)));
-        super.setQuantity(Integer.valueOf(response.get(i++)));
+        super.setQuantity(parseInt(response.get(i++)));
     }
 }

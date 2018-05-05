@@ -12,7 +12,11 @@ import item.Electrodomestic;
  * @author ashh412
  */
 public class Mobil extends Electrodomestic{
-    
+        private static final long serialVersionUID = -2873344211410398459L;
+    /**
+     *
+     * @param code
+     */
     public Mobil(String code) {
         super(code);
     }

@@ -1,7 +1,12 @@
 package Utils.Generator;
 
+import static java.lang.Integer.parseInt;
 import java.util.Random;
 
+/**
+ *
+ * @author ashh412
+ */
 public class PersonGenerator {
 
     private static final String LETRAS_NIF = "TRWAGMYFPDXBNJZSQVHLCKE";
@@ -27,6 +32,9 @@ public class PersonGenerator {
     private static final String[] lastname = {"De la vega", "Mateo", "Ruiz", "Afonso", "Suárez", "Pérez", "Smith",
         "Maqueda", "Díaz", "Romero", "Sosa", "García", "Pulido", "Holder", "Barlow", "Campos", "Potter"};
 
+    /**
+     *
+     */
     public PersonGenerator() {
     }
 
@@ -55,15 +63,23 @@ public class PersonGenerator {
      */
     private static String getNifLetter(String numerosDni) {
 
-        int numeros = Integer.valueOf(numerosDni);
+        int numeros = parseInt(numerosDni);
         return String.valueOf(numerosDni) + LETRAS_NIF.charAt(numeros % 23);
     }
 
+    /**
+     *
+     * @return
+     */
     public static String generateLastName() {
 
         return lastname[rand.nextInt(lastname.length)];
     }
 
+    /**
+     *
+     * @return
+     */
     public static String generateFirstName() {
 
         return name[rand.nextInt(name.length)] + " "

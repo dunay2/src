@@ -22,10 +22,20 @@ public class OWriteStream extends ObjectOutputStream {
     }
 
     //Constructores
+
+    /**
+     *
+     * @throws IOException
+     */
     public OWriteStream() throws IOException {
         super();
     }
 
+    /**
+     *
+     * @param out
+     * @throws IOException
+     */
     public OWriteStream(OutputStream out) throws IOException {
         super(out);
     }

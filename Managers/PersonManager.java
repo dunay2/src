@@ -30,6 +30,10 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
 
 //Extension de database
     //Guardamos
+
+    /**
+     *
+     */
     public void save() {
         save(persons);
     }
@@ -37,6 +41,10 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
 //el nombre de los managers debe ser NombreClaseManager
 //para que esta clase los guarde correctamente
 //Cargar la base de datos de personas
+
+    /**
+     *
+     */
     public void load() {
         persons = load(getClassName().replace("Manager", ""));//Pasamos el nombre del fichero   
     }
@@ -81,6 +89,10 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
 
     }
 
+    /**
+     *
+     * @return
+     */
     public Person generateRandomPerson() {
 
         Person person;
@@ -151,7 +163,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
     }
 
     private void printHeader() {
-        System.out.printf("%-13s%-20s%-20s%-20s%-20s%-20s%-10s%-10s\n", "ROL", "DNI", "APELLIDOS", "NOMBRE", "DIRECCION", "TELEFONO", "NOMINA", "ACTIVO");
+        System.out.printf("%-13s%-20s%-20s%-20s%-20s%-20s%-10s%-10s%n", "ROL", "DNI", "APELLIDOS", "NOMBRE", "DIRECCION", "TELEFONO", "NOMINA", "ACTIVO");
 
     }
 
@@ -174,10 +186,13 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
 //Guardamos el nombre de la clase hija
         String Rol = objectType.getClass().getSimpleName();
 
-        System.out.printf("%-13s%-20s%-20s%-20s%-20s%-20s%-10s%-10s\n", Rol, person.getDni(), person.getLastName(), person.getFirstName(), person.getAddress(), person.getPhone(), person.getSalary(), person.isActive());
+        System.out.printf("%-13s%-20s%-20s%-20s%-20s%-20s%-10s%-10s%n", Rol, person.getDni(), person.getLastName(), person.getFirstName(), person.getAddress(), person.getPhone(), person.getSalary(), person.isActive());
 
     }
 
+    /**
+     *
+     */
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -225,15 +240,18 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
 
             key = nodeAux.getResponseValue();
         }
+        //Tomamos la entrada de datos para la persona que vamos a crear
         nodesData = node.convertTreeChildToListIdx();
 
         node.getChildNodes()
                 .get(0).clearResponse();
 
+        //Creamos un cliente
         if (typeOfPerson.equals("mnuAddClient")) {
 
             person = new Client(key, nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), nodesData.get(i++));
         }
+        //Creamos el tipo de empleado indicado
         if (typeOfPerson.equals("mnuAddEmployee")) {
 
             int TypeofEmployee = Integer.parseInt(nodesData.get(nodesData.size() - 1));
@@ -255,6 +273,10 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
         return person;
     }
 
+    /**
+     *
+     * @param node
+     */
     protected void delete(MenuNode node) {
 
         StringBuilder outString = new StringBuilder();

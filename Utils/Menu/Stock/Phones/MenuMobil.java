@@ -16,8 +16,14 @@ import java.util.ArrayList;
  * @author ashh412
  */
 public class MenuMobil {
-
+  private static final long serialVersionUID = -2873344211410398459L;
     //Input menu
+
+    /**
+     *
+     * @param parentMnuName
+     * @return
+     */
     public static ArrayList<MenuStruct> addResponseEntries(String parentMnuName) {
         ArrayList<MenuStruct> entries = MenuAddItemCommonEntriesHeader.addResponseEntries("");
 

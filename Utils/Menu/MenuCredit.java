@@ -17,6 +17,12 @@ public class MenuCredit extends MenuBase {
     //Menu añadir producto al carrito
     //Padre: mnuMain
     //Menú mnuTransaction
+
+    /**
+     *
+     * @param parentMnuName
+     * @return
+     */
     static protected ArrayList<MenuStruct> transactionEntries(String parentMnuName) {
         //15. mnuTransaction
         ArrayList<MenuStruct> entries = new ArrayList();
@@ -33,6 +39,11 @@ public class MenuCredit extends MenuBase {
     //Padre: mnuMain
     //Menú mnuTransaction
 
+    /**
+     *
+     * @param parentMnuName
+     * @return
+     */
     static protected ArrayList<MenuStruct> transactionSaleEntries(String parentMnuName) {
         //15. mnuTransaction
         ArrayList<MenuStruct> entries = new ArrayList();
@@ -45,6 +56,11 @@ public class MenuCredit extends MenuBase {
         return entries;
     }
 
+    /**
+     *
+     * @param parentMnuName
+     * @return
+     */
     static protected ArrayList<MenuStruct> transactionCancelEntries(String parentMnuName) {
         //15. mnuTransaction
         ArrayList<MenuStruct> entries = new ArrayList();
@@ -57,6 +73,12 @@ public class MenuCredit extends MenuBase {
     //Menu añadir producto al carrito
     //Padre: mnuTransaction
     //Menú mnuAddItemToCart
+
+    /**
+     *
+     * @param parentMnuName
+     * @return
+     */
     static protected ArrayList<MenuStruct> addItemToCartEntries(String parentMnuName) {
         //16 mnuAddItemToCart
 
@@ -72,6 +94,12 @@ public class MenuCredit extends MenuBase {
     //Menu obtener codigo producto 
     //Padre: mnuAddItemToCart
     //Menú output
+
+    /**
+     *
+     * @param parentMnuName
+     * @return
+     */
     static protected ArrayList<MenuStruct> getItemCode(String parentMnuName) {
         //getItemCode
 
@@ -99,6 +127,12 @@ public class MenuCredit extends MenuBase {
     //Menu seguir comprando
     //Padre: mnuBuying
     //Menú mnuPaymentType
+
+    /**
+     *
+     * @param parentMnuName
+     * @return
+     */
     static protected ArrayList<MenuStruct> paymentTypeEntries(String parentMnuName) {
 
         ArrayList<MenuStruct> entries = new ArrayList();
@@ -135,6 +169,12 @@ public class MenuCredit extends MenuBase {
     //Propósito: Agregar clientes
     //Padre: mnuBuying
     //Menú mnuAddClient
+
+    /**
+     *
+     * @param parentMnuName
+     * @return
+     */
     static protected ArrayList<MenuStruct> addClientEntriesNoID(String parentMnuName) {
 //Input menu
         //1. mnuAddClient
@@ -143,6 +183,11 @@ public class MenuCredit extends MenuBase {
         // convertToChildNode(parentMnuName, entries);
     }
 
+    /**
+     *
+     * @param parentMnuName
+     * @return
+     */
     static protected ArrayList<MenuStruct> getClientIdEntries(String parentMnuName) {
 //Input menu
 

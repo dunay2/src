@@ -13,18 +13,19 @@ import item.Electrodomestic;
  */
 public class WashingMachine extends Electrodomestic {
 
-    private String Revolutions;
+    private static final long serialVersionUID = -2873344211410398459L;
+    private String revolutions;
 
     public WashingMachine(String code) {
         super(code);
     }
 
     public String getRevolutions() {
-        return Revolutions;
+        return revolutions;
     }
 
     public void setRevolutions(String Revolutions) {
-        this.Revolutions = Revolutions;
+        this.revolutions = Revolutions;
     }
 
 }

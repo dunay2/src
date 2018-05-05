@@ -6,6 +6,7 @@
 package item.Factory.Computer.Components;
 
 import item.family.computers.Components.Memory;
+import static java.lang.Integer.parseInt;
 
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ import java.util.ArrayList;
  */
 public class IniMemory extends Memory {
 
-    /**
+     /** Define la inicialización de un objeto de tipo
      *
      * @param key
      * @param response
@@ -32,7 +33,7 @@ public class IniMemory extends Memory {
         super.setGuaranty(response.get(i++));
         super.setBoughtPrice(Double.valueOf(response.get(i++)));
         super.setSellPrice(Double.valueOf(response.get(i++)));
-        super.setQuantity(Integer.valueOf(response.get(i++)));
+        super.setQuantity(parseInt(response.get(i++)));
     }
 
 }

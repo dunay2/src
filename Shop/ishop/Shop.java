@@ -5,12 +5,34 @@ import java.util.ArrayList;
 
 
 /*Scanner*/
+
+/**
+ *
+ * @author ashh412
+ */
+
 public abstract class Shop implements IBusiness {
 
     private String name;
 
     private String fiscalID;
 //Mantenemos un ArrayList de departamentos
+
+    /**
+     *
+     * @return
+     */
+    public String getFiscalID() {
+        return fiscalID;
+    }
+
+    /**
+     *
+     * @param fiscalID
+     */
+    public void setFiscalID(String fiscalID) {
+        this.fiscalID = fiscalID;
+    }
 
     ArrayList<Department> departments = new ArrayList<>();
 
@@ -33,6 +55,10 @@ public abstract class Shop implements IBusiness {
     public void addClient() {
     }
 
+    /**
+     *
+     * @param department
+     */
     public void addDepartment(Department department) {
 
         departments.add(department);
@@ -40,6 +66,11 @@ public abstract class Shop implements IBusiness {
         //  System.out.println("La cantidad de departamentos es "+  departments.size());
     }
 
+    /**
+     *
+     * @param department
+     * @return
+     */
     public Department removeDepartment(Department department) {
         throw new UnsupportedOperationException("Not supported yet.");
     }

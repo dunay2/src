@@ -6,9 +6,10 @@
 package item.Factory.Computer.Components;
 
 import item.family.computers.Computer;
+import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 
-/**
+  /** Define la inicialización de un objeto de tipo
  *
  * @author ashh412
  */
@@ -31,6 +32,6 @@ public class IniProcesor extends Computer {
         super.setGuaranty(response.get(i++));
         super.setBoughtPrice(Double.valueOf(response.get(i++)));
         super.setSellPrice(Double.valueOf(response.get(i++)));
-        super.setQuantity(Integer.valueOf(response.get(i++)));        
+        super.setQuantity(parseInt(response.get(i++)));        
     }
 }

@@ -10,5 +10,5 @@ package item.family.Sound;
  * @author ashh412
  */
 public class Auriculares {
-    
+   private static final long serialVersionUID = -2873344211410398459L;   
 }

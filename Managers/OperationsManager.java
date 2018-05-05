@@ -28,6 +28,11 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
         return records;
     }
 
+    /**
+     *
+     * @param node
+     * @return
+     */
     protected MenuNode callMainMenu(MenuNode node) {
 
         while (node.getParent() != null) {
@@ -43,14 +48,21 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
 //    }
     //Propósito: Listar 
     private void printHeader() {
-        System.out.printf("%-20s%-20s%-20s%-20s%-20s\n", "OPERACION", "CLIENTE", "EMPLEADO", "FECHA","ACTIVO");
+        System.out.printf("%-20s%-20s%-20s%-20s%-20s%n", "OPERACION", "CLIENTE", "EMPLEADO", "FECHA","ACTIVO");
 
     }
 
+    /**
+     *
+     * @return
+     */
     public int size() {
         return records.size();
     }
 
+    /**
+     *
+     */
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -107,6 +119,10 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
         System.out.printf("%-20s%-20s%-20s%-20s%-20s\n", record.getOperCode(), record.getCliCode(), record.getEmpCode(), dateFormat.format(record.getDate()), record.getActive());
     }
 
+    /**
+     *
+     * @return
+     */
     public Record generateRandomOperation() {
         return null;
 
@@ -121,6 +137,12 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
 
     //Propósito: 
     //Buscar la clave en el HashMapy devolver el objeto si existe
+
+    /**
+     *
+     * @param e
+     * @return
+     */
     protected Record searchRecord(String e) {
 
         if (records.containsKey(e)) {
@@ -132,6 +154,10 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
     }
 
     //Carga de ficheros
+
+    /**
+     *
+     */
     public void load() {
         records = load(getClassName().replace("Manager", ""));//Pasamos el nombre del fichero   
     }
@@ -144,6 +170,10 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
 
     //Extension de database
     //Guardamos
+
+    /**
+     *
+     */
     public void save() {
         save(records);
     }
@@ -203,6 +233,11 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
 //        return record;
 //
 //    }
+
+    /**
+     *
+     * @return
+     */
     public int getSequence() {
         return records.size();
 

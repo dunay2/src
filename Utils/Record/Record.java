@@ -23,8 +23,12 @@ public abstract class Record implements Serializable {
     private  String active;
     private Date date = null;
  
-    
-    
+    /**
+     *
+     * @param operCode
+     * @param cliCode
+     * @param empCode
+     */
     public Record(String operCode, String cliCode, String empCode) {
         this.active = "Y";
         this.operCode = operCode;
@@ -34,18 +38,34 @@ public abstract class Record implements Serializable {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public Date getDate() {
         return date;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getOperCode() {
         return operCode;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCliCode() {
         return cliCode;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getEmpCode() {
         return empCode;
     }
@@ -57,10 +77,18 @@ public abstract class Record implements Serializable {
         return date;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getActive() {
         return active;
     }
 
+    /**
+     *
+     * @param active
+     */
     public void setActive(String active) {
         this.active = active;
     }

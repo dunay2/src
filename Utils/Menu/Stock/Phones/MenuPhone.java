@@ -16,8 +16,14 @@ import java.util.ArrayList;
  * @author ashh412
  */
 public class MenuPhone {
+  private static final long serialVersionUID = -2873344211410398459L;
+   
 
-    //Input menu
+    /**Input menu
+     *
+     * @param parentMnuName
+     * @return
+     */
     public static ArrayList<MenuStruct> addResponseEntries(String parentMnuName) {
         ArrayList<MenuStruct> entries = MenuAddItemCommonEntriesHeader.addResponseEntries("");
 

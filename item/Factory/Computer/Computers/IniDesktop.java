@@ -6,6 +6,7 @@
 package item.Factory.Computer.Computers;
 
 import item.family.computers.Desktop;
+import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 
 /**
@@ -14,11 +15,15 @@ import java.util.ArrayList;
  */
 public class IniDesktop extends Desktop {
 
+    /**
+     *
+     * @param code
+     */
     public IniDesktop(String code) {
         super(code);
     }
 
-    /**
+     /** Define la inicialización de un objeto de tipo
      *
      * @param key
      * @param response
@@ -37,7 +42,7 @@ public class IniDesktop extends Desktop {
         super.setGuaranty(response.get(i++));
         super.setBoughtPrice(Double.valueOf(response.get(i++)));
         super.setSellPrice(Double.valueOf(response.get(i++)));
-        super.setQuantity(Integer.valueOf(response.get(i++)));
+        super.setQuantity(parseInt(response.get(i++)));
 
     }
 

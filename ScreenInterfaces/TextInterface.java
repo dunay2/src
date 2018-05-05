@@ -8,6 +8,11 @@ import java.util.Scanner;
 //Implementar la lectura de los nodos is imput
 // Clase TextInterface:
 //Propósito: gestionar las entradas y navegación de menú según la opción seleccionada
+
+/**
+ *
+ * @author ashh412
+ */
 public class TextInterface {
 
     /**
@@ -27,7 +32,9 @@ public class TextInterface {
 
     }
 
-//Propósito: limpiar la consola
+    /**Propósito: limpiar la consola
+     *
+     */
     public static void clearScreen() {
 
         clearConsole();
@@ -111,6 +118,9 @@ public class TextInterface {
         return null;
     }
 
+    /**
+     *
+     */
     public final static void clearConsole() {
         try {
             final String os = System.getProperty("os.name");
@@ -125,6 +135,9 @@ public class TextInterface {
         }
     }
 
+    /**
+     *
+     */
     public static void pressKey() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Pulsa una tecla para continuar ...");

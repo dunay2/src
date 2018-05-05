@@ -5,7 +5,6 @@
  */
 package item.components;
 
-import item.Electrodomestic;
 
 
 

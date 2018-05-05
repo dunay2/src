@@ -14,6 +14,10 @@ import java.util.List;
 //Propósito: Guardar una referencia a las actuaciones de las personas
 public interface IPersonOperation {
     
+    /**
+     *
+     * @return
+     */
     public List<String> getOperations();
     
     /**

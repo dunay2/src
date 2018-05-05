@@ -70,6 +70,8 @@ public class TextDatabase implements IDatabase {
                 case "Cashier":
                 case "Engineer":
                 case "FAssintance":
+                case "Clerk":
+                case "BackOfTheHouse":
 
                     filename = "Employee";
 

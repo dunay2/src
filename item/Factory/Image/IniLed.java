@@ -8,14 +8,14 @@ package item.Factory.Image;
  
 import item.family.Image.Led;
 import java.util.ArrayList;
-
+import static java.lang.Integer.parseInt;
 /**
  *
  * @author ashh412
  */
 public class IniLed extends Led {
-
-    /**
+  private static final long serialVersionUID = -2873344211410398459L;
+      /** Define la inicialización de un objeto de tipo
      *
      * @param key
      * @param response
@@ -30,6 +30,6 @@ public class IniLed extends Led {
         super.setGuaranty(response.get(i++));
         super.setBoughtPrice(Double.valueOf(response.get(i++)));
         super.setSellPrice(Double.valueOf(response.get(i++)));
-        super.setQuantity(Integer.valueOf(response.get(i++)));
+        super.setQuantity(parseInt(response.get(i++)));
     }
 }

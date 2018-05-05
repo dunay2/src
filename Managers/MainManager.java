@@ -6,11 +6,8 @@ package Managers;
 import Person.Employee.Cashier;
 import Person.Employee.Clerk;
 import Person.Employee.Employee;
-import Person.Employee.Engineer;
-import Person.Employee.FAssintance;
 import ScreenInterfaces.TextInterface;
 import Utils.Menu.MenuNode;
-import java.io.IOException;
 
 /**
  *
@@ -21,27 +18,25 @@ public class MainManager {
     //   private Shoppingcart shoppingcart;
     private final TextInterface myTextInterface;
     // private Client client;
-    private ClientManager clientManager;
+    private final ClientManager clientManager;
     private EmployeeManager employeeManager;
-    private StockManager stockManager;
-    private SaleManager saleManager = null;
+    private final StockManager stockManager;
+    private final SaleManager saleManager;
     private Employee activeEmployee; //Usuario que está gestionando la aplicación
+    String role = "";//Rol del usurio
 
-    Cashier cashier = new Cashier("CAJERO1_CODE");
+    private int numAccess = 0; //Valor que controla los intentos de login actuales
+    private static final int MAXACCESS = 3; //Valor que controla los intentos máximos de login
 
-    public MainManager() {
+    // Cashier cashier = new Cashier("CAJERO1_CODE");
+    private boolean getUserAuth() {
 
-        myTextInterface = new TextInterface();
+        if (numAccess++ == MAXACCESS) {
+            return false;
+        }
 
-    }
-
-    //Propósito: main method
-    public void start() throws IOException {
-
-        //Creamos un nodo para la autenticación
-        System.out.println("Electronic & CO");//Se pide un dato al usuario
-        MenuNode node = new MenuNode(null, 0, "auth", "Por favor introduzca codigo de usuario para autenticarse", null);
-
+        //Se pide un dato al usuario
+        MenuNode node = new MenuNode(null, 0, "auth", "Por favor introduzca codigo de usuario para autenticarse. Si es la primera vez que ejecuta la aplicación pulse return", null);
         node.addNode(node);
 
 //agregar un  nodo hijo de respuesta
@@ -51,23 +46,58 @@ public class MainManager {
         employeeManager.load();
         StringBuilder outString = new StringBuilder();
 
-//Se pide un dato al usuario
+//Se pide un dato al usuario. Buscamos el empleado
         activeEmployee = (Employee) employeeManager.search(node, outString);
 
+        //Es la primera vez. Creamos un usuario admin
         if (employeeManager.getAll().isEmpty()) {
-            Clerk clerk = new Clerk("1");
-            employeeManager.add(clerk);
-            System.out.println("Creado usuario administrador. Acceso a RRHH NIF:1");
+            activeEmployee = new Clerk("admin");
+            activeEmployee.setFirstName("admin");
+
+            employeeManager.add(activeEmployee);
+            System.out.println("Creado usuario administrador. Acceso a RRHH NIF: admin");
+            employeeManager.save();
+
+        } else {//No hemos encontrado el usuario. Volvemos a pedir datos
+            if (activeEmployee == null) {
+                System.out.println("Usuario no encontrado");
+                getUserAuth();
+            }
         }
-//comprobamos qué gestor cargamos
+
+        if (activeEmployee == null) {
+            return false;
+        }
+
+        role = activeEmployee.getClass().getSimpleName();
+
+        return true;
+    }
+
+    /**
+     *
+     */
+    public MainManager() {
+
+        if (!getUserAuth()) {
+            System.out.println("Usuario no autenticado. Saliendo de la aplicación");
+            System.exit(0);
+        }
+
+        //Creamos un nodo para la autenticación
+        System.out.println("Electronic & CO");
+
+        myTextInterface = new TextInterface();
+
         //Obtenemos una instancia a los gestores
-        {
-            this.clientManager = ClientManager.getInstance();
-        }
+        this.clientManager = ClientManager.getInstance();
 
         this.stockManager = StockManager.getInstance();
+        this.saleManager = SaleManager.getInstance(clientManager, stockManager);
 
-        this.saleManager = SaleManager.getInstance(cashier, clientManager, stockManager);
+        if (role.equals("Cashier")) {
+            saleManager.setCashier((Cashier) activeEmployee);
+        }
         clientManager.setSaleManager(this.saleManager);
 
 //   cashier.setFirstName("Juan el cajero 1");
@@ -97,43 +127,32 @@ public class MainManager {
         doBusiness(myTextInterface.printMenu(null));
 
     }
-//
-//    private static Employee userAuth() throws IOException {
-//
-////Creamos un lector
-//        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//        Employee emp = new Employee(br.readLine());
-//
-//        System.out.println("Electronic & CO");//Se pide un dato al usuario
-//
-//        System.out.println("Por favor introduzca codigo de usuario para autenticarse");//Se pide un dato al usuario
-//
-//        System.out.println();
-//  System.exit(0);
-//  return emp;
-//    }
-//Propósito: Comprobar que se tiene permiso para acceder a los menús
 
+//Propósito: Comprobar que se tiene permiso para acceder a los menús
     private boolean checkRole(int value) {
-        String role = activeEmployee.getClass().getSimpleName();
+
         System.out.println(role);
         String sNumero = String.valueOf(value);
 
         int offset = Double.valueOf(Math.pow(10, sNumero.length() - 1)).intValue();
         int fnum = value / offset;
 
-//        return fnum == 1 && role.equals("Cashier")//Ventas
-//                || fnum == 1 && role.equals("Clerk")
-//                //gestion de clientes
-//                || fnum == 2 && role.equals("Clerk")
-//                || fnum == 2 && role.equals("Clerk")
-//                || fnum == 2 && role.equals("FAssintance")
-//                || fnum == 2 && role.equals("Engineer")
-//                || fnum == 3 && role.equals("BackOfTheHouse")
-//                || fnum == 4 && role.equals("Clerk")
-//                || fnum == 5 && role.equals("Engineer")
-//                || fnum == 4 && role.equals("Engineer");
-        return true;
+        return fnum == 1 && role.equals("Cashier")//Ventas
+
+                //gestion de clientes
+                || fnum == 2 && role.equals("Clerk")
+                || fnum == 2 && role.equals("FAssintance")
+                || fnum == 2 && role.equals("Engineer")
+                //almacen
+                || fnum == 3 && role.equals("BackOfTheHouse")
+                //gestion empleados
+                || fnum == 4 && role.equals("Clerk")
+                //reparaciones
+                || fnum == 5 && role.equals("Engineer")
+                //Gestion de créditos
+                || fnum == 6 && role.equals("FAssintance");
+
+//        return true;
     }
 ///////////!!!!!!!!!!!!!!!!!!si no hay usuarios crear administrador!!!!!!!!!!!!!!!!1
 
@@ -146,7 +165,7 @@ public class MainManager {
 //de esta forma poder antender sus peticiones 
         MenuNode[] node = {enode};
         System.out.println("entrada menu" + enode.getValue());
-        if (enode.getValue() == 6) {
+        if (enode.getValue() == 7) {
             System.out.println("Gracias por usar la aplicación");
             System.exit(0);
 

@@ -14,44 +14,63 @@ import item.Electrodomestic;
  * @author ashh412
  */
 public class Computer extends Electrodomestic {
-
+  private static final long serialVersionUID = -2873344211410398459L;
     private String ram;
     private String mhz;
     private String hddSize;
 
-//    public Computer( String code,String familyCode, String name, String description, double boughtPrice, double sellPrice, int quantity,Double ram) {
-//
-//        super( code,familyCode, name, description, boughtPrice, sellPrice, quantity);
-//        this.ram=ram;
-//
-//    }
-
+    /**
+     *
+     * @param code
+     */
     public Computer(String code) {
         super(code);
     }
 
-    
-    
+    /**
+     *
+     * @return
+     */
     public String getRam() {
         return ram;
     }
 
+    /**
+     *
+     * @param ram
+     */
     public void setRam(String ram) {
         this.ram = ram;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getMhz() {
         return mhz;
     }
 
+    /**
+     *
+     * @param mhz
+     */
     public void setMhz(String mhz) {
         this.mhz = mhz;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getHddSize() {
         return hddSize;
     }
 
+    /**
+     *
+     * @param hddSize
+     */
     public void setHddSize(String hddSize) {
         this.hddSize = hddSize;
     }

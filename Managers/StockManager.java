@@ -9,6 +9,7 @@ import ScreenInterfaces.TextInterface;
 import Utils.Menu.MenuNode;
 import item.Electrodomestic;
 import item.Factory.ItemFactory;
+import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -30,11 +31,19 @@ public class StockManager extends templateManager {
     private static StockManager instance = null;    //Singleton Singleton Pattern
 
     //Singleton Singleton Pattern
+
+    /**
+     *
+     */
     protected StockManager() {
         // Exists only to defeat instantiation.
     }
     //Singleton Singleton Pattern
 
+    /**
+     *
+     * @return
+     */
     public static StockManager getInstance() {
         if (instance == null) {
             instance = new StockManager();
@@ -42,6 +51,11 @@ public class StockManager extends templateManager {
         return instance;
     }
 
+    /**
+     *
+     * @param itemCode
+     * @param amount
+     */
     public void buyItems(String itemCode, int amount) {
 
     }
@@ -57,6 +71,10 @@ public class StockManager extends templateManager {
     }
 
     //Propósito: Cargar el HM con el stock
+
+    /**
+     *
+     */
     public void load() {
 
         electrodomestics = super.load("Electrodomestic");
@@ -236,6 +254,11 @@ public class StockManager extends templateManager {
         System.out.printf("%-20s%-20s%-40s%-20s%-20s%-20s\n", "CODIGO", "NOMBRE", "DESCRIPCION", "PRECIO COMPRA", "PRECIO VENTA", "UNIDADES");
     }
 
+    /**
+     *
+     * @param e
+     * @return
+     */
     public Electrodomestic searchElectrodomestic(String e) {
         if (electrodomestics.containsKey(e)) {
             //Si encontramos el elemento en la búsqueda devolvemos el elemento
@@ -337,7 +360,7 @@ public class StockManager extends templateManager {
             electrodomestic.setDescription(nodesData.get(i++));
             electrodomestic.setBoughtPrice(Double.valueOf(nodesData.get(i++)));
             electrodomestic.setSellPrice(Double.valueOf(nodesData.get(i++)));
-            electrodomestic.setQuantity(Integer.valueOf(nodesData.get(i++)));
+            electrodomestic.setQuantity(parseInt(nodesData.get(i++)));
             //Guardar los datos 
 
             save(electrodomestics);
@@ -347,6 +370,9 @@ public class StockManager extends templateManager {
         }
     }
 
+    /**
+     *
+     */
     public void refresh() {
         save(electrodomestics);
     }
@@ -367,7 +393,7 @@ public class StockManager extends templateManager {
 
     private void listFormat(Electrodomestic item) {
 
-        System.out.printf("%-20s%-20s%-40s%-20s%-20s%-20s\n", item.getCode(), item.getName(), item.getDescription(), item.getBoughtPrice(), item.getSellPrice(), item.getQuantity());
+        System.out.printf("%-20s%-20s%-40s%-20s%-20s%-20s%n", item.getCode(), item.getName(), item.getDescription(), item.getBoughtPrice(), item.getSellPrice(), item.getQuantity());
 
     }
     // public void delete(Node electrodomestic) {

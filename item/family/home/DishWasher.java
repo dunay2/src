@@ -12,7 +12,7 @@ import item.Electrodomestic;
  * @author ashh412
  */
 public class DishWasher extends  Electrodomestic{
-    
+      private static final long serialVersionUID = -2873344211410398459L;
     public DishWasher(String code) {
         super(code);
     }

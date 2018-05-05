@@ -1,25 +1,26 @@
 package Shop.ishop;
 
 import Managers.MainManager;
-import Samples.addTestItems;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import Samples.AddTestItems;
 
+
+/**
+ *
+ * @author ashh412
+ */
 public class ElectronicShop extends Shop {
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
 
 
             MainManager scene = new MainManager();
 
-          //  addTestItems.addComponents();
-
-        try {
-            scene.start();
-        } catch (IOException ex) {
-            Logger.getLogger(ElectronicShop.class.getName()).log(Level.SEVERE, null, ex);
-        }
+          AddTestItems.addComponents();
+      //  scene.start();
 
      
     }

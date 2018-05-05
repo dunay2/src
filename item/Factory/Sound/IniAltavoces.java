@@ -8,18 +8,19 @@ package item.Factory.Sound;
 
 import item.family.Sound.Altavoces;
 import java.util.ArrayList;
-
+import static java.lang.Integer.parseInt;
 /**
  *
  * @author ashh412
  */
 public class IniAltavoces extends Altavoces {
-
-    /**
+  private static final long serialVersionUID = -2873344211410398459L;
+    /** Define la inicialización de un objeto de tipo
      *
      * @param key
      * @param response
      */
+
     public IniAltavoces(String key, ArrayList<String> response) {
 
         super(key);
@@ -31,7 +32,7 @@ public class IniAltavoces extends Altavoces {
         super.setGuaranty(response.get(i++));
         super.setBoughtPrice(Double.valueOf(response.get(i++)));
         super.setSellPrice(Double.valueOf(response.get(i++)));
-        super.setQuantity(Integer.valueOf(response.get(i++)));
+        super.setQuantity(parseInt(response.get(i++)));
         
 
         

@@ -14,7 +14,7 @@ import item.IRechargable;
  */
 public class BateryComputer extends Computer  implements IRechargable{
 
-
+  private static final long serialVersionUID = -2873344211410398459L;
     private String autonomy; //autonomia
 
 //    }

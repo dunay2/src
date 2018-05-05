@@ -25,6 +25,15 @@ import java.util.ArrayList;
 public class ItemFactory {
 //1. Vendedor 2. Tecnico 3. Financiero"));
 
+    /**
+     * Clase que representa la factura de items
+     * @param ElectroType
+     * @param key
+     * @param responseValues
+     * @return
+     * @throws Exception
+     */
+
     public static Electrodomestic getElectrodomestic(int ElectroType, String key, ArrayList<String> responseValues) throws Exception {
 
         switch (ElectroType) {
