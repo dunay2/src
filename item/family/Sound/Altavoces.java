@@ -5,10 +5,16 @@
  */
 package item.family.Sound;
 
+import item.Electrodomestic;
+
 /**
  *
  * @author ashh412
  */
-public class Altavoces {
+public class Altavoces extends Electrodomestic{
+    
+    public Altavoces(String code) {
+        super(code);
+    }
     
 }

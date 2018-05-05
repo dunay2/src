@@ -51,25 +51,10 @@ public class EmployeeManager extends PersonManager {
     /**
      *
      * @param enode
-     * @param node
      * @return
-     * @throws IOException
+    
      */
-//    @Override
-//    public Employee createObject(MenuNode[] node) {
-//
-//        MenuNode enode = node[0];
-//        ArrayList<String> nodesData = enode.convertTreeChildToList();
-//        int i = 0;
-//
-//        Employee employee = new Employee(nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), nodesData.get(i++), nodesData.get(i++));
-//
-////Guardamos el employee en la coleccion
-//        add(employee);
-//        save();
-//
-//        return employee;
-//    }
+
     @Override
     public boolean handleProcess(MenuNode[] enode) {
 

@@ -92,7 +92,7 @@ public class MenuStock extends MenuBase {
         // mnuAddItem
         entries.add(new MenuStruct("mnuDishWasher", "Lavaplatos"));
         entries.add(new MenuStruct("mnuFridge", "Neveras"));
-        entries.add(new MenuStruct("mnuhoover", "Aspiradoras"));
+        entries.add(new MenuStruct("mnuHoover", "Aspiradoras"));
         entries.add(new MenuStruct("mnuWashingMachine", "Lavadoras"));
         entries.add(new MenuStruct("tail", "volver"));
 
@@ -126,9 +126,9 @@ public class MenuStock extends MenuBase {
         ArrayList<MenuStruct> entries = new ArrayList();
 
         // mnuAddItem
-        entries.add(new MenuStruct("", "Altavoces"));
-        entries.add(new MenuStruct("", "Auriculares"));
-        entries.add(new MenuStruct("", "Minicadenas"));
+        entries.add(new MenuStruct("mnuAltavoces", "Altavoces"));
+        entries.add(new MenuStruct("mnuAuriculares", "Auriculares"));
+        entries.add(new MenuStruct("mnuMinicadena", "Minicadenas"));
         entries.add(new MenuStruct("tail", "volver"));
 
         return entries;

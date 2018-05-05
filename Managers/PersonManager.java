@@ -35,7 +35,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
     }
 
 //el nombre de los managers debe ser NombreClaseManager
-//para que essta clase los guarde correctamente
+//para que esta clase los guarde correctamente
 //Cargar la base de datos de personas
     public void load() {
         persons = load(getClassName().replace("Manager", ""));//Pasamos el nombre del fichero   
@@ -151,7 +151,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
     }
 
     private void printHeader() {
-        System.out.printf("%-13s%-20s%-20s%-20s%-20s%-20s%-10s%-10s\n","ROL", "DNI", "APELLIDOS", "NOMBRE", "DIRECCION", "TELEFONO", "NOMINA", "ACTIVO");
+        System.out.printf("%-13s%-20s%-20s%-20s%-20s%-20s%-10s%-10s\n", "ROL", "DNI", "APELLIDOS", "NOMBRE", "DIRECCION", "TELEFONO", "NOMINA", "ACTIVO");
 
     }
 
@@ -173,8 +173,8 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
         Object objectType = person;
 //Guardamos el nombre de la clase hija
         String Rol = objectType.getClass().getSimpleName();
-        
-        System.out.printf("%-13s%-20s%-20s%-20s%-20s%-20s%-10s%-10s\n",Rol, person.getDni(), person.getLastName(), person.getFirstName(), person.getAddress(), person.getPhone(), person.getSalary(), person.isActive());
+
+        System.out.printf("%-13s%-20s%-20s%-20s%-20s%-20s%-10s%-10s\n", Rol, person.getDni(), person.getLastName(), person.getFirstName(), person.getAddress(), person.getPhone(), person.getSalary(), person.isActive());
 
     }
 
@@ -196,6 +196,8 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
         MenuNode nodeAux = node.getChildNodes().get(0);//comprobacion de respuesta
         int i = 0;
         String typeOfPerson = node.getMnuName();
+        typeOfPerson = typeOfPerson.replace("mnuBuying", "mnuAddClient");
+
         Person person = null;
 //creacion estandar
 //No hay datos en los nodos hijos

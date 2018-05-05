@@ -5,10 +5,15 @@
  */
 package Utils.Menu;
 
+
 import Utils.Menu.Stock.MenuStock;
 import java.util.ArrayList;
 import Utils.Menu.Stock.Computers.*;
 import Utils.Menu.Stock.Computers.Components.*;
+import Utils.Menu.Stock.Home.*;
+import Utils.Menu.Stock.Image.*;
+import Utils.Menu.Stock.Sound.*;
+import Utils.Menu.Stock.Phones.*;
 
 /**
  *
@@ -42,7 +47,9 @@ public class MenuMain extends MenuBase {
         entries.add(new MenuStruct("mnuClient", "Gestión de Clientes"));
         entries.add(new MenuStruct("mnuStock", "Gestión de Stock"));
         entries.add(new MenuStruct("mnuEmployee", "Gestión de Empleados"));
-        entries.add(new MenuStruct("mnuEmployee", "Gestión de Reparaciones"));
+        entries.add(new MenuStruct("mnuRepair", "Gestión de Reparaciones"));
+        entries.add(new MenuStruct("mnuCredit", "Gestión de Créditos"));
+        
         entries.add(new MenuStruct("mnuExit", "Salir de la aplicación"));
 
         convertToChildNode(parentMnuName, entries);
@@ -219,17 +226,16 @@ public class MenuMain extends MenuBase {
         MenuProcesor.addResponseEntries("mnuProcesor").forEach(menu -> entries.add(menu));
         convertToChildNode("mnuProcesor", entries);
         entries.clear();
-        
+
         MenuMemory.addResponseEntries("mnuMemory").forEach(menu -> entries.add(menu));
         convertToChildNode("mnuMemory", entries);
         entries.clear();
-        
+
         MenuPrinter.addResponseEntries("mnuPrinter").forEach(menu -> entries.add(menu));
         convertToChildNode("mnuPrinter", entries);
         entries.clear();
-        
-//Fin componentes
 
+//Fin componentes
         //Propósito: Menú Equipos 
         //Padre: mnuGenComputers
         //Menú mnuComputers
@@ -253,8 +259,6 @@ public class MenuMain extends MenuBase {
         convertToChildNode("mnuNoteBook", entries);
         entries.clear();
 
-//       
-//
         //Propósito: Menú Equipos 
         //Padre: mnuGenComputers
         //Menú mnuComponents
@@ -288,6 +292,49 @@ public class MenuMain extends MenuBase {
         //Menú mnuGenPhone
         MenuStock.addSoundEntries("mnuSound").forEach(menu -> entries.add(menu));
         convertToChildNode("mnuSound", entries);
+        entries.clear();
+
+        MenuMobil.addResponseEntries("mnuMobil").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuMobil", entries);
+        entries.clear();
+
+        MenuPhone.addResponseEntries("mnuPhone").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuPhone", entries);
+        entries.clear();
+
+        MenuPlasma.addResponseEntries("mnuPlasma").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuPlasma", entries);
+        entries.clear();
+
+        MenuLed.addResponseEntries("mnuLed").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuLed", entries);
+        entries.clear();
+        MenuAltavoces.addResponseEntries("mnuAltavoces").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuAltavoces", entries);
+        entries.clear();
+
+        MenuAuriculares.addResponseEntries("mnuAuriculares").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuAuriculares", entries);
+        entries.clear();
+
+        MenuMinicadena.addResponseEntries("mnuMinicadena").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuMinicadena", entries);
+        entries.clear();
+
+        MenuFridge.addResponseEntries("mnuFridge").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuFridge", entries);
+        entries.clear();
+
+        MenuDishWasher.addResponseEntries("mnuDishWasher").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuDishWasher", entries);
+        entries.clear();
+
+        MenuHoover.addResponseEntries("mnuHoover").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuHoover", entries);
+        entries.clear();
+
+        MenuWashingMachine.addResponseEntries("mnuWashingMachine").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuWashingMachine", entries);
         entries.clear();
 
 //         MenuStock.addFridgeEntries("mnuFamily").forEach((menuStruct) -> {

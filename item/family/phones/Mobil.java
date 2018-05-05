@@ -5,10 +5,16 @@
  */
 package item.family.phones;
 
+import item.Electrodomestic;
+
 /**
  *
  * @author ashh412
  */
-public class Mobil {
+public class Mobil extends Electrodomestic{
+    
+    public Mobil(String code) {
+        super(code);
+    }
     
 }

@@ -16,14 +16,6 @@ public class Clerk extends Employee {
     public void printHistory() {
     }
 
-    public void printInvoice() {
-    }
 
-    public String getFinanceTicket(String ticket) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 
-    public boolean aprove() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 }

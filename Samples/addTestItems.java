@@ -18,9 +18,9 @@ import item.Electrodomestic;
  * @author ashh412
  */
 public class addTestItems {
-    
+
     private static StockManager stockManager;
-    
+
     public void addTestItems() {
         //Obtenemos una instancia a los gestores
 
@@ -30,10 +30,10 @@ public class addTestItems {
      *
      */
     public static void addComponents() {
-        
+
         stockManager = StockManager.getInstance();
         stockManager.load();
-        
+
         Electrodomestic e = new Keyboard("LOGIK480");//Código artículo
         e.setName("Teclado"); //Nombre
         e.setBrand("LOGITECH"); //Marca
@@ -43,7 +43,17 @@ public class addTestItems {
         e.setSellPrice(56.99); // precio de venta
         e.setQuantity(10); // stock
         stockManager.add(e);
-        
+
+        e = new Keyboard("LOGIK490");//Código artículo
+        e.setName("Teclado"); //Nombre
+        e.setBrand("LOGITECH"); //Marca
+        e.setDescription("BLUETOOTH MULTI-DEVICE KEYBOARD K490"); //descripción
+        e.setGuaranty("6 meses"); //Garantía
+        e.setBoughtPrice(12.12); // precio de compra
+        e.setSellPrice(57.99); // precio de venta
+        e.setQuantity(12); // stock
+        stockManager.add(e);
+
         e = new Mouse("M330");//Código artículo
         e.setName("Ratón"); //Nombre
         e.setBrand("LOGITECH"); //Marca
@@ -53,7 +63,7 @@ public class addTestItems {
         e.setSellPrice(41.50); // precio de venta
         e.setQuantity(7); // stock
         stockManager.add(e);
-        
+
         Procesor p = new Procesor("BX80684I78700K");//Código artículo
         p.setName("Procesador"); //Nombre
         p.setBrand("Intel"); //Marca
@@ -64,31 +74,43 @@ public class addTestItems {
         p.setMhz("3.4MHz");
         p.setQuantity(2); // stock
         stockManager.add(p);
-        
+
         Printer pr = new Printer("HP6230");//Código artículo
         pr.setName("Impresora"); //Nombre
         pr.setBrand("HP"); //Marca
         pr.setDescription("HP ENVY Photo 6230 Multifunción"); //descripción
-        pr.setGuaranty("2 año"); //Garantía
+        pr.setGuaranty("2 años"); //Garantía
         pr.setBoughtPrice(41.23); // precio de compra
         pr.setSellPrice(99.90); // precio de venta
 
         pr.setQuantity(5); // stock
         stockManager.add(pr);
         
+        
+        pr = new Printer("EP550");//Código artículo
+        pr.setName("Impresora"); //Nombre
+        pr.setBrand("EPSON"); //Marca
+        pr.setDescription("EPSON 550 Multifunción"); //descripción
+        pr.setGuaranty("2 años"); //Garantía
+        pr.setBoughtPrice(41.23); // precio de compra
+        pr.setSellPrice(99.90); // precio de venta
+
+        pr.setQuantity(5); // stock
+        stockManager.add(pr);
+
         Memory me = new Memory("N71VN");//Código artículoº
         me.setName("Memoria"); //Nombre
         me.setBrand("ASUS"); //Marca
         me.setDescription("N71VN DDR3 2GB"); //descripción
-        me.setGuaranty("2 año"); //Garantía
+        me.setGuaranty("2 años"); //Garantía
         me.setBoughtPrice(9.07); // precio de compra
         me.setSellPrice(17.51); // precio de venta
         me.setCapacity("2GB");
         me.setQuantity(5); // stock
         stockManager.add(me);
-        
+
         stockManager.save(stockManager.getAll());
-        
+
     }
-    
+
 }

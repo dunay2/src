@@ -6,6 +6,7 @@
 package Person;
 
 import Person.Employee.Cashier;
+import Person.Employee.Clerk;
 import Person.Employee.Engineer;
 import Person.Employee.FAssintance;
 
@@ -14,18 +15,20 @@ import Person.Employee.FAssintance;
  * @author ashh412
  */
 public class PersonFactory {
-//1. Vendedor 2. Tecnico 3. Financiero"));
 
     public static Person getPerson(int tipo, String dni) {
 
         switch (tipo) {
             case 1:
-
-                return new Cashier  (dni);
+                return new Cashier(dni);
             case 2:
                 return new Engineer(dni);
             case 3:
                 return new FAssintance(dni);
+            case 4:
+                return new Clerk(dni);
+            case 5:
+                return new Clerk(dni);
 
         }
         return null;

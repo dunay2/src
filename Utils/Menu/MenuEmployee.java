@@ -46,7 +46,7 @@ public class MenuEmployee extends MenuBase {
         entries.add(new MenuStruct("output", "Introduzca Apellido del Empleado "));
         entries.add(new MenuStruct("output", "Introduzca Domicilio"));
         entries.add(new MenuStruct("output", "Introduzca Teléfono"));
-        entries.add(new MenuStruct("output", "Introduzca rol: 1. Vendedor 2. Tecnico 3. Financiero"));
+        entries.add(new MenuStruct("output", "Introduzca rol: 1. Vendedor 2. Tecnico 3. Financiero 4. RRHH 5. BackOfTheHouse"));
 
         return entries;
     }

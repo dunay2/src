@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -48,7 +50,10 @@ public class StockManager extends templateManager {
     @Override
     public HashMap<String, Electrodomestic> getAll() {
 
+        
         return electrodomestics;
+        
+        
     }
 
     //Propósito: Cargar el HM con el stock
@@ -188,7 +193,13 @@ public class StockManager extends templateManager {
 
     private Electrodomestic getItem(int ElectroType, String key, ArrayList<String> responseValues) {
 
-        return ItemFactory.getElectrodomestic(ElectroType, key, responseValues);
+        try {
+            return ItemFactory.getElectrodomestic(ElectroType, key, responseValues);
+        } catch (Exception ex) {
+            Logger.getLogger(StockManager.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Cree el objeto");
+        }
+        return null;
 
     }
 

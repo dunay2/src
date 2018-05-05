@@ -5,10 +5,16 @@
  */
 package item.family.Image;
 
+import item.Electrodomestic;
+
 /**
  *
  * @author ashh412
  */
-public class Led {
+public class Led extends Electrodomestic{
+    
+    public Led(String code) {
+        super(code);
+    }
     
 }

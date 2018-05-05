@@ -113,10 +113,6 @@ public class SaleManager extends OperationsManager {
 
         switch (node.getValue()) {
 
-//            case 5:
-//                list();
-//                TextInterface.pressKey();
-//                return true;
             //Devolución
             case 12:
 
@@ -127,8 +123,17 @@ public class SaleManager extends OperationsManager {
                     TextInterface.pressKey();
                     return true;
                 }
-                sale.setActive("I");
-                save();
+                if (sale.getActive().equals("A")) {
+
+                    CancelTransaction(sale);
+
+                    System.out.println("La factura ".concat(sale.getOperCode().concat(" ha sido cancelada")));
+                    TextInterface.pressKey();
+                } else {
+                    System.out.println("La factura ".concat(sale.getOperCode().concat(" ya está cancelada")));
+                    TextInterface.pressKey();
+                }
+
                 return true;
 
             case 13:
@@ -187,6 +192,31 @@ public class SaleManager extends OperationsManager {
         return false;//Profundiza
     }
 
+    private void CancelTransaction(Sale sale) {
+        //continuar aqui, sacar el resto de nodos hijos con la forma de pago
+        //Si financia pasar a financiacion
+//Guardamos la compra
+
+        sale.setActive("I");//Llamar al manager para realizar la devolucion
+        save();
+
+//marcamos en la ficha de cliente el código de operacion como inactivo
+        client.addOperation(operCode);
+        clientManager.save();
+
+        //Restar del stock los items
+        //Recorrer todos los items del carro
+        shoppingCart.getItems().forEach(line -> {
+            Electrodomestic e = stockManager.searchElectrodomestic(line.getItemCode());
+            e.setQuantity(e.getQuantity() - line.getAmount());
+        });
+
+        //Guardamos el nuevo estado de la venta
+        save();
+
+        stockManager.refresh();
+    }
+
     private void finishTransaction() {
         //continuar aqui, sacar el resto de nodos hijos con la forma de pago
         //Si financia pasar a financiacion
@@ -198,7 +228,7 @@ public class SaleManager extends OperationsManager {
 
         //Restar del stock los items
         //Recorrer todos los items del carro
-        shoppingCart.getItems().forEach((line) -> {
+        shoppingCart.getItems().forEach(line -> {
             Electrodomestic e = stockManager.searchElectrodomestic(line.getItemCode());
             e.setQuantity(e.getQuantity() - line.getAmount());
         });
