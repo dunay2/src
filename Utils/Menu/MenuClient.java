@@ -99,11 +99,11 @@ public class MenuClient extends MenuBase {
         // mnuEditClient
 //InputMenu
         ArrayList<MenuStruct> entries = new ArrayList();
-        entries.add(new MenuStruct("", "Introduzca DNI del cliente"));
-        entries.add(new MenuStruct("", "Introduzca nombre"));
-        entries.add(new MenuStruct("", "Introduzca Apellido"));
-        entries.add(new MenuStruct("", "Introduzca Domicilio"));
-        entries.add(new MenuStruct("", "Introduzca Teléfono"));
+        entries.add(new MenuStruct("output", "Introduzca DNI del cliente"));
+        entries.add(new MenuStruct("output", "Introduzca nombre"));
+        entries.add(new MenuStruct("output", "Introduzca Apellido"));
+        entries.add(new MenuStruct("output", "Introduzca Domicilio"));
+        entries.add(new MenuStruct("output", "Introduzca Teléfono"));
      
         return entries;
     }

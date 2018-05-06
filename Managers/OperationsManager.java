@@ -48,8 +48,9 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
 //    }
     //Propósito: Listar 
     private void printHeader() {
-        System.out.printf("%-20s%-20s%-20s%-20s%-20s%n", "OPERACION", "CLIENTE", "EMPLEADO", "FECHA","ACTIVO");
+        System.out.printf("%-10s%-15s%-15s%-20s%-20s%n", "OPERACION", "CLIENTE", "EMPLEADO", "FECHA","ACTIVO");
 
+         
     }
 
     /**
@@ -115,8 +116,8 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
     @Override
     public void print(Record record) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-
-        System.out.printf("%-20s%-20s%-20s%-20s%-20s\n", record.getOperCode(), record.getCliCode(), record.getEmpCode(), dateFormat.format(record.getDate()), record.getActive());
+     
+        System.out.printf("%-10s%-15S%-15S%-20s%-20s\n", record.getOperCode(), record.getCliCode(), record.getEmpCode(), dateFormat.format(record.getDate()),  record.getActive());
     }
 
     /**

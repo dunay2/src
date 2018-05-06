@@ -5,6 +5,7 @@
  */
 package Managers;
 
+import Samples.AddTestItems;
 import ScreenInterfaces.TextInterface;
 import Utils.Menu.MenuNode;
 import item.Electrodomestic;
@@ -31,7 +32,6 @@ public class StockManager extends templateManager {
     private static StockManager instance = null;    //Singleton Singleton Pattern
 
     //Singleton Singleton Pattern
-
     /**
      *
      */
@@ -64,14 +64,11 @@ public class StockManager extends templateManager {
     @Override
     public HashMap<String, Electrodomestic> getAll() {
 
-        
         return electrodomestics;
-        
-        
+
     }
 
     //Propósito: Cargar el HM con el stock
-
     /**
      *
      */
@@ -116,37 +113,24 @@ public class StockManager extends templateManager {
                 createObject(enode);
                 return true;
 
-            //31. Agregar Item a Stock
-//            case 311://Ordenadores
-//                createObject(enode);
-//                return true;
-//               case 312: //Hogar
-//                createObject(enode);
-//                return true;
-//                case 313://Telefonia
-//                createObject(enode);
-//                return true;
-//                case 314://Imagen
-//                createObject(enode);
-//                return true;
-//                case 315://Sonido
-//                createObject(enode);
-//                return true;
+          
             //32. Modificar Item Stock
             case 32:
                 update(node);
                 return true;
             //33. Eliminar Item Stock
             case 33:
-                break;
+                return true; //no implementado
             //34. Listar eletrodomésticos
             case 34:
                 list();
                 return true;
-            //Ir atrás en el menú
+            //Agregar items
             case 35:
+                AddTestItems.addComponents();
+
                 return true;
-            case 36:
+            case 36://Buscar producto
 
                 StringBuilder outString = new StringBuilder();
                 Electrodomestic electrodomestic = (Electrodomestic) search(node, outString);
@@ -196,7 +180,6 @@ public class StockManager extends templateManager {
 
         childNode.clearResponse();
 
-    
         int ElectroType = node.getValue();
 //Llamamos a la factoría para que nos devuelva el tipo correcto de objeto
         item = getItem(ElectroType, key, listResponseData);
@@ -349,24 +332,48 @@ public class StockManager extends templateManager {
     //propósito: leer los datos introducidos por consola
     @Override
     public void update(MenuNode node) {
-        StringBuilder outString = null;
+        StringBuilder outString = new StringBuilder();
         Electrodomestic electrodomestic = search(node, outString);
+        Boolean hasChange = false;
 
         if (electrodomestic != null) {
             ArrayList<String> nodesData = node.convertTreeChildToListIdx();
             int i = 0;
 //electrodomestic
-            electrodomestic.setName(nodesData.get(i++));
-            electrodomestic.setDescription(nodesData.get(i++));
-            electrodomestic.setBoughtPrice(Double.valueOf(nodesData.get(i++)));
-            electrodomestic.setSellPrice(Double.valueOf(nodesData.get(i++)));
-            electrodomestic.setQuantity(parseInt(nodesData.get(i++)));
-            //Guardar los datos 
+            String auxStr = nodesData.get(i);
+            if (!nodesData.get(i++).isEmpty()) {
+                electrodomestic.setName(auxStr);
+                hasChange = true;
+            }
+            auxStr = nodesData.get(i);
+            if (!nodesData.get(i++).isEmpty()) {
+                electrodomestic.setDescription(auxStr);
+                hasChange = true;
+            }
+            auxStr = nodesData.get(i);
+            if (!nodesData.get(i++).isEmpty()) {
+                electrodomestic.setBoughtPrice(Double.valueOf(auxStr));
+                hasChange = true;
+            }
+            auxStr = nodesData.get(i);
+            if (!nodesData.get(i++).isEmpty()) {
+                electrodomestic.setSellPrice(Double.valueOf(auxStr));
+                hasChange = true;
+            }
+            auxStr = nodesData.get(i);
+            if (!nodesData.get(i++).isEmpty()) {
+                electrodomestic.setQuantity(parseInt(auxStr));
+                hasChange = true;
 
-            save(electrodomestics);
+            }
+
         } else {
             System.out.println("El electrodoméstico no existe");
             TextInterface.pressKey();
+        }
+
+        if (hasChange == true) {
+            save(electrodomestics);
         }
     }
 

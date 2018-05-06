@@ -19,7 +19,7 @@ public class ElectronicShop extends Shop {
 
             MainManager scene = new MainManager();
 
-          AddTestItems.addComponents();
+          
       //  scene.start();
 
      

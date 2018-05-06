@@ -30,7 +30,6 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
 
 //Extension de database
     //Guardamos
-
     /**
      *
      */
@@ -41,7 +40,6 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
 //el nombre de los managers debe ser NombreClaseManager
 //para que esta clase los guarde correctamente
 //Cargar la base de datos de personas
-
     /**
      *
      */
@@ -117,6 +115,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
         if (person != null) {
             return person;
         }
+ 
         return null;
 
     }
@@ -136,28 +135,49 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
 
         StringBuilder outString = new StringBuilder();
         Person person = search(node, outString);
+        Boolean hasChange = false;
 
         if (person != null) {
             ArrayList<String> nodesData = node.convertTreeChildToListIdx();
             int i = 0;
 
-            person.setFirstName(nodesData.get(i++));
-            person.setLastName(nodesData.get(i++));
-            person.setAddress(nodesData.get(i++));
-            person.setPhone(nodesData.get(i++));
-
-            //Guardar los datos 
-            save();
+            String auxStr = nodesData.get(i);
+            if (!nodesData.get(i++).isEmpty()) {
+                person.setFirstName(auxStr);
+                hasChange = true;
+            }
+            auxStr = nodesData.get(i);
+            if (!nodesData.get(i++).isEmpty()) {
+                person.setLastName(auxStr);
+                hasChange = true;
+            }
+            auxStr = nodesData.get(i);
+            if (!nodesData.get(i++).isEmpty()) {
+                person.setAddress(auxStr);
+                hasChange = true;
+            }
+            auxStr = nodesData.get(i);
+            if (!nodesData.get(i++).isEmpty()) {
+                person.setPhone(auxStr);
+                hasChange = true;
+            }
 
         } else {
             System.out.println("La persona no existe");
             TextInterface.pressKey();
         }
-    }
-    //Propósito: Listar las personas por consola
 
-    @Override
-    public void print(Person person) {
+        if (hasChange == true) {
+            //Guardar los datos 
+            save();
+        }
+
+    }
+
+//Propósito: Listar las personas por consola
+
+@Override
+        public void print(Person person) {
         printHeader();
         listFormat(person);
     }
@@ -168,7 +188,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
     }
 
     @Override
-    public void list() {
+        public void list() {
 
         Iterator<Map.Entry<String, Person>> it = persons.entrySet().iterator();
 
@@ -199,12 +219,12 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
     }
 
     @Override
-    public Object get(int rollNo) {
+        public Object get(int rollNo) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Person createObject(MenuNode[] enode) {
+        public Person createObject(MenuNode[] enode) {
         String key;
         MenuNode node = enode[0];
         ArrayList<String> nodesData;

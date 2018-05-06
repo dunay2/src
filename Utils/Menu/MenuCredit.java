@@ -30,6 +30,7 @@ public class MenuCredit extends MenuBase {
         entries.add(new MenuStruct("mnuSell", "Realizar una Venta"));
         entries.add(new MenuStruct("mnuReturnItem", "Realizar una Devolución1"));
         entries.add(new MenuStruct("", "Listar Facturas"));
+        entries.add(new MenuStruct("output", "Buscar una Factura"));
         entries.add(new MenuStruct("tail", "Volver al Menú Principal"));
 
         return entries;

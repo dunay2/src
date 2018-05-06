@@ -5,7 +5,6 @@
  */
 package Utils.Menu;
 
-
 import Utils.Menu.Stock.MenuStock;
 import java.util.ArrayList;
 import Utils.Menu.Stock.Computers.*;
@@ -49,7 +48,7 @@ public class MenuMain extends MenuBase {
         entries.add(new MenuStruct("mnuEmployee", "Gestión de Empleados"));
         entries.add(new MenuStruct("mnuRepair", "Gestión de Reparaciones"));
         entries.add(new MenuStruct("mnuCredit", "Gestión de Créditos"));
-        
+
         entries.add(new MenuStruct("mnuExit", "Salir de la aplicación"));
 
         convertToChildNode(parentMnuName, entries);
@@ -57,6 +56,7 @@ public class MenuMain extends MenuBase {
         addClientMnu();
         addStockMnu();
         addEmployeeMnu();
+        addRepairMnu();
     }
 
     private static void addEmployeeMnu() {
@@ -111,6 +111,11 @@ public class MenuMain extends MenuBase {
         //Devolver
         MenuSale.transactionCancelEntries("mnuReturnItem").forEach(menu -> entries.add(menu));
         convertToChildNode("mnuReturnItem", entries);
+        entries.clear();
+
+        //Consultar factura
+        MenuSale.transactionSearchInvoices("mnuSearchInvoice").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuSearchInvoice", entries);
         entries.clear();
 
         //Agregar items al carrito
@@ -259,13 +264,6 @@ public class MenuMain extends MenuBase {
         convertToChildNode("mnuNoteBook", entries);
         entries.clear();
 
-        //Propósito: Menú Equipos 
-        //Padre: mnuGenComputers
-        //Menú mnuComponents
-        MenuStock.addComputerTypeEntries("mnuComputers").forEach(menu -> entries.add(menu));
-        convertToChildNode("mnuComputers", entries);
-        entries.clear();
-
         //Propósito: Menú genérico Hogar 
         //Padre: mnuAddItem
         //Menú mnuHome
@@ -363,4 +361,33 @@ public class MenuMain extends MenuBase {
         convertToChildNode(parentMnuName, entries);
 
     }
+
+    private static void addRepairMnu() {
+        ArrayList<MenuStruct> entries = new ArrayList();
+
+        //menú principal
+        MenuRepair.repairEntries("mnuRepair").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuRepair", entries);
+        entries.clear();
+
+        //menú abrir parte
+        MenuRepair.openParteEntries("mnuOpenPart").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuOpenPart", entries);
+        entries.clear();
+
+        //Buscar
+        MenuRepair.repairEntries("mnuRepairSearch").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuRepairSearch", entries);
+        entries.clear();
+
+      //  entries.add(new MenuStruct("mnuRepairInsertItem", "Dar entrada producto"));
+        //entries.add(new MenuStruct("", "Listar reparaciones")); //indicando quién las tiene
+
+        //Dar una entrada
+//        MenuRepair.OpenParteEntries("mnuRepairInsertItem").forEach(menu -> entries.add(menu));
+//        convertToChildNode("mnuRepairInsertItem", entries);
+//        entries.clear();
+
+    }
+
 }

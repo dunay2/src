@@ -20,9 +20,9 @@ public abstract class Record implements Serializable {
     private final String operCode;
     private final String cliCode;
     private final String empCode;
-    private  String active;
+    private String active;
     private Date date = null;
- 
+
     /**
      *
      * @param operCode
@@ -43,7 +43,9 @@ public abstract class Record implements Serializable {
      * @return
      */
     public Date getDate() {
+
         return date;
+
     }
 
     /**
@@ -73,7 +75,7 @@ public abstract class Record implements Serializable {
     private Date getDate_() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         date = new Date();
-       // System.out.println(dateFormat.format(date));  
+        // System.out.println(dateFormat.format(date));  
         return date;
     }
 
@@ -92,7 +94,5 @@ public abstract class Record implements Serializable {
     public void setActive(String active) {
         this.active = active;
     }
-
-
 
 }

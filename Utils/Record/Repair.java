@@ -3,18 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package item.family.computers.Components;
+package Utils.Record;
 
-import item.Electrodomestic;
 
 /**
  *
  * @author ashh412
  */
-public class Printer extends Electrodomestic {
-    
-    public Printer(String code) {
-        super(code);
+public class Repair extends Record {
+
+    public Repair(String cliCode, String empCode, String operDate) {
+        super(cliCode, empCode, operDate);
     }
-    
+
 }

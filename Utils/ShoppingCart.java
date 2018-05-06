@@ -15,15 +15,35 @@ import java.util.ArrayList;
  */
 public class ShoppingCart implements Serializable {
 
+    private String invoiceCode;
+    private LocalDateTime salesDate;//Fecha de compra
+    private double totalAmount = 0; // Precio de la compra
+    private byte lineNumber;//Control de entradas en el carrito
+
+    private ArrayList<Line> items;
+
     /**
+     * En el shopping cart los items son líneas(con un código), no
+     * electrodomesticos // Es una lista poco extensa a la que podemos acceder
+     * por indice //No hay que realizar búsquedas y el acceso a elementos es
+     * directo
      *
      */
     public class Line implements Serializable {//Estructura privada que contiene el pedido
 
         private byte lineNumber;
         private String itemCode;
-        private int amount;
+        private int amount; //cantidad de items
         private double price;
+        private final ArrayList<String> references = new ArrayList<>();
+
+        public void addReference() {
+            references.add(String.valueOf(lineNumber).concat(itemCode));
+        }
+
+        public ArrayList<String> getReferences() {
+            return references;
+        }
 
         /**
          *
@@ -42,6 +62,7 @@ public class ShoppingCart implements Serializable {
         }
 
         /**
+         * Devuelve el código de producto
          *
          * @return
          */
@@ -89,25 +110,12 @@ public class ShoppingCart implements Serializable {
             this.price = price;
         }
     }
-    // En el shopping cart los items son líneas(con un código), no electrodomesticos
-    // Es una lista poco extensa a la que podemos acceder por indice
-    //No hay que realizar búsquedas y el acceso a elementos es directo    
-    private String invoiceCode;
-  //  private String cashierCode;
-  //  private String clientCode;
-    private LocalDateTime salesDate;//Fecha de compra
-    private double totalAmount = 0; // Precio de la compra
-    private byte lineNumber;//Control de entradas en el carrito
-
-    private final ArrayList<Line> items;
 
     /**
      *
      */
     public ShoppingCart() {
         items = new ArrayList();
-
-      //  this.cashierCode = cashierCode;
 
         //establecer la fecha por defecto 
         this.salesDate = LocalDateTime.now();
@@ -129,27 +137,10 @@ public class ShoppingCart implements Serializable {
         this.invoiceCode = invoiceCode;
     }
 
-//    public String getClient() {
-//        return clientCode;
-//    }
-//
-//    public void setClient(String clientCode) {
-//        this.clientCode = clientCode;
-//    }
-
-//    public String getCashier() {
-//        return cashierCode;
-//    }
-//
-//    public void setCashier(String cashierCode) {
-//        this.cashierCode = cashierCode;
-//    }
-
     /**
      *
      * @return
      */
-
     public LocalDateTime getSalesDate() {
         return salesDate;
     }
@@ -172,6 +163,14 @@ public class ShoppingCart implements Serializable {
 
     /**
      *
+     * @param lines
+     */
+    public void setItems(ArrayList<Line> lines) {
+        this.items = lines;
+    }
+
+    /**
+     *
      * @return
      */
     public double getTotalAmount() {
@@ -180,9 +179,18 @@ public class ShoppingCart implements Serializable {
 
     /**
      *
+     * @param totalAmount
+     */
+    public void setTotalAmount(Double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    /**
+     *
      * @param itemCode
      * @param itemPrice
      * @param amount
+     * @param reference
      */
     public void addItem(String itemCode, double itemPrice, int amount) {
         Line line = new Line();
@@ -191,6 +199,10 @@ public class ShoppingCart implements Serializable {
         line.setItemCode(itemCode);
         line.setPrice(itemPrice);
         line.setAmount(amount);
+
+        for (int i = 0; i < amount; i++) {
+            line.addReference();
+        }
 
         items.add(line);
 
@@ -206,7 +218,8 @@ public class ShoppingCart implements Serializable {
         Line line = items.get(lineNumber);
 
         items.remove(line);
-        totalAmount = totalAmount - line.getPrice();
+        totalAmount = totalAmount - line.price * line.amount;
+
     }
 
 }

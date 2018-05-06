@@ -30,7 +30,7 @@ public class MenuStock extends MenuBase {
         entries.add(new MenuStruct("mnuEditItem", "Actualizar Producto "));
         entries.add(new MenuStruct("mnuDeleteItem", "Eliminar Producto"));
         entries.add(new MenuStruct("", "Listar Productos"));
-        entries.add(new MenuStruct("", "Crear Aleatorio .No implementando."));
+        entries.add(new MenuStruct("", "Cargar Items de prueba."));
         entries.add(new MenuStruct("mnuSearchItem", "Buscar Producto"));
 
         entries.add(new MenuStruct("tail", "Volver al Menú Principal"));

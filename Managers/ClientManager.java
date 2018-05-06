@@ -11,6 +11,7 @@ import ScreenInterfaces.TextInterface;
 import Utils.Generator.PersonGenerator;
 import Utils.Menu.MenuNode;
 import Utils.Record.Sale;
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
 
 /**
@@ -39,7 +40,6 @@ public class ClientManager extends PersonManager {
     }
 
     //Singleton Singleton Pattern
-
     /**
      *
      */
@@ -60,7 +60,6 @@ public class ClientManager extends PersonManager {
     }
 
     //Propósito: crear un cliente aleatorio
-
     /**
      *
      * @return
@@ -83,7 +82,6 @@ public class ClientManager extends PersonManager {
 //Propósito: modificar los datos de un cliente
 
 //Propósito: gestionar las peticiones del controlador principal
-
     /**
      *
      * @param enode
@@ -91,23 +89,23 @@ public class ClientManager extends PersonManager {
      */
     @Override
     public boolean handleProcess(MenuNode[] enode) {
-        
+
         MenuNode node = enode[0];
 
         switch (node.getValue()) {
 
             case 21:
-                
+
                 createObject(enode);
                 return true;
 
             case 22: //Actualizar
-                
+
                 update(node);
                 return true;
-                
+
             case 23: //Eliminar
-                
+
                 delete(node);
                 return true;
             //Listar clientes 
@@ -144,7 +142,6 @@ public class ClientManager extends PersonManager {
 //            TextInterface.pressKey();
 //        }
 //    }
-
     private void printRecord(Client client) {
         if (client == null) {
             System.out.println("el cliente no existe");
@@ -162,13 +159,16 @@ public class ClientManager extends PersonManager {
         while (it.hasNext()) {
             Sale sale = saleManager.getSale((String) it.next());
 
-            System.out.printf("%-20s%-20s%-20s%-20s%n", sale.getOperCode(), sale.getEmpCode(), sale.getDate(), String.valueOf(sale.getTotal()));
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+// Aqui usamos la instancia formatter para darle el formato a la fecha. Es importante ver que el resultado es un string.
+            String strDate = formatter.format(sale.getDate());
+
+            System.out.printf("%-20s%-20s%-20s%-20s%n", sale.getOperCode(), sale.getEmpCode(), strDate, String.valueOf(sale.getTotal()));
 
         }
 
         TextInterface.pressKey();
     }
-
 
     void listClients() {
 

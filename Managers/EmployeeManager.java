@@ -7,6 +7,7 @@ package Managers;
 
 import Person.Employee.Employee;
 import Person.Person;
+import ScreenInterfaces.TextInterface;
 import Utils.Menu.MenuNode;
 import java.util.Scanner;
 
@@ -94,8 +95,8 @@ public class EmployeeManager extends PersonManager {
             case 45://buscar
 
                 StringBuilder outString = new StringBuilder();
-                Person employee = (Employee) search(node, outString);
-                //printRecord(client);
+                Employee employee = (Employee) search(node, outString);
+                printRecord(employee);
                 return true;
 
             case 46://menu superior
@@ -103,7 +104,16 @@ public class EmployeeManager extends PersonManager {
         }
         return false;
     }
+   private void printRecord(Employee employee) {
+        if (employee == null) {
+            System.out.println("el empleado no existe");
+            TextInterface.pressKey();
+            return;
+        }
 
+        print(employee);
+   }
+   
     void listEmployees() {
 
         Scanner scanner = new Scanner(System.in);
@@ -119,13 +129,5 @@ public class EmployeeManager extends PersonManager {
         String a = scanner.nextLine();
     }
 
-    /**
-     *
-     * @param e
-     */
-    @Override
-    public void print(Person e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
 }

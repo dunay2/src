@@ -53,16 +53,34 @@ public class TextDatabase implements IDatabase {
                     break;
                 case "Electrodomestic":
                 case "Computer":
+                case "Keyboard":
                 case "Fridge":
                 case "Phone":
                 case "Screen":
                 case "Sound":
                 case "Procesor":
-                case "IniProcesor":
+                 case "IniProcesor":
                 case "IniKeyboard":
+                case "IniMemory":
                 case "IniMouse":
-                case "Mouse":
-                case "Keyboard":
+                case "IniPrinter":
+                case "IniDesktop":
+                case "IniLabtop":
+                case "IniNoteBook":
+                case "IniPda":
+                case "IniDishWasher":
+                case "IniFridge":
+                    case "IniHoover":
+                case "IniWashingMachine":
+                case "IniLed":
+                case "IniPlasma":
+                case "IniMobil":
+                    case "IniPhone":
+                case "IniAltavoces":
+                case "IniAuriculares":
+                case "IniMinicadena":   
+
+                                            
                     filename = "Electrodomestic";
                     hmfile = (HashMap<String, Electrodomestic>) hm;
                     break;

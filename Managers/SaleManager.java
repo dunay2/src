@@ -16,6 +16,8 @@ import Utils.Record.Record;
 import Utils.Record.Sale;
 import Utils.ShoppingCart.Line;
 import item.Electrodomestic;
+import java.text.SimpleDateFormat;
+import java.util.Iterator;
 
 /**
  *
@@ -48,13 +50,12 @@ public class SaleManager extends OperationsManager {
     }
 
     //Singleton Singleton Pattern
-
     /**
      *
      * @param clientManager
      * @param stockManager
      */
-    protected SaleManager( ClientManager clientManager, StockManager stockManager) {
+    protected SaleManager(ClientManager clientManager, StockManager stockManager) {
         shoppingCart = new ShoppingCart();
         this.clientManager = clientManager;
         this.stockManager = stockManager;
@@ -68,9 +69,9 @@ public class SaleManager extends OperationsManager {
      * @param stockManager
      * @return
      */
-    public static SaleManager getInstance( ClientManager clientManager, StockManager stockManager) {
+    public static SaleManager getInstance(ClientManager clientManager, StockManager stockManager) {
         if (instance == null) {
-            instance = new SaleManager( clientManager, stockManager);
+            instance = new SaleManager(clientManager, stockManager);
         }
         return instance;
     }
@@ -82,7 +83,6 @@ public class SaleManager extends OperationsManager {
     public void setCashier(Cashier cashier) {
         this.cashier = cashier;
     }
-
 
     private MenuNode callNextMenu(MenuNode node) {
         return node.getChildNodes().get(0);
@@ -96,7 +96,7 @@ public class SaleManager extends OperationsManager {
             TextInterface.pressKey();
             return null;
         }
-// hacer cosas 
+
         MenuNode node = enode[0];
 
         //1. buscar cliente y si no existe crearlo
@@ -130,20 +130,22 @@ public class SaleManager extends OperationsManager {
     @Override
     public boolean handleProcess(MenuNode[] enode) {
         MenuNode node = enode[0];
+        StringBuilder outString;
+        Sale sale;
 
         switch (node.getValue()) {
 
             //Devolución
             case 12:
 
-                StringBuilder outString = new StringBuilder();
-                Sale sale = (Sale) search(node, outString);
+                outString = new StringBuilder();
+                sale = (Sale) search(node, outString);
                 if (sale == null) {
                     System.out.println("La factura no existe");
                     TextInterface.pressKey();
                     return true;
                 }
-                if (sale.getActive().equals("A")) {
+                if (sale.getActive().equals("Y")) {
 
                     cancelTransaction(sale);
 
@@ -160,6 +162,14 @@ public class SaleManager extends OperationsManager {
                 list();
                 TextInterface.pressKey();
                 return true;
+
+            case 14: // Buscar una Factura"
+                outString = new StringBuilder();
+                sale = (Sale) search(node, outString);
+
+                printRecord(sale);
+                return true;
+
             //Consultar el importe actual
             case 111:
                 itemList();
@@ -217,18 +227,14 @@ public class SaleManager extends OperationsManager {
         //Si financia pasar a financiacion
 //Guardamos la compra
 
-        sale.setActive("I");//Llamar al manager para realizar la devolucion
+        sale.setActive("I");//realizar la devolucion
         save();
-
-//marcamos en la ficha de cliente el código de operacion como inactivo
-        client.addOperation(operCode);
-        clientManager.save();
 
         //Restar del stock los items
         //Recorrer todos los items del carro
-        shoppingCart.getItems().forEach(line -> {
+        sale.getShoppingCart().getItems().forEach(line -> {
             Electrodomestic e = stockManager.searchElectrodomestic(line.getItemCode());
-            e.setQuantity(e.getQuantity() - line.getAmount());
+            e.setQuantity(e.getQuantity() + line.getAmount());
         });
 
         //Guardamos el nuevo estado de la venta
@@ -246,15 +252,33 @@ public class SaleManager extends OperationsManager {
         client.addOperation(operCode);
         clientManager.save();
 
-        //Restar del stock los items
+        //Restar los items del stock
         //Recorrer todos los items del carro
         shoppingCart.getItems().forEach(line -> {
             Electrodomestic e = stockManager.searchElectrodomestic(line.getItemCode());
             e.setQuantity(e.getQuantity() - line.getAmount());
         });
 
+        shoppingCart.setInvoiceCode(operCode);
+
         //Agregamos y guardamos todos los datos de la venta
-        add(new Sale(operCode, client.getDni(), cashier.getDni(), shoppingCart));
+        ShoppingCart sShoppingCart = new ShoppingCart();
+
+        sShoppingCart.setInvoiceCode(operCode);
+        sShoppingCart.setTotalAmount(shoppingCart.getTotalAmount());
+        sShoppingCart.setSalesDate(shoppingCart.getSalesDate());
+
+        //Recorrer todos los items del carro
+        shoppingCart.getItems().forEach(line -> {
+
+            sShoppingCart.addItem(line.getItemCode(), line.getPrice(), line.getAmount());
+        });
+
+        Sale sale = new Sale(operCode, client.getDni(), cashier.getDni(), sShoppingCart);
+        sale.setTotal(shoppingCart.getTotalAmount());
+
+        add(sale);
+
         save();
 
         System.out.println("Total: ".concat(String.valueOf(shoppingCart.getTotalAmount())));
@@ -263,9 +287,8 @@ public class SaleManager extends OperationsManager {
 
         TextInterface.pressKey();
 
-        clearShoppingCart();
-
         stockManager.refresh();
+        clearShoppingCart();
     }
 
     /**
@@ -290,6 +313,7 @@ public class SaleManager extends OperationsManager {
         for (byte i = 0; i < shoppingCart.getItems().size(); i++) {
             shoppingCart.removeItem(i);
         }
+
     }
 
     private double getTotalAmount() {
@@ -299,7 +323,7 @@ public class SaleManager extends OperationsManager {
 
     private void addItem(MenuNode node) {
 
-        int i = 0;
+        int i = 0; //variable de control de nodos de lectura
 
         StringBuilder outString = new StringBuilder();
         Electrodomestic item = stockManager.search(node, outString);
@@ -339,7 +363,16 @@ public class SaleManager extends OperationsManager {
         } else {
 //Comprobamos si Existe la línea de pedidos. En caso afirmativo la modificamos. Si no, creamos una nueva línea en el carro
             if (auxAmount > 0) {
+                //indicamos el nuevo numero de elementos
                 auxLine.setAmount(auxLine.getAmount() + amount);
+
+                for (int k = 0; k < amount; k++) {
+                    auxLine.addReference();
+                }
+
+//Recalculamos el precio del carro
+                shoppingCart.setTotalAmount(shoppingCart.getTotalAmount() + (auxLine.getPrice() * amount));
+
             } else {
                 shoppingCart.addItem(itemCode, cost, amount);
             }
@@ -357,7 +390,7 @@ public class SaleManager extends OperationsManager {
         if (!shoppingCart.getItems().isEmpty()) {
             if (shoppingCart.getItems().size() > 0) {
                 shoppingCart.getItems().forEach((ShoppingCart.Line line) -> {
-                    System.out.printf("%-10s%-10s%-30s%-20s\n", line.getLineNumber(), line.getItemCode(), line.getPrice(), line.getAmount());
+                    System.out.printf("%-10s%-10s%-30s%-20s\n", line.getLineNumber() + 1, line.getItemCode(), line.getPrice(), line.getAmount());
 
                 });
             }
@@ -366,12 +399,6 @@ public class SaleManager extends OperationsManager {
         System.out.println("TOTAL AMOUNT:" + getTotalAmount());
         TextInterface.pressKey();
     }
-//
-//    private void listFormat(Electrodomestic item) {
-//
-//        System.out.printf("%-20s%-20s%-40s%-20s%-20s%-20s%n", item.getCode(), item.getName(), item.getDescription(), item.getBoughtPrice(), item.getSellPrice(), item.getQuantity());
-//
-//    }
 
     private void printHeader() {
 
@@ -379,106 +406,32 @@ public class SaleManager extends OperationsManager {
 
     }
 
-    @Override
-    public void update(MenuNode e) {
-        Byte i = 1;
+    private void printRecord(Sale sale) {
+        if (sale == null) {
+            System.out.println("la factura no existe");
+            TextInterface.pressKey();
+            return;
+        }
+        System.out.printf("%-10s%-15s%-15s%-20s%-20s%n", "Factura", "Cliente", "Empleado", "Fecha", "Activa");
+        print(sale);
 
-        //  e.addItem("", 0, i);
-        //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Iterator<Line> it = sale.getShoppingCart().getItems().iterator();
+        System.out.println("Lineas de factura");
+
+        while (it.hasNext()) {
+            Line line = (Line) it.next();
+
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+// Aqui usamos la instancia formatter para darle el formato a la fecha. Es importante ver que el resultado es un string.
+            String strDate = formatter.format(sale.getDate());
+            System.out.printf("%-10s%-20s%-20s%-20s%n", "Línea", "Artículo", "precio", "cantidad");
+            System.out.printf("%-10s%-20s%-20s%-20s%n", line.getLineNumber() + 1, line.getItemCode(), line.getPrice(), line.getAmount());
+
+        }
+
+        System.out.printf("================= TOTAL: ".concat(String.valueOf(sale.getTotal())).concat("%n"));
+
+        TextInterface.pressKey();
     }
 
-//    @Override
-//    public Record search(Node node, StringBuilder outString) {
-//        outString.append(node.getChildNodes().get(0).getResponse());
-//        Sale sale = (Sale) searchRecord(outString.toString());
-//        if (sale != null) {
-//            return sale;
-//        }
-//        return null;
-//
-//    }
 }
-
-/*
-
- 
-//ventas de productos e inventarios
-public class Ventasproductos {
-    static void inventarioyventa(String x){
-    String resultado="venta";
-    resultado="inventario";
-    int opcion=3;
-   while (opcion != 0){
-     opcion=Integer.parseInt(JOptionPane.showInputDialog("Digite 1 para la venta o 2 para el inventario")); 
-        switch(opcion){
-           
-            case 1:
-       
-                int a=0;
-                int codigo=1; 
-            
-                while(codigo != -1){
-               
-                codigo=VentanaProductos.seleccionProducto();
-             
-           
-               
-               
-              JOptionPane.showMessageDialog(null, "El Valor Total a pagar es:"+ a);
-                break;
-               
-            
-              
-                JOptionPane.showMessageDialog(null,"hay tomate!"  );
-        
-break;
-    }
-       }
-   }
-
-    /**
-     * @param args the command line arguments
- */
- /*
-
-
-
-    public static void main(String[] args) {
-        // TODO code application logic here
-        String resultado="0";
-Ventasproductos.inventarioyventa(resultado);
-    }
-
-//    //intervinient
-//    //role (clasgetname)
-////deprecated
-//    private void saveTransaction() { ////         
-/////ESTRUCTURA DEL NODO: 0 (REPAIR || SELL)
-//// cliCode  empCode  List --> (0)ShoppingCart
-/////llamada
-//////              List l = null;
-//////          ShoppingCart shoppingCart;
-//////          l.add(shoppingCart);
-//////
-//////          node.setList(l);
-//////            }
-//        ////         
-/////ESTRUCTURA DEL NODO: 0 (REPAIR || SELL)
-//// cliCode  empCode  List --> (0)ShoppingCart
-//
-//        Node node = new Node(0, null, "SALES");
-//        Node childNode = new Node(0, node, client.getDni());
-//        node.addChild(node);
-//        childNode = new Node(1, node, client.getDni());
-//        node.addChild(node);
-//        childNode = new Node(2, node, cashier.getDni());
-//        node.addChild(node);
-/////llamada
-//        List<ShoppingCart> list = new ArrayList<>();
-//
-//        list.add(shoppingCart);
-//
-//        //   node.setList(list);
-//    }
-
- */

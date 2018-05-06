@@ -14,8 +14,9 @@ import java.io.Serializable;
 public abstract class Item implements Serializable {
 
     private static final long serialVersionUID = -2873344211410398459L;
-    private String familyCode;
+    //private String familyCode;
     private String code;
+    private String reference;
     private String name;
     private String description;
 
@@ -38,7 +39,7 @@ public abstract class Item implements Serializable {
      * @param quantity
      */
     public Item(String code, String familyCode, String name, String description, double boughtPrice, double sellPrice, int quantity) {
-        this.familyCode = familyCode;
+        this.brand = familyCode;
         this.code = code;
         this.name = name;
         this.description = description;
@@ -46,6 +47,14 @@ public abstract class Item implements Serializable {
         this.sellPrice = sellPrice;
         this.quantity = quantity;
 
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 
     /**
@@ -68,17 +77,12 @@ public abstract class Item implements Serializable {
      *
      * @return
      */
-    public String getFamilyCode() {
-        return familyCode;
-    }
-
+  
     /**
      *
      * @param familyCode
      */
-    public void setFamilyCode(String familyCode) {
-        this.familyCode = familyCode;
-    }
+
 
     /**
      *
@@ -160,21 +164,9 @@ public abstract class Item implements Serializable {
         this.weith = weith;
     }
 
-    /**
-     *
-     * @return
-     */
-    public String getFamily() {
-        return familyCode;
-    }
 
-    /**
-     *
-     * @param familyCode
-     */
-    public void setFamily(String familyCode) {
-        this.familyCode = familyCode;
-    }
+
+
 
     /**
      *

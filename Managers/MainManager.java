@@ -6,6 +6,7 @@ package Managers;
 import Person.Employee.Cashier;
 import Person.Employee.Clerk;
 import Person.Employee.Employee;
+import Samples.AddTestItems;
 import ScreenInterfaces.TextInterface;
 import Utils.Menu.MenuNode;
 
@@ -61,7 +62,7 @@ public class MainManager {
         } else {//No hemos encontrado el usuario. Volvemos a pedir datos
             if (activeEmployee == null) {
                 System.out.println("Usuario no encontrado");
-                getUserAuth();
+               return getUserAuth();
             }
         }
 
@@ -70,7 +71,8 @@ public class MainManager {
         }
 
         role = activeEmployee.getClass().getSimpleName();
-
+System.out.println("Bienvenido "  .concat(activeEmployee.getFirstName() ) );
+System.out.println("Su role es "  .concat(role ) );
         return true;
     }
 
@@ -79,6 +81,8 @@ public class MainManager {
      */
     public MainManager() {
 
+    
+        
         if (!getUserAuth()) {
             System.out.println("Usuario no autenticado. Saliendo de la aplicación");
             System.exit(0);
