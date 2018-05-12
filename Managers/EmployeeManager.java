@@ -6,7 +6,6 @@
 package Managers;
 
 import Person.Employee.Employee;
-import Person.Person;
 import ScreenInterfaces.TextInterface;
 import Utils.Menu.MenuNode;
 import java.util.Scanner;

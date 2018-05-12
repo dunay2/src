@@ -3,10 +3,8 @@
  */
 package Managers;
 
-import Person.Employee.Cashier;
 import Person.Employee.Clerk;
 import Person.Employee.Employee;
-import Samples.AddTestItems;
 import ScreenInterfaces.TextInterface;
 import Utils.Menu.MenuNode;
 
@@ -20,69 +18,23 @@ public class MainManager {
     private final TextInterface myTextInterface;
     // private Client client;
     private final ClientManager clientManager;
-    private EmployeeManager employeeManager;
+    private EmployeeManager employeeManager; //Multipropósito autenticación/gestión
     private final StockManager stockManager;
     private final SaleManager saleManager;
+    private final RepairManager repairManager;
+    private final FinanceManager financeManager;
+
     private Employee activeEmployee; //Usuario que está gestionando la aplicación
     String role = "";//Rol del usurio
 
     private int numAccess = 0; //Valor que controla los intentos de login actuales
     private static final int MAXACCESS = 3; //Valor que controla los intentos máximos de login
 
-    // Cashier cashier = new Cashier("CAJERO1_CODE");
-    private boolean getUserAuth() {
-
-        if (numAccess++ == MAXACCESS) {
-            return false;
-        }
-
-        //Se pide un dato al usuario
-        MenuNode node = new MenuNode(null, 0, "auth", "Por favor introduzca codigo de usuario para autenticarse. Si es la primera vez que ejecuta la aplicación pulse return", null);
-        node.addNode(node);
-
-//agregar un  nodo hijo de respuesta
-        node.isInput(true);
-        //Cargamos los empleados
-        this.employeeManager = EmployeeManager.getInstance();
-        employeeManager.load();
-        StringBuilder outString = new StringBuilder();
-
-//Se pide un dato al usuario. Buscamos el empleado
-        activeEmployee = (Employee) employeeManager.search(node, outString);
-
-        //Es la primera vez. Creamos un usuario admin
-        if (employeeManager.getAll().isEmpty()) {
-            activeEmployee = new Clerk("admin");
-            activeEmployee.setFirstName("admin");
-
-            employeeManager.add(activeEmployee);
-            System.out.println("Creado usuario administrador. Acceso a RRHH NIF: admin");
-            employeeManager.save();
-
-        } else {//No hemos encontrado el usuario. Volvemos a pedir datos
-            if (activeEmployee == null) {
-                System.out.println("Usuario no encontrado");
-               return getUserAuth();
-            }
-        }
-
-        if (activeEmployee == null) {
-            return false;
-        }
-
-        role = activeEmployee.getClass().getSimpleName();
-System.out.println("Bienvenido "  .concat(activeEmployee.getFirstName() ) );
-System.out.println("Su role es "  .concat(role ) );
-        return true;
-    }
-
     /**
      *
      */
     public MainManager() {
 
-    
-        
         if (!getUserAuth()) {
             System.out.println("Usuario no autenticado. Saliendo de la aplicación");
             System.exit(0);
@@ -100,32 +52,30 @@ System.out.println("Su role es "  .concat(role ) );
         this.saleManager = SaleManager.getInstance(clientManager, stockManager);
 
         if (role.equals("Cashier")) {
-            saleManager.setCashier((Cashier) activeEmployee);
+            //  saleManager.setCashier((Cashier) activeEmployee);
+            saleManager.setEmployee(activeEmployee);
         }
-        clientManager.setSaleManager(this.saleManager);
+        this.clientManager.setSaleManager(this.saleManager);
 
-//   cashier.setFirstName("Juan el cajero 1");
-        //inicializar gestores
-        //Instanciamos para crear un par de cajeros
-        //Creamos unos cajeros
-        //Cramos una nueva tienda
-        //  Shop myShop = new ElectronicShop();
-        // myShop.setName("Empresa1");
-//        //Creamos departamentos
-//        Department support = new Support();
-//        Department cajeros = new FrontDesk();
-//        Department finance = new Finance();
-//
-//        //Agregamos un departamento a la tienda
-//        myShop.addDepartment(cajeros);
-//        myShop.addDepartment(support);
-//        myShop.addDepartment(finance);
-//        //Agregamos al cajero 
-//        cajeros.addStaff(cashier);
-        //Cargamos los datos en memoria dependiendo del usuario
+        this.repairManager = RepairManager.getInstance(clientManager, saleManager);
+
+        this.clientManager.setRepairManager(this.repairManager);
+
+        if (role.equals("Engineer")) {
+            this.repairManager.setEmployee(activeEmployee);
+        }
+
+        this.financeManager = FinanceManager.getInstance(clientManager, saleManager, stockManager);
+        if (role.equals("FAssintance")) {
+            this.financeManager.setEmployee(activeEmployee);
+        }
+
+        //Cargamos los datos  
         clientManager.load();
         stockManager.load();
         saleManager.load();
+        repairManager.load();
+        financeManager.load();
 
         //  this.saleManager = new SaleManager(cashier, clientManager, stockManager);
         doBusiness(myTextInterface.printMenu(null));
@@ -172,7 +122,6 @@ System.out.println("Su role es "  .concat(role ) );
         if (enode.getValue() == 7) {
             System.out.println("Gracias por usar la aplicación");
             System.exit(0);
-
         }
 
         if (saleManager.handleProcess(node)) {
@@ -191,6 +140,15 @@ System.out.println("Su role es "  .concat(role ) );
             startNewSequence = true;
         }
 
+        if (repairManager.handleProcess(node) && !startNewSequence) {
+            startNewSequence = true;
+        }
+
+        if (checkRole(enode.getValue())) {
+            if (financeManager.handleProcess(node) && !startNewSequence) {
+                startNewSequence = true;
+            }
+        }
         TextInterface.clearScreen();
         //Imprimimos el menú del nodo seleccionado y mandamos a consola,
         //la cual nos devolverá el valor del nuevo nodo seleccionado
@@ -205,5 +163,51 @@ System.out.println("Su role es "  .concat(role ) );
         }
 
         doBusiness(newNode);
+    }
+
+    private boolean getUserAuth() {
+
+        if (numAccess++ == MAXACCESS) {
+            return false;
+        }
+
+        //Se pide un dato al usuario
+        MenuNode node = new MenuNode(null, 0, "auth", "Por favor introduzca codigo de usuario para autenticarse. Si es la primera vez que ejecuta la aplicación pulse return", null);
+        node.addNode(node);
+
+//agregar un  nodo hijo de respuesta
+        node.isInput(true);
+        //Cargamos los empleados
+        this.employeeManager = EmployeeManager.getInstance();
+        employeeManager.load();
+        StringBuilder outString = new StringBuilder();
+
+//Se pide un dato al usuario. Buscamos el empleado
+        activeEmployee = (Employee) employeeManager.search(node, outString);
+
+        //Es la primera vez. Creamos un usuario admin
+        if (employeeManager.getAll().isEmpty()) {
+            activeEmployee = new Clerk("admin");
+            activeEmployee.setFirstName("admin");
+
+            employeeManager.add(activeEmployee);
+            System.out.println("Creado usuario administrador. Acceso a RRHH NIF: admin");
+            employeeManager.save();
+
+        } else {//No hemos encontrado el usuario. Volvemos a pedir datos
+            if (activeEmployee == null) {
+                System.out.println("Usuario no encontrado");
+                return getUserAuth();
+            }
+        }
+
+        if (activeEmployee == null) {
+            return false;
+        }
+
+        role = activeEmployee.getClass().getSimpleName();
+        System.out.println("Bienvenido ".concat(activeEmployee.getFirstName()));
+        System.out.println("Su role es ".concat(role));
+        return true;
     }
 }

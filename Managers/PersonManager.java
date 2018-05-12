@@ -115,12 +115,12 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
         if (person != null) {
             return person;
         }
- 
+
         return null;
 
     }
 
-    private Person searchPerson(String e) {
+    public Person searchPerson(String e) {
 
         if (persons.containsKey(e)) {
             //Si encontramos el elemento en la búsqueda devolvemos el elemento
@@ -175,20 +175,19 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
     }
 
 //Propósito: Listar las personas por consola
-
-@Override
-        public void print(Person person) {
+    @Override
+    public void print(Person person) {
         printHeader();
         listFormat(person);
     }
 
     private void printHeader() {
-        System.out.printf("%-13s%-20s%-20s%-20s%-20s%-20s%-10s%-10s%n", "ROL", "DNI", "APELLIDOS", "NOMBRE", "DIRECCION", "TELEFONO", "NOMINA", "ACTIVO");
+        System.out.printf("%-15s%-20s%-20s%-20s%-20s%-20s%-10s%-10s%n", "ROL", "DNI", "APELLIDOS", "NOMBRE", "DIRECCION", "TELEFONO", "NOMINA", "ACTIVO");
 
     }
 
     @Override
-        public void list() {
+    public void list() {
 
         Iterator<Map.Entry<String, Person>> it = persons.entrySet().iterator();
 
@@ -206,7 +205,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
 //Guardamos el nombre de la clase hija
         String Rol = objectType.getClass().getSimpleName();
 
-        System.out.printf("%-13s%-20s%-20s%-20s%-20s%-20s%-10s%-10s%n", Rol, person.getDni(), person.getLastName(), person.getFirstName(), person.getAddress(), person.getPhone(), person.getSalary(), person.isActive());
+        System.out.printf("%-15s%-20s%-20s%-20s%-20s%-20s%-10s%-10s%n", Rol, person.getDni(), person.getLastName(), person.getFirstName(), person.getAddress(), person.getPhone(), person.getSalary(), person.isActive());
 
     }
 
@@ -219,12 +218,12 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
     }
 
     @Override
-        public Object get(int rollNo) {
+    public Object get(int rollNo) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-        public Person createObject(MenuNode[] enode) {
+    public Person createObject(MenuNode[] enode) {
         String key;
         MenuNode node = enode[0];
         ArrayList<String> nodesData;
@@ -263,8 +262,7 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
         //Tomamos la entrada de datos para la persona que vamos a crear
         nodesData = node.convertTreeChildToListIdx();
 
-        node.getChildNodes()
-                .get(0).clearResponse();
+        node.getChildNodes().get(0).clearResponse();
 
         //Creamos un cliente
         if (typeOfPerson.equals("mnuAddClient")) {

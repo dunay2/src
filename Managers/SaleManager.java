@@ -6,7 +6,6 @@
 package Managers;
 
 import Person.Client.Client;
-import Person.Employee.Cashier;
 import ScreenInterfaces.TextInterface;
 import Utils.Menu.MenuNode;
 import Utils.ShoppingCart;
@@ -25,29 +24,10 @@ import java.util.Iterator;
  */
 public class SaleManager extends OperationsManager {
 
-    private Client client;
-    private Cashier cashier;//Lo declaramos como objeto para poder usar sus métodos
     private final ShoppingCart shoppingCart;
-    private final ClientManager clientManager;
-    private final StockManager stockManager;
-    private String operCode = "INVOICE ".concat(String.valueOf(size()));
+
+    private String invoiceCounter = "INVOICE ".concat(String.valueOf(size()));
     private static SaleManager instance = null;    //Singleton  Pattern
-
-    /**
-     *
-     * @return
-     */
-    public Client getClient() {
-        return client;
-    }
-
-    /**
-     *
-     * @param client
-     */
-    public void setClient(Client client) {
-        this.client = client;
-    }
 
     //Singleton Singleton Pattern
     /**
@@ -56,9 +36,8 @@ public class SaleManager extends OperationsManager {
      * @param stockManager
      */
     protected SaleManager(ClientManager clientManager, StockManager stockManager) {
+        super(clientManager, stockManager);
         shoppingCart = new ShoppingCart();
-        this.clientManager = clientManager;
-        this.stockManager = stockManager;
 
     }
     //Singleton Singleton Pattern
@@ -78,10 +57,18 @@ public class SaleManager extends OperationsManager {
 
     /**
      *
-     * @param cashier
+     * @return
      */
-    public void setCashier(Cashier cashier) {
-        this.cashier = cashier;
+    public Client getClient() {
+        return client;
+    }
+
+    /**
+     *
+     * @param client
+     */
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     private MenuNode callNextMenu(MenuNode node) {
@@ -108,9 +95,7 @@ public class SaleManager extends OperationsManager {
         //Si el cliente no existe lo creamos
         if (client == null) {
             client = (Client) clientManager.createObject(enode);
-            //tomamos el resto de valores output
 
-            //ArrayList<String> nodesData = node.convertTreeChildToListIdx();
         }
         if (!client.isActive()) {
             System.out.println("El cliente no está activo.");
@@ -120,11 +105,17 @@ public class SaleManager extends OperationsManager {
 
 //Pasamos al menu siguiente
         setInvoiceNumber();
-        return new Sale("", "", "", null);
+
+        return new Sale(getInvoiceNumber(), client.getDni(), employee.getDni(), shoppingCart, "A");
+
     }
 
     private void setInvoiceNumber() {
-        operCode = "INV0000".concat(String.valueOf(size()));
+        invoiceCounter = "INV0000".concat(String.valueOf(size()));
+    }
+
+    private String getInvoiceNumber() {
+        return invoiceCounter;
     }
 
     @Override
@@ -145,14 +136,14 @@ public class SaleManager extends OperationsManager {
                     TextInterface.pressKey();
                     return true;
                 }
-                if (sale.getActive().equals("Y")) {
+                if (sale.getStatus().equals("A")) {
 
                     cancelTransaction(sale);
 
                     System.out.println("La factura ".concat(sale.getOperCode().concat(" ha sido cancelada")));
                     TextInterface.pressKey();
                 } else {
-                    System.out.println("La factura ".concat(sale.getOperCode().concat(" ya está cancelada")));
+                    System.out.println("La factura ".concat(sale.getOperCode().concat(" no se ha podido cancelar")));
                     TextInterface.pressKey();
                 }
 
@@ -194,19 +185,19 @@ public class SaleManager extends OperationsManager {
             case 114:
                 clearShoppingCart();
                 return false;
-
+//Métodos de pago
             case 11311://pago en efectivo
-                finishTransaction();
+                finishTransaction("E");
                 enode[0] = callMainMenu(node);
                 return true;
 
             case 11312://Tarjeta
-                finishTransaction();
+                finishTransaction("T");
                 enode[0] = callMainMenu(node);
                 return true;
-//Tocar aquí para financiar
+
             case 11313://Financiado
-                finishTransaction();
+                finishTransaction("W");
                 enode[0] = callMainMenu(node);
                 return true;
 
@@ -227,7 +218,7 @@ public class SaleManager extends OperationsManager {
         //Si financia pasar a financiacion
 //Guardamos la compra
 
-        sale.setActive("I");//realizar la devolucion
+        sale.setStatus("I");//realizar la devolucion
         save();
 
         //Restar del stock los items
@@ -243,14 +234,12 @@ public class SaleManager extends OperationsManager {
         stockManager.refresh();
     }
 
-    private void finishTransaction() {
+    private void finishTransaction(String paymentType) {
         //continuar aqui, sacar el resto de nodos hijos con la forma de pago
         //Si financia pasar a financiacion
 //Guardamos la compra
 
-//agregamos en la ficha de cliente el código de operacion
-        client.addOperation(operCode);
-        clientManager.save();
+
 
         //Restar los items del stock
         //Recorrer todos los items del carro
@@ -259,30 +248,38 @@ public class SaleManager extends OperationsManager {
             e.setQuantity(e.getQuantity() - line.getAmount());
         });
 
-        shoppingCart.setInvoiceCode(operCode);
+        shoppingCart.setInvoiceCode(invoiceCounter);
 
         //Agregamos y guardamos todos los datos de la venta
+        //Creamos una copia del carrito
         ShoppingCart sShoppingCart = new ShoppingCart();
 
-        sShoppingCart.setInvoiceCode(operCode);
+        sShoppingCart.setInvoiceCode(invoiceCounter);
         sShoppingCart.setTotalAmount(shoppingCart.getTotalAmount());
         sShoppingCart.setSalesDate(shoppingCart.getSalesDate());
 
         //Recorrer todos los items del carro
         shoppingCart.getItems().forEach(line -> {
 
-            sShoppingCart.addItem(line.getItemCode(), line.getPrice(), line.getAmount());
+            sShoppingCart.addItem(sShoppingCart.getInvoiceCode(), line.getItemCode(), line.getPrice(), line.getAmount());
         });
 
-        Sale sale = new Sale(operCode, client.getDni(), cashier.getDni(), sShoppingCart);
+        Sale sale = new Sale(invoiceCounter, client.getDni(), employee.getDni(), sShoppingCart, paymentType);
         sale.setTotal(shoppingCart.getTotalAmount());
 
         add(sale);
 
         save();
+        //agregamos en la ficha de cliente el código de operacion
+        client.addOperation(sale);
+        clientManager.save();
+        
 
         System.out.println("Total: ".concat(String.valueOf(shoppingCart.getTotalAmount())));
-        System.out.println(">>>> Su código de factura es: ".concat(operCode));
+        System.out.println(">>>> Su código de factura es: ".concat(invoiceCounter));
+        if (paymentType.equals("W")) {
+            System.out.println("Sus productos han sido apartados. Pase por el departamento financiero para finalizar la compra");
+        }
         System.out.println("Gracias por usar nuestros productos");
 
         TextInterface.pressKey();
@@ -374,7 +371,7 @@ public class SaleManager extends OperationsManager {
                 shoppingCart.setTotalAmount(shoppingCart.getTotalAmount() + (auxLine.getPrice() * amount));
 
             } else {
-                shoppingCart.addItem(itemCode, cost, amount);
+                shoppingCart.addItem("", itemCode, cost, amount);
             }
         }
 

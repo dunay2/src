@@ -5,7 +5,7 @@
  */
 package Managers;
 
-import Samples.AddTestItems;
+import Samples.AddTest;
 import ScreenInterfaces.TextInterface;
 import Utils.Menu.MenuNode;
 import item.Electrodomestic;
@@ -125,9 +125,9 @@ public class StockManager extends templateManager {
             case 34:
                 list();
                 return true;
-            //Agregar items
+            //Agregar items de prueba
             case 35:
-                AddTestItems.addComponents();
+                AddTest.addTestComponents();
 
                 return true;
             case 36://Buscar producto
@@ -192,6 +192,8 @@ public class StockManager extends templateManager {
         return item;
     }
 
+    
+    
     private Electrodomestic getItem(int ElectroType, String key, ArrayList<String> responseValues) {
 
         try {
@@ -275,31 +277,6 @@ public class StockManager extends templateManager {
 
     }
 
-//    public class Test {
-//
-//        public String var1;
-//        public Integer var2;
-//    }
-//
-//    public class Test2 {
-//
-//        Test2(String[] args) throws Exception {
-//            Map<String, Object> map = new HashMap<String, Object>();
-//            map.put("var1", "test");
-//            map.put("var2", 1);
-//
-//            Test t = new Test();
-//
-//            for (Map.Entry<String, Object> entry : map.entrySet()) {
-//                Field f = Test.class.getField(entry.getKey());
-//
-//                f.set(t, f.getType().cast(entry.getValue()));
-//            }
-//
-//            System.out.println(t.var1);
-//            System.out.println(t.var2);
-//        }
-//    }
     @Override
     public Object get(int rollNo) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

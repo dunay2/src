@@ -6,9 +6,10 @@
 package Managers;
 
 import DataBase.TextDatabase;
+import Person.Client.Client;
+import Person.Employee.Employee;
 import Utils.Menu.MenuNode;
 import Utils.Record.Record;
-import Utils.Record.Sale;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -22,10 +23,20 @@ import java.util.Map;
 //Facturas y ordenes de reparacion
 public abstract class OperationsManager extends TextDatabase implements Imanager<Record, MenuNode> {
 
-    static HashMap<String, Record> records = new HashMap<>();
+    private HashMap<String, Record> records = new HashMap<>();
+    Client client;
+    Employee employee;
+    final ClientManager clientManager;
+    final StockManager stockManager;
 
-    static HashMap<String, Record> getRecords() {
-        return records;
+    protected OperationsManager(ClientManager clientManager, StockManager stockManager) {
+        this.clientManager = clientManager;
+        this.stockManager = stockManager;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+
     }
 
     /**
@@ -48,9 +59,8 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
 //    }
     //Propósito: Listar 
     private void printHeader() {
-        System.out.printf("%-10s%-15s%-15s%-20s%-20s%n", "OPERACION", "CLIENTE", "EMPLEADO", "FECHA","ACTIVO");
-
-         
+        System.out.printf("%-25s%-15s%-15s%-20s%-20s%n", "OPERACION", "CLIENTE", "EMPLEADO", "FECHA", "ACTIVO");
+ 
     }
 
     /**
@@ -76,7 +86,7 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
 
     @Override
     public HashMap<String, Record> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return records;
     }
 
     @Override
@@ -92,32 +102,27 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
     @Override
     public boolean add(Record record) {
 
-        if (record instanceof Sale) {
-            Sale sale = (Sale) record;
-
-            if (records.containsKey(sale.getOperCode())) {
-                System.out.println("No se puede introducir el registro. El código esta repetido.");
-                return false;
-            }
-
-            try {
-                //Agregamos  al hasmap
-                records.put(sale.getOperCode(), sale);
-                return true;
-
-            } catch (Exception e) {
-                System.out.println("No se puede introducir el registro. Ha habido un error.");
-                return false;
-            }
+        if (records.containsKey(record.getOperCode())) {
+            System.out.println("No se puede introducir el registro. El código esta repetido.");
+            return false;
         }
-        return false;
+        try {
+            //Agregamos  al hasmap
+            records.put(record.getOperCode(), record);
+            return true;
+
+        } catch (Exception e) {
+            System.out.println("No se puede introducir el registro. Ha habido un error.");
+            return false;
+        }
+
     }
 
     @Override
     public void print(Record record) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-     
-        System.out.printf("%-10s%-15S%-15S%-20s%-20s\n", record.getOperCode(), record.getCliCode(), record.getEmpCode(), dateFormat.format(record.getDate()),  record.getActive());
+
+        System.out.printf("%-25s%-15S%-15S%-20s%-20s\n", record.getOperCode(), record.getCliCode(), record.getEmpCode(), dateFormat.format(record.getDate()), record.getStatus());
     }
 
     /**
@@ -138,13 +143,12 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
 
     //Propósito: 
     //Buscar la clave en el HashMapy devolver el objeto si existe
-
     /**
      *
      * @param e
      * @return
      */
-    protected Record searchRecord(String e) {
+    public Record searchRecord(String e) {
 
         if (records.containsKey(e)) {
             //Si encontramos el elemento en la búsqueda devolvemos el elemento
@@ -155,7 +159,6 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
     }
 
     //Carga de ficheros
-
     /**
      *
      */
@@ -171,7 +174,6 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
 
     //Extension de database
     //Guardamos
-
     /**
      *
      */
@@ -234,7 +236,6 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
 //        return record;
 //
 //    }
-
     /**
      *
      * @return
@@ -251,12 +252,10 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
 
         printHeader();
         while (it.hasNext()) {
-            print((Sale) it.next().getValue());
+            print(it.next().getValue());
         }
         clearScreen();
     }
-
-    
 
     @Override
     public Record search(MenuNode node, StringBuilder outString) {
@@ -269,4 +268,17 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
         return null;
 
     }
+    
+     public Record searchThisNode(MenuNode node, StringBuilder outString) {
+
+        outString.append(node.getResponse());
+        Record record = searchRecord(outString.toString());
+        if (record != null) {
+            return record;
+        }
+        return null;
+
+    }
+    
+    
 }
