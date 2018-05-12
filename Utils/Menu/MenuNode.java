@@ -21,7 +21,7 @@ public class MenuNode {
     private int parentValue = 0;
     private final int value;
     private ArrayList<MenuNode> childNodes = new ArrayList();
-    private  String mnuName;//Nombre del menú
+    private String mnuName;//Nombre del menú
     private final String label;//Texto de menu
     private boolean isInput = false;//Es un nodo de lectura
     private String response; //Devolucion de datos de nodo de lectura
@@ -176,7 +176,6 @@ public class MenuNode {
     //de nodos input que toman como valor devuelto
     //la entrada de teclado
     //sin devolver el primer elemento
-
     /**
      *
      * @return
@@ -229,6 +228,21 @@ public class MenuNode {
      */
     public String getMnuName() {
         return mnuName;
+    }
+
+    public ArrayList<String> convertTreeChildToListIdxFrom(int index) {
+        ArrayList<String> nodeDataList = new ArrayList();
+
+        MenuNode childNode;
+        //Convertimos los nodos en arraylist
+        while (index < this.getChildNodes().size()) {
+            childNode = this.getChildNodes().get(index);
+            nodeDataList.add(childNode.getResponse());
+            index++;
+        }
+
+        return nodeDataList;
+
     }
 
 }

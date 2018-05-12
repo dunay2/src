@@ -5,9 +5,9 @@
  */
 package Utils.Record;
 
+import Person.Client.ClientHistory;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -20,8 +20,11 @@ public abstract class Record implements Serializable {
     private final String operCode;
     private final String cliCode;
     private final String empCode;
-    private String active;
+    private String status;
     private Date date = null;
+    private String recordType;
+
+    private final ArrayList<ClientHistory> history = new ArrayList();
 
     /**
      *
@@ -29,12 +32,40 @@ public abstract class Record implements Serializable {
      * @param cliCode
      * @param empCode
      */
-    public Record(String operCode, String cliCode, String empCode) {
-        this.active = "Y";
+    //Estados 
+    // Y--> ACTIVO
+    // I--> INACTIVO
+    // R--> EN REPARACION
+    // P--> PENDIENTE
+    // S--> PARADO
+    // T--> TEST
+    // F--> FINISH
+    // W--> ESPERANDO POR FINANCIACION
+    public Record(String operCode, String cliCode, String empCode, String recordType) {
+        this.status = "A";
         this.operCode = operCode;
         this.cliCode = cliCode;
         this.empCode = empCode;
         date = getDate_();
+        this.recordType = recordType;
+
+    }
+
+    public String getRecordType() {
+        return recordType;
+    }
+
+    public void addHistory(String note) {
+
+        ClientHistory clientHistory;
+        clientHistory = new ClientHistory(getDate_(), note);
+        history.add(clientHistory);
+
+    }
+
+    public ArrayList<ClientHistory> getHistory() {
+
+        return history;
 
     }
 
@@ -73,7 +104,7 @@ public abstract class Record implements Serializable {
     }
 
     private Date getDate_() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        //DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         date = new Date();
         // System.out.println(dateFormat.format(date));  
         return date;
@@ -83,16 +114,16 @@ public abstract class Record implements Serializable {
      *
      * @return
      */
-    public String getActive() {
-        return active;
+    public String getStatus() {
+        return status;
     }
 
     /**
      *
-     * @param active
+     * @param status
      */
-    public void setActive(String active) {
-        this.active = active;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

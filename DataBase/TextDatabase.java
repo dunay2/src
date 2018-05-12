@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import Person.Client.Client;
 import Person.Employee.Employee;
+import Utils.Record.Repair;
 import Utils.Record.Sale;
 import item.Electrodomestic;
 
@@ -59,7 +60,7 @@ public class TextDatabase implements IDatabase {
                 case "Screen":
                 case "Sound":
                 case "Procesor":
-                 case "IniProcesor":
+                case "IniProcesor":
                 case "IniKeyboard":
                 case "IniMemory":
                 case "IniMouse":
@@ -70,17 +71,16 @@ public class TextDatabase implements IDatabase {
                 case "IniPda":
                 case "IniDishWasher":
                 case "IniFridge":
-                    case "IniHoover":
+                case "IniHoover":
                 case "IniWashingMachine":
                 case "IniLed":
                 case "IniPlasma":
                 case "IniMobil":
-                    case "IniPhone":
+                case "IniPhone":
                 case "IniAltavoces":
                 case "IniAuriculares":
-                case "IniMinicadena":   
+                case "IniMinicadena":
 
-                                            
                     filename = "Electrodomestic";
                     hmfile = (HashMap<String, Electrodomestic>) hm;
                     break;
@@ -100,6 +100,10 @@ public class TextDatabase implements IDatabase {
                     hmfile = (HashMap<String, Sale>) hm;
                     break;
                 case "Repair":
+                    hmfile = (HashMap<String, Repair>) hm;
+                    break;
+                case "Credit":
+                    hmfile = (HashMap<String, Repair>) hm;
                     break;
             }
 

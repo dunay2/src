@@ -8,6 +8,7 @@ package Utils;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -23,6 +24,17 @@ public class ShoppingCart implements Serializable {
     private ArrayList<Line> items;
 
     /**
+     *
+     */
+    public ShoppingCart() {
+
+        items = new ArrayList();
+
+        //establecer la fecha por defecto 
+        this.salesDate = LocalDateTime.now();
+    }
+
+    /**
      * En el shopping cart los items son líneas(con un código), no
      * electrodomesticos // Es una lista poco extensa a la que podemos acceder
      * por indice //No hay que realizar búsquedas y el acceso a elementos es
@@ -31,17 +43,36 @@ public class ShoppingCart implements Serializable {
      */
     public class Line implements Serializable {//Estructura privada que contiene el pedido
 
+        private String invoiceCode;
         private byte lineNumber;
         private String itemCode;
         private int amount; //cantidad de items
         private double price;
-        private final ArrayList<String> references = new ArrayList<>();
+        private final HashMap<String, String> references = new HashMap<>();
 
-        public void addReference() {
-            references.add(String.valueOf(lineNumber).concat(itemCode));
+        public void Line(String invoiceCode) {
+
+            this.invoiceCode = invoiceCode;
         }
 
-        public ArrayList<String> getReferences() {
+        public String getInvoiceCode() {
+            return invoiceCode;
+        }
+
+        public void setInvoiceCode(String invoiceCode) {
+            this.invoiceCode = invoiceCode;
+        }
+
+        //Creamos una referencia única para cada elemento en el carrito
+        public void addReference() {
+
+            String RefInvoice=invoiceCode.concat("-");
+            
+            references.put( RefInvoice.concat( String.valueOf(lineNumber).concat(itemCode).concat(String.valueOf(references.size()))), "A");
+
+        }
+
+        public HashMap<String, String> getReferences() {
             return references;
         }
 
@@ -110,16 +141,8 @@ public class ShoppingCart implements Serializable {
             this.price = price;
         }
     }
-
-    /**
-     *
-     */
-    public ShoppingCart() {
-        items = new ArrayList();
-
-        //establecer la fecha por defecto 
-        this.salesDate = LocalDateTime.now();
-    }
+////fin de Line
+//////////////    
 
     /**
      *
@@ -187,19 +210,20 @@ public class ShoppingCart implements Serializable {
 
     /**
      *
+     * @param invoiceCode
      * @param itemCode
      * @param itemPrice
      * @param amount
-     * @param reference
      */
-    public void addItem(String itemCode, double itemPrice, int amount) {
+    public void addItem(String invoiceCode,String itemCode, double itemPrice, int amount) {
         Line line = new Line();
 
         line.setLineNumber(this.lineNumber++);
         line.setItemCode(itemCode);
         line.setPrice(itemPrice);
         line.setAmount(amount);
-
+        line.setInvoiceCode(invoiceCode);
+        
         for (int i = 0; i < amount; i++) {
             line.addReference();
         }

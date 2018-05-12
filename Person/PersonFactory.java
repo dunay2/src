@@ -23,14 +23,18 @@ public class PersonFactory {
             case 1:
                 return new Cashier(dni);
             case 2:
-                return new Engineer(dni);
+                return new Clerk(dni);
+
             case 3:
-                return new FAssintance(dni);
+                return new BackOfTheHouse(dni);
+
             case 4:
                 return new Clerk(dni);
             case 5:
-                return new BackOfTheHouse(dni);
 
+                return new Engineer(dni);
+            case 6:
+                return new FAssintance(dni);
         }
         return null;
     }

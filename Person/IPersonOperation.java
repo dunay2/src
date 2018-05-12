@@ -5,6 +5,7 @@
  */
 package Person;
 
+import Utils.Record.Record;
 import java.util.List;
 
 /**
@@ -18,12 +19,12 @@ public interface IPersonOperation {
      *
      * @return
      */
-    public List<String> getOperations();
+    public List<Record> getOperations();
     
     /**
      *
      * @param e
      */
-    public void addOperation(String e);
+    public void addOperation(Record e);
     
 }

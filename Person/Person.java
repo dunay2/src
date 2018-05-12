@@ -1,5 +1,6 @@
 package Person;
 
+import Utils.Record.Record;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public abstract class Person implements Serializable, IPersonOperation {
     private String web;
     private Double salary;
     private boolean active;
-    private final List<String> operations = new ArrayList<>();//Valor de código de operacion
+    private final List<Record> operations = new ArrayList<>();//Valor de código de operacion
 
     //Contructor básico
 
@@ -335,13 +336,13 @@ public abstract class Person implements Serializable, IPersonOperation {
      * @return
      */
     @Override
-    public List<String> getOperations() {
+    public List<Record> getOperations() {
         return operations;
     }
 
     @Override
-    public void addOperation(String e) {
+    public void addOperation( Record record) {
 
-        operations.add(e);
+        operations.add(record);
     }
 }

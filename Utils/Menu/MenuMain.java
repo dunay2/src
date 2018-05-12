@@ -57,6 +57,7 @@ public class MenuMain extends MenuBase {
         addStockMnu();
         addEmployeeMnu();
         addRepairMnu();
+        addCreditMnu();
     }
 
     private static void addEmployeeMnu() {
@@ -376,18 +377,57 @@ public class MenuMain extends MenuBase {
         entries.clear();
 
         //Buscar
-        MenuRepair.repairEntries("mnuRepairSearch").forEach(menu -> entries.add(menu));
+        MenuRepair.hndRepairSearchEntries("mnuRepairSearch").forEach(menu -> entries.add(menu));
         convertToChildNode("mnuRepairSearch", entries);
         entries.clear();
 
-      //  entries.add(new MenuStruct("mnuRepairInsertItem", "Dar entrada producto"));
-        //entries.add(new MenuStruct("", "Listar reparaciones")); //indicando quién las tiene
+//Cambiar el estado de una reparacion
+        MenuRepair.hndRepairHndEntries("mnuHndRepairCode").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuHndRepairCode", entries);
+        entries.clear();
 
-        //Dar una entrada
-//        MenuRepair.OpenParteEntries("mnuRepairInsertItem").forEach(menu -> entries.add(menu));
-//        convertToChildNode("mnuRepairInsertItem", entries);
-//        entries.clear();
+        MenuRepair.hndRepairStatusEntries("mnuRepChangeStatus").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuRepChangeStatus", entries);
+        entries.clear();
 
+        MenuRepair.mnuRepairAddCommentEntries("mnuRepRep").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuRepRep", entries);
+        entries.clear();
+
+        MenuRepair.mnuRepairAddCommentEntries("mnuRepPending").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuRepPending", entries);
+        entries.clear();
+
+        MenuRepair.mnuRepairAddCommentEntries("mnuRepStop").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuRepStop", entries);
+        entries.clear();
+
+        MenuRepair.mnuRepairAddCommentEntries("mnuRepTest").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuRepTest", entries);
+        entries.clear();
+
+        MenuRepair.mnuRepairAddCommentEntries("mnuRepFinish").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuRepFinish", entries);
+        entries.clear();
+        
+        MenuRepair.ChekcInvoiceItemEntries("mnuChekcInvoiceItem").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuChekcInvoiceItem", entries);
+        entries.clear();
+        
+         MenuRepair.mnuRepairListentries("mnuRepairList").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuRepairList", entries);
+        entries.clear();
+        
+        
+       
     }
+    
+        private static void addCreditMnu() {
+        ArrayList<MenuStruct> entries = new ArrayList();
+//Menú principal de la rama
+        MenuCredit.financeEntries("mnuCredit").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuCredit", entries);
+        entries.clear();
+        }
 
 }

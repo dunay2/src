@@ -12,8 +12,10 @@ package Utils.Record;
  */
 public class Repair extends Record {
 
-    public Repair(String cliCode, String empCode, String operDate) {
-        super(cliCode, empCode, operDate);
+    public Repair(String operCode, String cliCode, String empCode) {
+        super(operCode, cliCode, empCode,"R");
     }
+
+  
 
 }

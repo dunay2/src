@@ -1,17 +1,34 @@
 package Person.Client;
 
-public class ClientHistory {
+import java.io.Serializable;
+import java.util.Date;
 
-    private String client;
+public class ClientHistory implements Serializable {
 
-    private String personal;
+    private static final long serialVersionUID = -2873344211410398459L;
 
-    private Object date;
+    private Date date;
+    private String note;
 
-    private Object operation;
-
-    private Object ticket;
-
-    public void untitledMethod() {
+    public ClientHistory(Date date, String note) {
+        this.date = date;
+        this.note = note;
     }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
 }
