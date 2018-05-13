@@ -50,11 +50,16 @@ public class ShoppingCart implements Serializable {
         private double price;
         private final HashMap<String, String> references = new HashMap<>();
 
+        /**
+         * @param invoiceCode*******************************/
+        
         public void Line(String invoiceCode) {
 
             this.invoiceCode = invoiceCode;
         }
 
+        
+        
         public String getInvoiceCode() {
             return invoiceCode;
         }
