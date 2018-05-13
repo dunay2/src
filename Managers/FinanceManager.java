@@ -6,7 +6,7 @@
 package Managers;
 
 import Person.Client.Client;
-import Person.Employee.FAssintance;
+ 
 import ScreenInterfaces.TextInterface;
 import Utils.Menu.MenuNode;
 import Utils.Record.Finance;
@@ -99,7 +99,7 @@ public class FinanceManager extends OperationsManager {
 
         fperiod = Byte.valueOf(nodesData.get(i++));
         Finance finance;
-        if (finance(client.getSalary(), sale.getTotal(), fperiod)) {
+        if (finance(client.getSalary(), sale.getTotalAmount(), fperiod)) {
             sale.setStatus("A");
             finance = new Finance(sale.getOperCode() , client.getDni(), employee.getDni(), true);
 

@@ -255,12 +255,15 @@ public abstract class PersonManager extends TextDatabase implements Imanager<Per
                 return null;
             }
 
-        } else {//Creación por búsqueda, ya hemos obtenido el dni
+        } else //(nodeAux.getResponseValue() !== null
+        {//Creación por búsqueda, ya hemos obtenido el dni
 
             key = nodeAux.getResponseValue();
         }
         //Tomamos la entrada de datos para la persona que vamos a crear
-        nodesData = node.convertTreeChildToListIdx();
+       // nodesData = node.convertTreeChildToListIdx();
+        
+     nodesData=   node.convertTreeChildToListIdxFrom(1);
 
         node.getChildNodes().get(0).clearResponse();
 

@@ -91,13 +91,16 @@ public class RepairManager extends OperationsManager {
             case 53: //Buscar referencias por factura// Identificamos los productos de una venta
                 StringBuilder outString = new StringBuilder();
                 Sale sale = (Sale) saleManager.search(node, outString);
-                if (sale == null) {
-                    System.out.println("la factura no existe");
+                
+                if (sale == null || !(sale.getStatus().equals("A"))) {
+                    System.out.println("factura no valida");
 
                 } else {
+
                     HndInvoice.printInvoiceRef(sale);
-                    TextInterface.pressKey();
+
                 }
+                TextInterface.pressKey();
                 return true;
 //54X listados
             case 541: //"Reparaciones Pendientes" Listar reparaciones de un tecnico
@@ -263,13 +266,16 @@ public class RepairManager extends OperationsManager {
 //llamar a obtencion de nodos index
         int i = 0;
 
+
+        //"Introduzca código de factura"));
+        String invoiceRef = nodesData.get(i++);
         //introduzca referencia de producto
-        String ref = nodesData.get(i++);
+        String itemRef = nodesData.get(i++);
         //intruzca nota //Introduzca descripción del problema
         String note = nodesData.get(i++);
 
         //Creamos un nuevo parte identificando la referencia del objeto
-        Repair repair = createRepair(ref, client.getDni(), employee.getDni(), note);
+        Repair repair = createRepair(invoiceRef, itemRef, client.getDni(), employee.getDni(), note);
         //damos seguimiento al objeto
 
         if (repair == null) {
@@ -294,13 +300,10 @@ public class RepairManager extends OperationsManager {
         return operCode;
     }
 
-    private Repair createRepair(String itemKeyCode, String clientCode, String empCode, String note) {
+    private Repair createRepair(String invoiceRef ,String itemKeyCode, String clientCode, String empCode, String note) {
 
-        //necesitamos acceso a las ventas
-        //abrir un parte
-        //introduzca codigo de cliente
-        //introduzca referencia de producto
-        String invoiceRef = getInvoiceRef(itemKeyCode);
+ 
+       // String invoiceRef = getInvoiceRef(itemKeyCode);
 
         //Buscamos la venta para obtener el producto
         Sale sale = (Sale) saleManager.searchRecord(invoiceRef);

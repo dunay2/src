@@ -210,7 +210,7 @@ public class ClientManager extends PersonManager {
 // Aqui usamos la instancia formatter para darle el formato a la fecha. Es importante ver que el resultado es un string.
             String strDate = formatter.format(sale.getDate());
 
-            String strTotal = String.valueOf(sale.getTotal());
+            String strTotal = String.valueOf(sale.getTotalAmount());
 
             if (sale.getStatus().equals("W")) {
                 strTotal = strTotal.concat(" Pendiente de aprobación financiera");
