@@ -22,7 +22,7 @@ public abstract class Record implements Serializable {
     private final String empCode;
     private String status;
     private Date date = null;
-    private String recordType;
+    private final String recordType;
 
     private final ArrayList<ClientHistory> history = new ArrayList();
 
@@ -79,6 +79,8 @@ public abstract class Record implements Serializable {
 
     }
 
+    
+    
     /**
      *
      * @return
