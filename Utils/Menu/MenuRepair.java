@@ -61,6 +61,7 @@ public class MenuRepair extends MenuBase {
         ArrayList<MenuStruct> entries = new ArrayList();
 
         entries.add(new MenuStruct("output", "Introduzca código de cliente"));
+        entries.add(new MenuStruct("output", "Introduzca código de factura"));
         entries.add(new MenuStruct("output", "Introduzca referencia de producto averiado"));
         entries.add(new MenuStruct("output", "Introduzca descripción de la avería"));
 

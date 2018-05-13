@@ -146,7 +146,6 @@ public class MenuSale extends MenuBase {
 
         ArrayList<MenuStruct> entries = new ArrayList();
         entries.add(new MenuStruct("output,mnuBuyGetClientId", "Introduzca DNI del cliente"));
-        entries.add(new MenuStruct("", "Introduzca DNI del cliente"));
         entries.add(new MenuStruct("output", "Introduzca nombre"));
         entries.add(new MenuStruct("output", "Introduzca Apellido"));
         entries.add(new MenuStruct("output", "Introduzca Domicilio"));
