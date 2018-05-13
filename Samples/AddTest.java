@@ -16,6 +16,7 @@ import Person.Client.Client;
 import Person.Employee.Employee;
 import Person.Employee.Engineer;
 import Person.PersonFactory;
+import Utils.Menu.MenuNode;
 import Utils.Record.Record;
 import Utils.Record.Repair;
 import Utils.Record.Sale;
@@ -175,6 +176,7 @@ public class AddTest {
 
         employeeManager = EmployeeManager.getInstance();
         employeeManager.load();
+        stockManager.load();
 
         clientManager = ClientManager.getInstance();
         clientManager.load();
@@ -193,22 +195,24 @@ public class AddTest {
 
         saleManager.setClient(person);
 
-        Sale sale = new Sale("INV1", "1", "1", shoppingCart, "W");
+        Sale sale = new Sale("INV1", "1", "1", shoppingCart, "A");
         person.addOperation(sale);
 
-//Agregamos un elemento al carrito
-        shoppingCart.addItem(shoppingCart.getInvoiceCode(), "LOGIK480", 100, 300);
+//Agregamos   elementos al carrito
+        shoppingCart.addItem(shoppingCart.getInvoiceCode(), "LOGIK480", 100, 1);
+       // shoppingCart.addItem(shoppingCart.getInvoiceCode(), "EP550", 100, 3);
 
-        sale.setTotal(shoppingCart.getTotalAmount());
+        sale.setTotalAmount(shoppingCart.getTotalAmount());
         saleManager.add(sale);
 
         saleManager.save();
         clientManager.save();
-        
-       
-        
+
         saleManager.checkReturnConditions("INV1");
-        
+
+        stockManager.refresh();
+        // public Sale returnItem(String ItemRef, String clientId, String employeeId)
+        saleManager.returnItem("INV1", "INV1-0LOGIK4800", "1", "1");
 
     }
 
@@ -305,8 +309,8 @@ public class AddTest {
 
         //abrir un parte
         //introduzca codigo de cliente
-        Client client =(Client) clientManager.searchPerson("1");
-        
+        Client client = (Client) clientManager.searchPerson("1");
+
         Engineer engineer = new Engineer("5");
 
         //introduzca referencia de producto
