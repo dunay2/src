@@ -204,6 +204,11 @@ public class AddTest {
 
         saleManager.save();
         clientManager.save();
+        
+       
+        
+        saleManager.checkReturnConditions("INV1");
+        
 
     }
 
