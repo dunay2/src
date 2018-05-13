@@ -13,7 +13,7 @@ import Utils.ShoppingCart;
  */
 public class Sale extends Record {
     
-    private double total;
+    private double totalAmount;
     private final String paymentType;
     //E EFECTIVO
     //T TARJETA
@@ -48,16 +48,16 @@ public class Sale extends Record {
      *
      * @return
      */
-    public double getTotal() {
-        return total;
+    public double getTotalAmount() {
+        return totalAmount;
     }
 
     /**
      *
-     * @param total
+     * @param totalAmount
      */
-    public void setTotal(double total) {
-        this.total = total;
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     /**
