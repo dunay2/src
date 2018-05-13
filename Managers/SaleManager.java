@@ -15,8 +15,13 @@ import Utils.Record.Record;
 import Utils.Record.Sale;
 import Utils.ShoppingCart.Line;
 import item.Electrodomestic;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -24,7 +29,7 @@ import java.util.Iterator;
  */
 public class SaleManager extends OperationsManager {
 
-    private final ShoppingCart shoppingCart;
+    private ShoppingCart shoppingCart;
 
     private String invoiceCounter = "INVOICE ".concat(String.valueOf(size()));
     private static SaleManager instance = null;    //Singleton  Pattern
@@ -239,8 +244,6 @@ public class SaleManager extends OperationsManager {
         //Si financia pasar a financiacion
 //Guardamos la compra
 
-
-
         //Restar los items del stock
         //Recorrer todos los items del carro
         shoppingCart.getItems().forEach(line -> {
@@ -273,7 +276,6 @@ public class SaleManager extends OperationsManager {
         //agregamos en la ficha de cliente el código de operacion
         client.addOperation(sale);
         clientManager.save();
-        
 
         System.out.println("Total: ".concat(String.valueOf(shoppingCart.getTotalAmount())));
         System.out.println(">>>> Su código de factura es: ".concat(invoiceCounter));
@@ -335,7 +337,7 @@ public class SaleManager extends OperationsManager {
 
         String itemCode = item.getCode();
 
-        //Comprobamos la cantidad en estock
+        //Comprobamos la cantidad en stock
         int stockUnits = item.getQuantity();
         //Obtenemos la cantidad de unidades que vamos a comprar
         int amount = Byte.parseByte(nodesData.get(i++));
@@ -429,6 +431,191 @@ public class SaleManager extends OperationsManager {
         System.out.printf("================= TOTAL: ".concat(String.valueOf(sale.getTotal())).concat("%n"));
 
         TextInterface.pressKey();
+    }
+
+    /**
+     *
+     * Propósito: Realizar la devolución de un item
+     *
+     *
+     * @param enode
+     * @return
+     *
+     */
+    public Sale returnItem(MenuNode[] enode) {
+        client = null;
+
+        MenuNode node = enode[0];
+
+        //1. buscar cliente 
+        StringBuilder outString = new StringBuilder();
+
+        //Devolvemos el código introducido por teclado en el StringBuilder de salida
+        client = (Client) clientManager.search(node, outString);
+        if (client == null) {
+            System.out.println("El cliente no existe");
+            return null;
+        }
+
+        if (!client.isActive()) {
+            System.out.println("El cliente no está activo.");
+            TextInterface.pressKey();
+            return null;
+        }
+
+        //tomamos el resto de valores output
+        ArrayList<String> nodesData = node.convertTreeChildToListIdx();
+
+        node.getChildNodes().get(0).clearResponse();
+
+//llamar a obtencion de nodos index
+        int i = 0;
+
+        //introduzca referencia de producto
+        String ref = nodesData.get(i++);
+
+        String invRef = getInvoiceRef(ref);
+
+        if (!checkReturnConditions(invRef)) {
+            return null;
+        }
+
+        //Creamos una nota de abono identificando la referencia del objeto
+        Sale sale = createCreditNote(ref, client.getDni(), employee.getDni());
+
+        if (sale == null) {
+            System.out.println("Datos incorrectos.");
+            return null;
+        }
+
+        add(sale);
+
+        save();
+
+        //Modificar la operación antigua
+        Iterator<Record> it = client.getOperations().iterator();
+
+        while (it.hasNext()) {
+
+            Sale saleOper = (Sale) it.next();
+            if (saleOper.getOperCode().equals(invRef)) {
+                saleOper.setStatus("D");
+            }
+        }
+
+        //Agregar la nueva operación
+        client.addOperation(sale);
+
+        clientManager.save();
+        System.out.println("Nota de abono creada");
+        System.out.println("Su nueva referencia es ".concat(sale.getOperCode()));
+
+        return sale;
+    }
+
+    /**
+     *
+     * Propósito: Cancelar la factura y crear una nota de abono
+     *
+     *
+     *
+     */
+    private Sale createCreditNote(String itemKeyCode, String clientCode, String empCode) {
+
+        String invoiceRef = getInvoiceRef(itemKeyCode);
+
+        //Buscamos la venta para obtener el producto
+        Sale saleCancel = (Sale) searchRecord(invoiceRef);
+        if (saleCancel == null || !(saleCancel.getStatus().equals("A"))) {
+            System.out.println("La factura indicada no está activa ");
+            return null;
+        }
+        if (!clientCode.equals(saleCancel.getCliCode())) {
+            System.out.println("La factura indicada no hace referencia al identificador del cliente ");
+            return null;
+        }
+//Tomamos el carrito de la venta
+        shoppingCart = saleCancel.getShoppingCart();
+
+        Boolean changed = false;
+//Buscamos la referencia del artículo en las líneas
+        for (Line line : shoppingCart.getItems()) {
+
+            if (line.getReferences().get(itemKeyCode).equals("A")) {
+//Marcamos la operación en la factura
+                line.getReferences().put(itemKeyCode, "D");
+//Realizamos la devolución del producto al stock
+                Electrodomestic e = stockManager.searchElectrodomestic(line.getItemCode());
+                e.setQuantity(e.getQuantity() + 1);
+
+                changed = true;
+                break;
+
+            }
+        }
+
+        if (!changed) {
+            System.out.println("No se ha podido realizar la cancelación de la factura ");
+            return null;
+        }
+
+        //Bloqueamos la factura e indicamos que es una devolución
+        saleCancel.setStatus("D");
+
+        //Creamos una nueva factura identificando la referencia del objeto
+        setInvoiceNumber();
+
+        Sale sale = new Sale(getInvoiceNumber(), clientCode, empCode, saleCancel.getShoppingCart(), saleCancel.getPaymentType());
+//Guardamos y devolvemos el objeto creado
+
+        return sale;
+    }
+
+    private static String getInvoiceRef(String code) {
+
+        String[] parts = code.split("-");
+        return parts[0];
+
+    }
+
+    private static String getItemRef(String code) {
+
+        String[] parts = code.split("-");
+        return parts[1];
+
+    }
+
+    /**
+     *
+     * Propósito: Comprobar las condiciones de devolución de una factura
+     *
+     * @param invRef String código de factura
+     * @return boolean: Verdadero si se puede realizar la operación Rules: la
+     * diferencia entre la fecha de compra y la devolución no puede ser superior
+     * a 90 días
+     */
+    public boolean checkReturnConditions(String invRef) {
+
+        Sale sale = (Sale) searchRecord(invRef);
+
+        //supera los 3 meses
+        Calendar rightNow = Calendar.getInstance();
+
+        rightNow.getTime();
+
+        Date fechaInicial;
+        Date fechaFinal;
+        int dias;
+
+        fechaInicial = sale.getDate();
+
+        fechaFinal = rightNow.getTime();
+
+        dias = (int) ((fechaFinal.getTime() - fechaInicial.getTime()) / 86400000);
+        System.out.println("Hay " + dias + " dias de diferencia");
+
+        return false;
+
     }
 
 }
