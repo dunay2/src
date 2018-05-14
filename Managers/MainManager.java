@@ -5,6 +5,7 @@ package Managers;
 
 import Person.Employee.Clerk;
 import Person.Employee.Employee;
+import Person.Employee.SalesMan;
 import ScreenInterfaces.TextInterface;
 import Utils.Menu.MenuNode;
 
@@ -23,6 +24,7 @@ public class MainManager {
     private final SaleManager saleManager;
     private final RepairManager repairManager;
     private final FinanceManager financeManager;
+    private final OfferManager offerManager;
 
     private Employee activeEmployee; //Usuario que está gestionando la aplicación
     String role = "";//Rol del usurio
@@ -70,12 +72,16 @@ public class MainManager {
             this.financeManager.setEmployee(activeEmployee);
         }
 
-        //Cargamos los datos  
-        clientManager.load();
+        this.offerManager = OfferManager.getInstance(clientManager);
+        if (role.equals("SalesMan")) {
+            this.offerManager.setSalesMan((SalesMan) activeEmployee);
+        }
+
         stockManager.load();
         saleManager.load();
         repairManager.load();
         financeManager.load();
+        offerManager.load("Offer");
 
         //  this.saleManager = new SaleManager(cashier, clientManager, stockManager);
         doBusiness(myTextInterface.printMenu(null));
@@ -104,13 +110,19 @@ public class MainManager {
                 //reparaciones
                 || fnum == 5 && role.equals("Engineer")
                 //Gestion de créditos
-                || fnum == 6 && role.equals("FAssintance");
+                || fnum == 6 && role.equals("FAssintance")
+                //Promciones
+                || fnum == 7 && role.equals("SalesMan");
 
 //        return true;
     }
-///////////!!!!!!!!!!!!!!!!!!si no hay usuarios crear administrador!!!!!!!!!!!!!!!!1
+///////////!!!!!!!!!!!!!!!!!!si no hay usuarios se crea un administrador!!!!!!!!!!!!!!!!
 
-    //Propósito: Hacer de listener y handler de las peticiones
+    /**
+     * Propósito: Hacer de listener y handler de las peticiones
+     *
+     * @param enode
+     */
     private void doBusiness(MenuNode enode) {
         boolean startNewSequence = false;
 
@@ -119,7 +131,7 @@ public class MainManager {
 //de esta forma poder antender sus peticiones 
         MenuNode[] node = {enode};
         System.out.println("entrada menu" + enode.getValue());
-        if (enode.getValue() == 7) {
+        if (enode.getValue() == 8) {
             System.out.println("Gracias por usar la aplicación");
             System.exit(0);
         }
@@ -149,6 +161,13 @@ public class MainManager {
                 startNewSequence = true;
             }
         }
+
+        if (checkRole(enode.getValue())) {
+            if (offerManager.handleProcess(node) && !startNewSequence) {
+                startNewSequence = true;
+            }
+        }
+
         TextInterface.clearScreen();
         //Imprimimos el menú del nodo seleccionado y mandamos a consola,
         //la cual nos devolverá el valor del nuevo nodo seleccionado
@@ -165,6 +184,11 @@ public class MainManager {
         doBusiness(newNode);
     }
 
+    /**
+     * Controla accesos de cliente configurados en MAXACCESS
+     *
+     * @return
+     */
     private boolean getUserAuth() {
 
         if (numAccess++ == MAXACCESS) {
