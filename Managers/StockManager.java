@@ -5,7 +5,7 @@
  */
 package Managers;
 
-import Samples.AddTest;
+ 
 import ScreenInterfaces.TextInterface;
 import Utils.Menu.MenuNode;
 import item.Electrodomestic;
@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  * TextDatabase mediante emplatemanager lo que le da persistencia
  *
  */
-public class StockManager extends templateManager {
+public class StockManager extends TemplateManager {
 
     Electrodomestic item = null;
     private HashMap<String, Electrodomestic> electrodomestics = new HashMap<>();
@@ -127,7 +127,7 @@ public class StockManager extends templateManager {
                 return true;
             //Agregar items de prueba
             case 35:
-                AddTest.addTestComponents();
+               // AddTest.addTestComponents();
 
                 return true;
             case 36://Buscar producto

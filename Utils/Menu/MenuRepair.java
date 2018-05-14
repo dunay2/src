@@ -128,6 +128,7 @@ public class MenuRepair extends MenuBase {
         entries.add(new MenuStruct("mnuRepStop", "Parado"));
         entries.add(new MenuStruct("mnuRepTest", "En Pruebas"));
         entries.add(new MenuStruct("mnuRepFinish", "Finalizado"));
+           entries.add(new MenuStruct("mnuRepReturn", "Entregar"));
 
         return entries;
     }

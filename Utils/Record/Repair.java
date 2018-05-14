@@ -5,17 +5,27 @@
  */
 package Utils.Record;
 
-
 /**
  *
  * @author ashh412
  */
 public class Repair extends Record {
 
-    public Repair(String operCode, String cliCode, String empCode) {
-        super(operCode, cliCode, empCode,"R");
+    String invoiceRef;
+    String itemRef;
+
+    public Repair(String operCode, String cliCode, String empCode, String invoiceRef, String itemRef) {
+        super(operCode, cliCode, empCode, "R");
+        this.invoiceRef = invoiceRef;
+        this.itemRef = itemRef;
     }
 
-  
+    public String getInvoiceRef() {
+        return invoiceRef;
+    }
+
+    public String getItemRef() {
+        return itemRef;
+    }
 
 }

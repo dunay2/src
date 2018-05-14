@@ -36,8 +36,7 @@ public abstract class Shop implements IBusiness {
 
     ArrayList<Department> departments = new ArrayList<>();
 
-//
-//    private Employee Employee;
+ 
 //
 //    private Store store;
 //

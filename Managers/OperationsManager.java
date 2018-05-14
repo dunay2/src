@@ -19,8 +19,9 @@ import java.util.Map;
 /**
  *
  * @author ashh412
+ * Gestor genérico de Facturas y Ordenes de Reparacion
  */
-//Facturas y ordenes de reparacion
+
 public abstract class OperationsManager extends TextDatabase implements Imanager<Record, MenuNode> {
 
     private HashMap<String, Record> records = new HashMap<>();
@@ -52,11 +53,6 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
         return node;
     }
 
-    //Extension de database
-    //Guardamos
-//    public void save() {
-//        save(records);
-//    }
 
     /**
      *
@@ -112,10 +108,13 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
         }
 
     }
-    //Propósito: Listar 
+
+    /**Propósito: Listar cabecera
+     * 
+     */
     private void printHeader() {
         System.out.printf("%-25s%-15s%-15s%-25s%-20s%n", "OPERACION", "CLIENTE", "EMPLEADO", "FECHA", "ESTADO");
- 
+
     }
 
     @Override
@@ -132,18 +131,11 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
     public Record generateRandomOperation() {
         return null;
 
-//        Person person;
-//
-//        person = new Client(PersonGenerator.generateDni());
-//
-//        person.setFirstName(PersonGenerator.generateName());
-//        person.setSalary(1000D);
-//        return person;
     }
 
-    //Propósito: 
-    //Buscar la clave en el HashMapy devolver el objeto si existe
     /**
+     * Propósito: Buscar la clave en el HashMapy devolver el objeto si existe
+     *
      *
      * @param e
      * @return
@@ -158,8 +150,9 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
 
     }
 
-    //Carga de ficheros
     /**
+     * Carga de ficheros
+     *
      *
      */
     public void load() {
@@ -172,79 +165,23 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
         return records;//Pasamos el nombre del fichero
     }
 
-    //Extension de database
-    //Guardamos
     /**
+     * Extension de database Guardamos
+     *
      *
      */
     public void save() {
         save(records);
     }
 
-//
-//    @Override
-//    public void update(Node node) {
-//
-////        Record record = search(node);
-////
-////        if (record != null) {
-////            ArrayList<String> nodesData = node.convertTreeChildToListIdx();
-////            int i = 0;
-////
-////            person.setFirstName(nodesData.get(i++));
-////            person.setLastName(nodesData.get(i++));
-////            person.setSalary(Double.valueOf(nodesData.get(i++)));
-////            //Guardar los datos 
-////            save();
-//
-//  
-//    @Override
-//    public Record createObject(Node node) throws IOException {
-//        Record record = null;
-//        String operCode = null;
-//        String cliCode = null;;
-//        String empCode = null;;
-//        Date date;
-//        ShoppingCart shoppingCart;
-//
-//        if (node.getLabel().equals("SELL")) {
-//
-//            operCode = "INVOICE".concat(String.valueOf(getSequence()));
-//            List list = node.getList();
-//
-//            shoppingCart = (ShoppingCart) list.get(0);
-//            
-//            operCode = node.getChildNodes().get(0).getLabel();
-//            empCode = node.getChildNodes().get(1).getLabel();
-//            date = getDate();
-//            record = new SalesRecord(operCode, cliCode, empCode, date, shoppingCart);
-//        }
-//
-//        if (node.getLabel().equals("REPAIR")) {
-//
-//            List list = node.getList();
-//
-//            shoppingCart = (ShoppingCart) list.get(0);
-//            cliCode = node.getChildNodes().get(1).getLabel();
-//            empCode = node.getChildNodes().get(2).getLabel();
-//            date = getDate();
-//
-//        }
-//        add(record);
-//        save();
-//
-//        return record;
-//
-//    }
-    /**
-     *
-     * @return
-     */
     public int getSequence() {
         return records.size();
 
     }
 
+    /**
+     *
+     */
     @Override
     public void list() {
 
@@ -257,6 +194,12 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
         clearScreen();
     }
 
+    /**
+     *
+     * @param node
+     * @param outString
+     * @return
+     */
     @Override
     public Record search(MenuNode node, StringBuilder outString) {
 
@@ -268,8 +211,14 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
         return null;
 
     }
-    
-     public Record searchThisNode(MenuNode node, StringBuilder outString) {
+
+    /**
+     *
+     * @param node
+     * @param outString
+     * @return
+     */
+    public Record searchThisNode(MenuNode node, StringBuilder outString) {
 
         outString.append(node.getResponse());
         Record record = searchRecord(outString.toString());
@@ -279,6 +228,5 @@ public abstract class OperationsManager extends TextDatabase implements Imanager
         return null;
 
     }
-    
-    
+
 }

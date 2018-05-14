@@ -208,15 +208,5 @@ public class FinanceManager extends OperationsManager {
 
     }
 
-    private void setInvoiceNumber() {
-        operCode = "FIN0000".concat(String.valueOf(size()));
-    }
-
-    private String getInvoiceNumber() {
-     
-     
-        
-        return operCode;
-    }
 
 }

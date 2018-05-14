@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Managers;
 
 import Person.Client.Client;
@@ -140,20 +136,7 @@ public class ClientManager extends PersonManager {
         return false;
     }
 
-//    private void delete(MenuNode node) {
-//
-//        StringBuilder outString = new StringBuilder();
-//        Client client = (Client) search(node, outString);
-//        if (client == null) {
-//            System.out.println("El cliente no existe");
-//            TextInterface.pressKey();
-//
-//        } else {
-//            client.setActive(false);
-//            System.out.println("Cliente desactivado. Pulse una tecla para continuar");
-//            TextInterface.pressKey();
-//        }
-//    }
+
     private void printRecord(Client client) {
         if (client == null) {
             System.out.println("el cliente no existe");
@@ -162,9 +145,9 @@ public class ClientManager extends PersonManager {
         }
 
         print(client);
-        System.out.println("Operaciones del cliente");
+    
 
-        System.out.printf("%-12s%-20s%-20s%-20s%-20s%n", "Operación", "Código", "Atentido por", "Fecha", "TOTAL");
+        System.out.printf("%-12s%-20s%-20s%-20s%-20s%-20s%n", "Operación", "Código", "Atentido por", "Fecha", "TOTAL" ,"Estado");
 
         printRecords(client);
 
@@ -216,7 +199,7 @@ public class ClientManager extends PersonManager {
                 strTotal = strTotal.concat(" Pendiente de aprobación financiera");
             }
 
-            System.out.printf("%-12s%-20s%-20s%-20s%-20s%n", "Venta", sale.getOperCode(), sale.getEmpCode(), strDate, strTotal);
+            System.out.printf("%-12s%-20s%-20s%-20s%-20s%-20s%n", "Venta", sale.getOperCode(), sale.getEmpCode(), strDate, strTotal , sale.getStatus());
         }
     }
     //private void 
@@ -251,5 +234,7 @@ public class ClientManager extends PersonManager {
         TextInterface.pressKey();
 
     }
+    
+    
 
 }

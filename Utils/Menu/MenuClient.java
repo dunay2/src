@@ -56,7 +56,7 @@ public class MenuClient extends MenuBase {
         entries.add(new MenuStruct("output", "Introduzca nombre"));
         entries.add(new MenuStruct("output", "Introduzca Apellido"));
         entries.add(new MenuStruct("output", "Introduzca Domicilio"));
-        entries.add(new MenuStruct("output", "Introduzca Teléfono"));
+        entries.add(new MenuStruct("output", "Introduzca email"));
 
       
         return entries;

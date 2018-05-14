@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Managers;
 
 import Person.Client.Client;
@@ -31,8 +27,7 @@ public class SaleManager extends OperationsManager {
     private String invoiceCounter = "INVOICE ".concat(String.valueOf(size()));
     private static SaleManager instance = null;    //Singleton  Pattern
 
-    //Singleton Singleton Pattern
-    /**
+    /**Singleton Pattern
      *
      * @param clientManager
      * @param stockManager
@@ -111,15 +106,24 @@ public class SaleManager extends OperationsManager {
         return new Sale(getInvoiceNumber(), client.getDni(), employee.getDni(), shoppingCart, "A");
 
     }
-
+/**
+ * 
+ */
     private void setInvoiceNumber() {
         invoiceCounter = "INV0000".concat(String.valueOf(size()));
     }
-
+/**
+ * 
+ * @return 
+ */
     private String getInvoiceNumber() {
         return invoiceCounter;
     }
-
+/**
+ * 
+ * @param enode
+ * @return 
+ */
     @Override
     public boolean handleProcess(MenuNode[] enode) {
         MenuNode node = enode[0];
@@ -140,15 +144,20 @@ public class SaleManager extends OperationsManager {
                 }
                 if (sale.getStatus().equals("A")) {
 
-                    cancelTransaction(sale);
+                    ArrayList<String> nodesData = node.convertTreeChildToListIdxFrom(1);
 
-                    System.out.println("La factura ".concat(sale.getOperCode().concat(" ha sido cancelada")));
-                    TextInterface.pressKey();
+                    if (cancelTransaction(sale, nodesData.get(0))) {
+                        System.out.println("La factura ".concat(sale.getOperCode().concat(" ha sido cancelada")));
+                    } else {
+                        System.out.println("La factura ".concat(sale.getOperCode().concat(" no se ha podido cancelar")));
+
+                    }
                 } else {
-                    System.out.println("La factura ".concat(sale.getOperCode().concat(" no se ha podido cancelar")));
-                    TextInterface.pressKey();
-                }
 
+                    System.out.println("La factura ".concat(sale.getOperCode().concat(" no se ha podido cancelar")));
+
+                }
+                TextInterface.pressKey();
                 return true;
 
             case 13:
@@ -215,25 +224,34 @@ public class SaleManager extends OperationsManager {
         return false;//Profundiza
     }
 
-    private void cancelTransaction(Sale sale) {
-        //continuar aqui, sacar el resto de nodos hijos con la forma de pago
-        //Si financia pasar a financiacion
-//Guardamos la compra
+    /**
+     *
+     * Propósito: Realizar la devolución de un item
+     *
+     *
+     *
+     * @return
+     *
+     */
+    private boolean cancelTransaction(Sale sale, String itemCode) {
 
-        sale.setStatus("I");//realizar la devolucion
-        save();
+        String invRef = sale.getOperCode();
 
-        //Restar del stock los items
-        //Recorrer todos los items del carro
-        sale.getShoppingCart().getItems().forEach(line -> {
-            Electrodomestic e = stockManager.searchElectrodomestic(line.getItemCode());
-            e.setQuantity(e.getQuantity() + line.getAmount());
-        });
+        if (!checkReturnConditions(invRef)) {
+            return false;
+        }
 
-        //Guardamos el nuevo estado de la venta
-        save();
+        Sale returnSale = returnItem(sale.getOperCode(), itemCode, sale.getCliCode());
+        if (returnSale != null) {
+            if (returnSale.getTotalAmount() > 0) {
+                System.out.println("Nota de abono creada");
+                System.out.println("Su nueva referencia es ".concat(returnSale.getOperCode()));
+            }
+            System.out.println("Devolución realizada");
+            return true;
+        }
 
-        stockManager.refresh();
+        return false;
     }
 
     private void finishTransaction(String paymentType) {
@@ -298,11 +316,6 @@ public class SaleManager extends OperationsManager {
 
         return sale;
 
-    }
-
-    private void openCreditLine() {
-
-        //crear credito para el cliente
     }
 
     private void clearShoppingCart() {
@@ -375,8 +388,12 @@ public class SaleManager extends OperationsManager {
         }
 
     }
-//Proposito: Listar elementos del carrito. Dar formato
 
+    /**
+     * Proposito: Listar elementos del carrito. Dar formato
+     *
+     *
+     */
     private void itemList() {
 
         System.out.println("Fecha:" + shoppingCart.getSalesDate());
@@ -427,7 +444,6 @@ public class SaleManager extends OperationsManager {
 
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 // Aqui usamos la instancia formatter para darle el formato a la fecha. Es importante ver que el resultado es un string.
-            String strDate = formatter.format(sale.getDate());
 
             System.out.printf("%-10s%-20s%-20s%-20s%n", line.getLineNumber() + 1, line.getItemCode(), line.getPrice(), line.getAmount());
 
@@ -446,13 +462,17 @@ public class SaleManager extends OperationsManager {
      * @param invoiceRef
      * @param itemRef
      * @param clientCode
-     * @param empCode
      * @return
      *
      */
-    public Sale returnItem(String invoiceRef, String itemRef, String clientCode, String empCode) {
+    public Sale returnItem(String invoiceRef, String itemRef, String clientCode) {
 
         client = (Client) clientManager.searchPerson(clientCode);
+
+        if (!client.isActive()) {
+            System.out.println("El cliente no está activo.");
+            return null;
+        }
 
         //Creamos una nota de abono identificando la referencia del objeto
         Sale sale = createCreditNote(invoiceRef, itemRef);
@@ -466,10 +486,15 @@ public class SaleManager extends OperationsManager {
         Iterator<Record> it = client.getOperations().iterator();
 
         while (it.hasNext()) {
+            try {
+                Sale saleOper = (Sale) it.next();
+                if (saleOper.getOperCode().equals(invoiceRef)) {
 
-            Sale saleOper = (Sale) it.next();
-            if (saleOper.getOperCode().equals(invoiceRef)) {
-                saleOper.setStatus("D");
+                    saleOper.setStatus("D");
+                }
+
+            } catch (Exception e) {
+
             }
         }
 
@@ -494,54 +519,25 @@ public class SaleManager extends OperationsManager {
      * @return
      *
      */
-    private Sale returnItem(MenuNode[] enode) {
-        client = null;
-
-        MenuNode node = enode[0];
-
-        //1. buscar cliente 
-        StringBuilder outString = new StringBuilder();
-
-        //Devolvemos el código introducido por teclado en el StringBuilder de salida
-        client = (Client) clientManager.search(node, outString);
-        if (client == null) {
-            System.out.println("El cliente no existe");
-            return null;
-        }
-
-        if (!client.isActive()) {
-            System.out.println("El cliente no está activo.");
-            TextInterface.pressKey();
-            return null;
-        }
-
-        //tomamos el resto de valores output
-        ArrayList<String> nodesData = node.convertTreeChildToListIdx();
-
-        node.getChildNodes().get(0).clearResponse();
-
-//llamar a obtencion de nodos index
-        int i = 0;
-
-        String invoiceRef = nodesData.get(i++);
-
-        //introduzca referencia de producto
-        String ref = nodesData.get(i++);
-
-        String invRef = getInvoiceRef(ref);
-
-        if (!checkReturnConditions(invRef)) {
-            return null;
-        }
-
-        Sale sale = returnItem(invoiceRef, ref, client.getDni(), employee.getDni());
-
-        System.out.println("Nota de abono creada");
-        System.out.println("Su nueva referencia es ".concat(sale.getOperCode()));
-
-        return sale;
-    }
-
+    //   private Sale returnItem(MenuNode[] enode) {
+//        if (!client.isActive()) {
+//            System.out.println("El cliente no está activo.");
+//            TextInterface.pressKey();
+//            return null;
+//        }
+//
+// 
+//
+//        if (!checkReturnConditions(invRef)) {
+//            return null;
+//        }
+//
+//        Sale sale = returnItem(invoiceRef, ref, client.getDni());
+//
+//        System.out.println("Nota de abono creada");
+//        System.out.println("Su nueva referencia es ".concat(sale.getOperCode()));
+    //   return sale;
+    //}
     /**
      *
      * Propósito: Cancelar la factura y crear una nota de abono

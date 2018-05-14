@@ -52,6 +52,7 @@ public class MenuSale extends MenuBase {
         ArrayList<MenuStruct> entries = new ArrayList();
 
         entries.add(new MenuStruct("output", "Introduzca la Referencia de Factura:"));
+          entries.add(new MenuStruct("output", "Introduzca la Referencia de Producto:"));
 
         return entries;
     }
@@ -62,6 +63,7 @@ public class MenuSale extends MenuBase {
         ArrayList<MenuStruct> entries = new ArrayList();
 
         entries.add(new MenuStruct("output", "Introduzca la Referencia de Factura:"));
+       
 
         return entries;
     }

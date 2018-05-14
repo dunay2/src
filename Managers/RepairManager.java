@@ -91,7 +91,7 @@ public class RepairManager extends OperationsManager {
             case 53: //Buscar referencias por factura// Identificamos los productos de una venta
                 StringBuilder outString = new StringBuilder();
                 Sale sale = (Sale) saleManager.search(node, outString);
-                
+
                 if (sale == null || !(sale.getStatus().equals("A"))) {
                     System.out.println("factura no valida");
 
@@ -171,44 +171,49 @@ public class RepairManager extends OperationsManager {
                 enode[0] = node.getParent().getParent().getParent();
                 return true;
 //
-//                return true;
-//            case 13:
-//                list();
-//                TextInterface.pressKey();
-//                return true;
-//
-//            case 14: // Buscar una Factura"
-//                outString = new StringBuilder();
-//                Repair repair = (Repair) search(node, outString);
-            //  printRecord(sale);
-            //     return true;
-            //Consultar el importe actual
-//            case 111:
-//                //itemList();
-//                return true;
-//            //"12. Añadir electrodomestico al carrito"
-//            case 112:
-//                //addItem(node);
-//                return true;
-            //13. Cobrar Compra
-            //  case 113:
-            //identificar al cliente o solicitar alta 
-            //Si el carrito está vacío cancelar el cobro
-            //Si no, seguimos navegando por los hijos
-//                if (createObject(enode) == null) {
-//                    return true;
-//                }
-//                // enode[0] = callNextMenu(node);
-//                break;
-//            case 11314://cancel
-//                //   clearShoppingCart();
-//                enode[0] = callMainMenu(node);
-//                return true;
-//
-//            case 113131://Mensaje final financiado
-//                enode[0] = callMainMenu(node);
+            case 521256: //E--> ENTREGADO
+                setNewStatus(node, curRepair, "E");
+
+                returnItemToClient(curRepair);
+
+                curRepair = null;
+
+                save();
+                enode[0] = node.getParent().getParent().getParent();
+                return true;
+
+//          
         }
         return false;//Profundiza
+    }
+
+    /**
+     * **
+     */
+    private void returnItemToClient(Repair repair) {
+
+        client = (Client) clientManager.searchPerson(repair.getCliCode());
+
+        Iterator<Record> it = client.getOperations().iterator();
+
+        while (it.hasNext()) {
+
+            try {
+                Sale sale = (Sale) it.next();
+
+                if (repair.getInvoiceRef().equals(sale.getOperCode())) {
+
+                    sale.getShoppingCart().getItems().stream().filter((line) -> (line.getReferences().containsKey(repair.getItemRef()))).forEachOrdered((line) -> {
+                        line.getReferences().put(repair.getItemRef(), "A");
+                    });
+                }
+            } catch (Exception e) {
+
+            }
+
+        }
+ 
+
     }
 
     private void setNewStatus(MenuNode node, Repair repair, String status) {
@@ -266,7 +271,6 @@ public class RepairManager extends OperationsManager {
 //llamar a obtencion de nodos index
         int i = 0;
 
-
         //"Introduzca código de factura"));
         String invoiceRef = nodesData.get(i++);
         //introduzca referencia de producto
@@ -282,12 +286,13 @@ public class RepairManager extends OperationsManager {
             System.out.println("Datos incorrectos.");
             return null;
         }
-        add(repair);
 
         save();
 
         client.addOperation(repair);
+
         clientManager.save();
+        saleManager.save();
         System.out.println("Orden de reparación creada");
         System.out.println("Su referencia es ".concat(repair.getOperCode()));
 
@@ -300,11 +305,9 @@ public class RepairManager extends OperationsManager {
         return operCode;
     }
 
-    private Repair createRepair(String invoiceRef ,String itemKeyCode, String clientCode, String empCode, String note) {
+    private Repair createRepair(String invoiceRef, String itemKeyCode, String clientCode, String empCode, String note) {
 
- 
-       // String invoiceRef = getInvoiceRef(itemKeyCode);
-
+        // String invoiceRef = getInvoiceRef(itemKeyCode);
         //Buscamos la venta para obtener el producto
         Sale sale = (Sale) saleManager.searchRecord(invoiceRef);
         if (sale == null || !(sale.getStatus().equals("A"))) {
@@ -322,21 +325,17 @@ public class RepairManager extends OperationsManager {
 
         ShoppingCart shoppingCart = sale.getShoppingCart();
 
-        //records
         //Bloqueamos el registro en la factura
-        sale.setStatus("R");
-        saleManager.save();
-
         Boolean changed = false;
 //Buscamos la referencia del artículo en las líneas
         for (Line line : shoppingCart.getItems()) {
-//            if (line.getReferences().containsKey(invoiceCode)) {
-            //  line.getReferences().get(itemKeyCode);
-            if (line.getReferences().get(itemKeyCode).equals("A")) {
-                line.getReferences().put(itemKeyCode, "R");
-                changed = true;
-                break;
-//                }
+
+            if (line.getReferences().get(itemKeyCode) != null) {
+                if (line.getReferences().get(itemKeyCode).equals("A")) {
+                    line.getReferences().put(itemKeyCode, "R");
+                    changed = true;
+                    break;
+                }
             }
         }
         if (!changed) {
@@ -346,9 +345,9 @@ public class RepairManager extends OperationsManager {
         //Creamos un nuevo parte identificando la referencia del objeto
         //
         //damos seguimiento al objeto
-        Repair repair = new Repair(getNewRepairNumber() + getItemRef(itemKeyCode), clientCode, empCode);
+        Repair repair = new Repair(getNewRepairNumber() + getItemRef(itemKeyCode), clientCode, empCode, sale.getOperCode(), itemKeyCode);
 
-        //Intruduzca descripción del problema
+        //Introduzca descripción del problema
         repair.addHistory(note);
 
         if (add(repair)) {
@@ -381,7 +380,6 @@ public class RepairManager extends OperationsManager {
         printHeader();
         while (it.hasNext()) {
             Repair repair = (Repair) it.next().getValue();
-
             if (repair.getEmpCode().equals(this.employee.getDni())) {
                 print(repair);
             }
@@ -456,6 +454,19 @@ public class RepairManager extends OperationsManager {
 
         return repair;
 
+    }
+
+    private void changeOperStatus(String operCode, String newStatus) {
+
+        Iterator<Record> it = client.getOperations().iterator();
+
+        while (it.hasNext()) {
+
+            Record record = (Record) it.next();
+            if (record.getOperCode().equals(operCode)) {
+                record.setStatus(newStatus);
+            }
+        }
     }
 
 }

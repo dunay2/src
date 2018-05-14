@@ -1,8 +1,6 @@
 package Person.Employee;
 
 
-import Invoice.Invoice;
-import Person.Client.Client;
 
 /**
  *
@@ -19,28 +17,8 @@ public class Cashier extends Employee {
         super(dni);
     }
 
-    /**
-     *
-     * @param client
-     * @param paymentMethod
-     * @return
-     */
-    public String sell(Client client, String paymentMethod) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+  
 
 
-    /**
-     *
-     * @return
-     */
-    public Invoice createInvoice() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    /**
-     *
-     */
-    public void generateFinanceTicket() {
-    }
+   
 }

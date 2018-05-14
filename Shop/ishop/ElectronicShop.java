@@ -1,7 +1,7 @@
 package Shop.ishop;
 
 import Managers.MainManager;
-import Samples.AddTest;
+ 
 
 /**
  *
@@ -15,9 +15,9 @@ public class ElectronicShop extends Shop {
      */
     public static void main(String[] args) {
 
-        AddTest.addTestEmployees();
-        AddTest.addTestComponents();
-        AddTest.addTestSale();
+//        AddTest.addTestEmployees();
+//        AddTest.addTestComponents();
+     //   AddTest.addTestSale();
       
         
        // AddTest.testRepair();

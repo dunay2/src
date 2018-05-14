@@ -48,7 +48,7 @@ public class MenuMain extends MenuBase {
         entries.add(new MenuStruct("mnuEmployee", "Gestión de Empleados"));
         entries.add(new MenuStruct("mnuRepair", "Gestión de Reparaciones"));
         entries.add(new MenuStruct("mnuCredit", "Gestión de Créditos"));
-
+        entries.add(new MenuStruct("mnuOffer", "Gestión de Promociones"));
         entries.add(new MenuStruct("mnuExit", "Salir de la aplicación"));
 
         convertToChildNode(parentMnuName, entries);
@@ -58,6 +58,33 @@ public class MenuMain extends MenuBase {
         addEmployeeMnu();
         addRepairMnu();
         addCreditMnu();
+        addOfferMnu();
+
+    }
+
+    /**
+     *
+     * @return
+     */
+    private static void addOfferMnu() {
+
+        ArrayList<MenuStruct> entries = new ArrayList();
+
+        MenuOffer.createPromoEntries("mnuOffer").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuOffer", entries);
+        entries.clear();
+
+        MenuOffer.listPromoCliEntries("mnuListPromoCli").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuListPromoCli", entries);
+        entries.clear();
+
+        MenuOffer.addPromoCliEntries("mnuAddPromoCli").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuAddPromoCli", entries);
+        entries.clear();
+
+        MenuOffer.promoSendEntries("mnuPromoSend").forEach(menu -> entries.add(menu));
+        convertToChildNode("mnuPromoSend", entries);
+
     }
 
     private static void addEmployeeMnu() {
@@ -409,25 +436,23 @@ public class MenuMain extends MenuBase {
         MenuRepair.mnuRepairAddCommentEntries("mnuRepFinish").forEach(menu -> entries.add(menu));
         convertToChildNode("mnuRepFinish", entries);
         entries.clear();
-        
+
         MenuRepair.ChekcInvoiceItemEntries("mnuChekcInvoiceItem").forEach(menu -> entries.add(menu));
         convertToChildNode("mnuChekcInvoiceItem", entries);
         entries.clear();
-        
-         MenuRepair.mnuRepairListentries("mnuRepairList").forEach(menu -> entries.add(menu));
+
+        MenuRepair.mnuRepairListentries("mnuRepairList").forEach(menu -> entries.add(menu));
         convertToChildNode("mnuRepairList", entries);
         entries.clear();
-        
-        
-       
+
     }
-    
-        private static void addCreditMnu() {
+
+    private static void addCreditMnu() {
         ArrayList<MenuStruct> entries = new ArrayList();
 //Menú principal de la rama
         MenuCredit.financeEntries("mnuCredit").forEach(menu -> entries.add(menu));
         convertToChildNode("mnuCredit", entries);
         entries.clear();
-        }
+    }
 
 }

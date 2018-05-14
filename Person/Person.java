@@ -10,6 +10,7 @@ import java.util.List;
  * @author ashh412
  */
 public abstract class Person implements Serializable, IPersonOperation {
+
     private static final long serialVersionUID = -2873344211410398459L;
     private final String key;
     private final String dni;
@@ -31,7 +32,6 @@ public abstract class Person implements Serializable, IPersonOperation {
     private final List<Record> operations = new ArrayList<>();//Valor de código de operacion
 
     //Contructor básico
-
     /**
      *
      * @param dni
@@ -48,17 +48,17 @@ public abstract class Person implements Serializable, IPersonOperation {
      * @param firstName
      * @param lastName
      * @param address
-     * @param phone
+     * @param email
      */
-    public Person(String dni, String firstName, String lastName, String address, String phone) {
+    public Person(String dni, String firstName, String lastName, String address, String email) {
 
         key = "0";
         this.dni = dni;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
-        this.phone = phone;
-        active=true;
+        this.email = email;
+        active = true;
 
     }
 
@@ -132,7 +132,7 @@ public abstract class Person implements Serializable, IPersonOperation {
     public void setPhone(String phone) {
         this.phone = phone;
     }
- 
+
     /**
      * @param mobil the mobil to set
      */
@@ -341,7 +341,7 @@ public abstract class Person implements Serializable, IPersonOperation {
     }
 
     @Override
-    public void addOperation( Record record) {
+    public void addOperation(Record record) {
 
         operations.add(record);
     }
